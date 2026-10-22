@@ -1061,3 +1061,48 @@
     border-left: 0;
   }
 }
+
+/* Reference composition: lighter paper, compact form, and a prominent poster. */
+.create { --paper-noise: linear-gradient(transparent, transparent); }
+.create__stage { padding-top: 2.6em; padding-bottom: 1.6em; }
+.create__banner { padding-top: 1.9em; padding-bottom: 2.2em; }
+.create__banner-shadow { transform: rotate(-1deg); }
+.create__form { padding: 2.6em 3.6em 2.5em; }
+.create__panel {
+  background: radial-gradient(ellipse at 50% 42%, #fff5dfaa, #fff2d24d 75%),
+    var(--paper-mid) url('/textures/parchment-v2.jpg') center / cover;
+  box-shadow: inset 0 0 0 .12em #73482080, inset 0 0 2.8em #70421680;
+}
+.step + .step { margin-top: 1.5em; padding-top: 1.5em; }
+.step__title { font-family: Georgia, serif; font-size: 2.35em; }
+.step__number { box-shadow: none; transform: rotate(-7deg); }
+.upload__thumb { width: 12em; height: 11em; }
+.upload__drop { height: 10em; }
+.create__preview { padding: 2.5em 3.2em 2.6em; }
+.create__poster { width: 98%; margin-top: 1.2em; transform: rotate(-1.5deg); }
+.create__assurances { margin-top: 1.8em; padding-top: 1.3em; }
+.bounty-input input {
+  min-width: 0; width: 100%; border: 0; outline-offset: 3px;
+  background: transparent; color: inherit; font: inherit; font-variant-numeric: tabular-nums;
+}
+.bounty-input input::placeholder { color: #49331f; opacity: 1; }
+.steps { padding: 1.6em 0 2.6em; }
+.steps__list { padding-left: 1em; }
+.steps__row { margin-top: 1.6em; }
+@media (max-width: 1100px) {
+  .create__poster { max-width: 440px; }
+}
+@media (max-width: 600px) {
+  .create__form { padding: 2.2em 1.4em; }
+  .create__banner { padding: 2em 1.6em 2.2em; }
+  .create__title span:last-child { font-size: clamp(28px, 8vw, 46px); }
+  .step__title { font-size: 1.8em; }
+  .upload { flex-direction: row; gap: .8em; }
+  .upload__thumb { width: 6em; height: 9em; }
+  .upload__drop { height: 9em; }
+  .upload__drop strong { font-size: 1.2em; }
+  .upload__drop span { font-size: 1.1em; }
+  .create__preview { padding: 3em 2em 2.4em; }
+  .steps__list { grid-template-columns: repeat(2, minmax(0, 1fr)); padding-left: 0; }
+  .steps__list li { padding-inline: .7em; }
+}

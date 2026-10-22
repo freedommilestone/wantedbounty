@@ -1,5 +1,5 @@
 import { toPng } from "html-to-image";
-import { useRef, useState, type ChangeEvent, type DragEvent, type ReactNode } from "react";
+import { useEffect, useRef, useState, type ChangeEvent, type DragEvent, type ReactNode } from "react";
 import { SiteHeader } from "./components/SiteHeader";
 import { POSTER_FEE } from "./payment";
 import { WantedPoster } from "./components/WantedPoster";
@@ -55,19 +55,26 @@ export function CreatePosterPage() {
   const [uploadError, setUploadError] = useState<string | null>(null);
   const [dragging, setDragging] = useState(false);
   const [name, setName] = useState("");
+  const [customBounty, setCustomBounty] = useState("");
+  const uploadSequence = useRef(0);
   const [title, setTitle] = useState<string>(TITLES[0]);
   const [artStyle, setArtStyle] = useState<ArtStyle>("classic");
   const [payNote, setPayNote] = useState<string | null>(null);
   const [phase, setPhase] = useState<"idle" | "signing" | "confirming" | "paid">("idle");
   const [receipt, setReceipt] = useState<string | null>(null);
 
-  const bounty = isHolder && holdings.state === "ready" ? holdings.display : PLACEHOLDER_BOUNTY;
+  const bounty = customBounty ? Number(customBounty).toLocaleString("en-US") : isHolder && holdings.state === "ready" ? holdings.display : PLACEHOLDER_BOUNTY;
+
+  useEffect(() => {
+    document.title = "Create Your Wanted Poster | Wanted Bounty";
+  }, []);
   const posterName = name.trim() || "Your Name";
   const balance = holdings.state === "ready" ? holdings.amount : 0;
   const canAfford = balance >= FEE;
 
   const takeFile = (file: File | undefined) => {
     if (!file) return;
+    const sequence = ++uploadSequence.current;
     if (!["image/jpeg", "image/png"].includes(file.type)) {
       setUploadError("Please choose a JPG or PNG image.");
       return;
@@ -79,7 +86,17 @@ export function CreatePosterPage() {
     setUploadError(null);
     // A data URL (not a blob URL) so the poster image can be exported to PNG.
     const reader = new FileReader();
-    reader.onload = () => setPhoto({ url: String(reader.result), name: file.name });
+    reader.onload = () => {
+      const url = String(reader.result);
+      const image = new Image();
+      image.onload = () => {
+        if (sequence === uploadSequence.current) setPhoto({ url, name: file.name });
+      };
+      image.onerror = () => {
+        if (sequence === uploadSequence.current) setUploadError("This image could not be opened. Try another JPG or PNG.");
+      };
+      image.src = url;
+    };
     reader.onerror = () => setUploadError("Couldn't read that image.");
     reader.readAsDataURL(file);
   };
@@ -194,7 +211,7 @@ export function CreatePosterPage() {
             <div className="create__grid">
               <div className="create__panel-shadow">
                 <form className="create__panel create__form" style={{ clipPath: FORM_EDGE }} onSubmit={(event) => event.preventDefault()}>
-                  <Step number={1} title="Upload Your Photo" hint="Use a clear photo of yourself. We'll turn it into a One Piece–style artwork.">
+                  <Step number={1} title="Upload Your Photo" hint="Use a clear photo of yourself. Choose a vintage finish for your wanted poster.">
                     <div className="upload">
                       <div className="upload__thumb">
                         {photo ? <img src={photo.url} alt="Your uploaded photo" /> : <span>Your photo</span>}
@@ -215,7 +232,7 @@ export function CreatePosterPage() {
                           <strong>{photo ? "Replace photo" : "Click to upload"}</strong>
                           <span>or drag and drop</span>
                         </button>
-                        <p className={`upload__hint ${uploadError ? "is-error" : ""}`}>{uploadError ?? "JPG, PNG (max 10MB)"}</p>
+                        <p role="status" className={`upload__hint ${uploadError ? "is-error" : ""}`}>{uploadError ?? "JPG, PNG (max 10MB)"}</p>
                       </div>
                       <input ref={fileRef} type="file" accept="image/png,image/jpeg" hidden onChange={onFileChange} />
                     </div>
@@ -252,7 +269,10 @@ export function CreatePosterPage() {
                         <span className="field__label">Bounty Amount</span>
                         <div className="field__control bounty-input">
                           <BeriCoin className="bounty-input__coin" />
-                          <output aria-live="polite">{isHolder && holdings.state === "ready" ? holdings.display : "—"}</output>
+                          <input aria-label="Bounty amount" inputMode="numeric" maxLength={15}
+                            value={customBounty ? Number(customBounty).toLocaleString("en-US") : ""}
+                            placeholder={bounty}
+                            onChange={(event) => setCustomBounty(event.target.value.replace(/[^0-9]/g, "").slice(0, 15))} />
                           <span className="bounty-input__unit">
                             <BeriCoin className="bounty-input__unit-coin" />
                             BERI
@@ -326,9 +346,9 @@ export function CreatePosterPage() {
                     <p className="pay__secure">
                       <ShieldIcon />
                       <span>
-                        Your BERI balance is verified through your connected wallet.
+                        The 500 BERI fee requires your wallet approval.
                         <br />
-                        No additional steps needed.
+                        Photo finishes are filters, not AI-generated artwork.
                       </span>
                     </p>
                   </Step>
@@ -361,8 +381,8 @@ export function CreatePosterPage() {
                     <div>
                       <LockIcon />
                       <p>
-                        <strong>Fully Secure</strong>
-                        Your image and payment are protected.
+                        <strong>Photo stays local</strong>
+                        Your upload stays in this browser.
                       </p>
                     </div>
                   </div>
