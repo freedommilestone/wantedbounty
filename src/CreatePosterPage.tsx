@@ -35,24 +35,15 @@ const ART_STYLES = [
 
 type ArtStyle = (typeof ART_STYLES)[number]["id"];
 
-// Fine irregular tears follow the reference's tapered banner silhouette.
-const bannerOutline = [[0, 8], [4, 5], [42, 1], [43, 12], [58, 14], [63, 19], [80, 24], [85, 29], [98, 34], [99, 48], [96, 59], [82, 64], [79, 76], [68, 83], [60, 94], [34, 96], [15, 99], [4, 94], [2, 72]];
-const BANNER_EDGE = `polygon(${bannerOutline.flatMap(([x, y], index) => {
-  const [nx, ny] = bannerOutline[(index + 1) % bannerOutline.length];
-  return Array.from({ length: 10 }, (_, step) => {
-    const jitter = Math.sin(index * 71 + step * 43) * .45;
-    return `${x + (nx - x) * step / 10 + jitter}% ${y + (ny - y) * step / 10 + jitter}%`;
-  });
-}).join(",")})`;
 const FORM_EDGE = tornPaper(17, 170, 0.7);
 const PREVIEW_EDGE = tornPaper(23, 170, 0.8);
 const NOTE_EDGE = tornPaper(9, 70, 1.5);
 
 const steps = [
-  { icon: "/icons/step-compass.jpg", title: "1. Upload", text: "Add your photo and choose your details." },
-  { icon: "/icons/step-wanted.jpg", title: "2. Customize", text: "Set your name, bounty, title and art style." },
-  { icon: "/icons/step-wallet.jpg", title: "3. Pay with BERI", text: `Connect your wallet and confirm the ${FEE} BERI fee.` },
-  { icon: "/icons/step-poster.jpg", title: "4. Get your poster", text: "Receive your One Piece–style wanted poster and share it with the community." },
+  { title: "1. Upload", text: "Add your photo and choose your details." },
+  { title: "2. Customize", text: "Set your name, bounty, title and art style." },
+  { title: "3. Pay with BERI", text: `Connect your wallet and confirm the ${FEE} BERI fee.` },
+  { title: "4. Get your poster", text: "Receive your One Piece–style wanted poster and share it with the community." },
 ];
 
 export function CreatePosterPage() {
@@ -194,13 +185,13 @@ export function CreatePosterPage() {
           <div className="container">
             <div className="create__intro">
               <div className="create__banner-shadow">
-                <div className="create__banner" style={{ clipPath: BANNER_EDGE }}>
+                <div className="create__banner">
                   <h1 className="create__title">
                     <span>Create your</span>
                     <span>Wanted Poster</span>
                   </h1>
                   <p className="create__lede">
-                    Turn your story into a legendary bounty.
+                    <strong>Turn your story into a legendary bounty.</strong>
                     <br />
                     Upload your photo, customize your details, and get your very own One Piece–style wanted poster.
                   </p>
@@ -405,17 +396,17 @@ export function CreatePosterPage() {
             <h2 className="steps__ribbon">How It Works</h2>
             <div className="steps__row">
               <ol className="steps__list">
-                {steps.map(({ icon, title: stepTitle, text }) => (
+                {steps.map(({ title: stepTitle, text }, index) => (
                   <li key={stepTitle}>
-                    <img className="steps__icon" src={icon} alt="" />
+                    <GuideIcon step={index} />
                     <h3>{stepTitle}</h3>
                     <p>{text}</p>
                   </li>
                 ))}
               </ol>
               <div className="steps__note-shadow">
+                <CompassIcon className="steps__note-icon" />
                 <div className="steps__note" style={{ clipPath: NOTE_EDGE }}>
-                  <CompassIcon className="steps__note-icon" />
                   <p className="steps__note-title">Generate. Share. Build the fleet.</p>
                   <p>The more bounties, the stronger our community.</p>
                   <p className="steps__note-sign">— BERI</p>
@@ -426,6 +417,22 @@ export function CreatePosterPage() {
         </section>
       </main>
     </>
+  );
+}
+
+function GuideIcon({ step }: { step: number }) {
+  if (step === 0) return <CompassIcon className="steps__icon" />;
+  if (step === 2) return <span className="steps__icon steps__wallet-ring"><WalletIcon /></span>;
+  return (
+    <svg className="steps__icon steps__poster-icon" viewBox="0 0 64 72" aria-hidden="true">
+      <g transform={step === 1 ? "rotate(-8 32 36)" : "rotate(3 32 36)"} fill="none" stroke="currentColor" strokeWidth="1.3">
+        {step === 1 && <path d="M12 13 49 6 58 63 19 69Z" />}
+        <path d="M15 7 19 9 23 6 27 8 32 6 37 8 42 6 49 8 48 16 50 22 48 28 50 36 48 43 50 51 48 64 43 63 38 65 33 63 27 65 22 63 15 65 16 56 14 49 16 42 14 35 16 27 14 20Z" />
+        <text x="32" y="19" fill="currentColor" stroke="none" textAnchor="middle" fontFamily="Georgia,serif" fontWeight="bold" fontSize="8">WANTED</text>
+        <path d="M20 24H44V46H20Z" />
+        <circle cx="32" cy="32" r="5" /><path d="M24 44c0-10 16-10 16 0M23 31q9-7 18 0M25 29q7-12 14 0M21 51h22M23 55h18M25 59h14" />
+      </g>
+    </svg>
   );
 }
 
