@@ -70,13 +70,13 @@
 
 .create__stage::before {
   background:
-    linear-gradient(180deg, rgba(8, 18, 38, 0.38) 0%, rgba(8, 18, 38, 0.22) 35%, rgba(12, 9, 6, 0.8) 100%),
-    url("/scene/create-sea.jpg") center top / cover no-repeat;
-  filter: saturate(0.72) brightness(0.78) contrast(1.1);
+    linear-gradient(180deg, rgba(5, 10, 20, 0) 0%, rgba(5, 10, 20, 0) 55%, #060a12 92%),
+    url("/scene/create-scene.jpg") center top / 100% auto no-repeat,
+    #060a12;
 }
 
 .create__stage::after {
-  background: radial-gradient(ellipse at 50% 38%, transparent 40%, rgba(4, 8, 16, 0.55) 100%);
+  background: radial-gradient(ellipse at 50% 30%, transparent 60%, rgba(3, 6, 12, 0.28) 100%);
 }
 
 /* ---------- Intro ---------- */
@@ -98,7 +98,7 @@
   background:
     var(--paper-noise),
     radial-gradient(ellipse at 22% 30%, rgba(255, 246, 222, 0.5), transparent 55%),
-    #e5cc9a url("/textures/parchment.jpg") center / cover;
+    #e5cc9a url("/textures/parchment-v2.jpg") center / cover;
   box-shadow:
     inset 0 0 3.4em rgba(112, 66, 22, 0.62),
     inset 0 0 0.5em rgba(60, 32, 10, 0.55);
@@ -193,7 +193,7 @@
   background:
     var(--paper-noise),
     radial-gradient(ellipse at 50% 42%, rgba(255, 244, 218, 0.55), transparent 68%),
-    var(--paper-mid) url("/textures/parchment.jpg") center / cover;
+    var(--paper-mid) url("/textures/parchment-v2.jpg") center / cover;
   box-shadow:
     inset 0 0 0 0.16em rgba(70, 40, 14, 0.55),
     inset 0 0 5.4em var(--burn),
@@ -690,7 +690,7 @@
 }
 
 .create__poster {
-  width: 81%;
+  width: 90%;
   margin-top: 1.9em;
 }
 
@@ -729,7 +729,7 @@
 }
 
 .create__poster .poster__name {
-  font-size: calc(var(--name-size, 13cqw) * 1.3);
+  font-size: calc(var(--name-size, 13cqw) * 1.08);
 }
 
 .create__poster .poster__bounty {
@@ -783,24 +783,9 @@
 
 .steps {
   position: relative;
-  padding: 2.2em 0 5.6em;
-  background:
-    radial-gradient(ellipse at 6% 100%, rgba(214, 160, 74, 0.1), transparent 30%),
-    radial-gradient(ellipse at 96% 90%, rgba(214, 160, 74, 0.08), transparent 28%),
-    var(--paper-noise),
-    linear-gradient(180deg, #14100b 0%, #0b0806 100%);
-  box-shadow: inset 0 1px 0 rgba(214, 160, 74, 0.4);
+  padding: 3.4em 0 5.2em;
+  background: #0b0806 url("/scene/deck-strip.jpg") center / 100% 100% no-repeat;
   color: #ead9ba;
-}
-
-.steps::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 2.6em;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(214, 160, 74, 0.5) 12%, rgba(214, 160, 74, 0.5) 88%, transparent);
 }
 
 .steps__ribbon {
@@ -834,7 +819,7 @@
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
   list-style: none;
-  padding-left: 1em;
+  padding-left: 10em;
 }
 
 .steps__list li {
@@ -847,10 +832,12 @@
 }
 
 .steps__icon {
-  width: 6em;
-  height: 6em;
-  margin: 0 auto 1.2em;
-  color: #e3c58c;
+  width: 7.4em;
+  height: 7.4em;
+  margin: -0.6em auto 0.6em;
+  object-fit: contain;
+  /* The icon art sits on pure black, so screen blending drops the black and keeps the gold. */
+  mix-blend-mode: screen;
 }
 
 .steps__list h3 {
@@ -881,7 +868,7 @@
   background:
     var(--paper-noise),
     radial-gradient(ellipse at 40% 30%, rgba(255, 244, 218, 0.45), transparent 65%),
-    #dec28a url("/textures/parchment.jpg") center / cover;
+    #dec28a url("/textures/parchment-v2.jpg") center / cover;
   box-shadow:
     inset 0 0 2.6em rgba(104, 60, 18, 0.62),
     inset 0 0 0.6em rgba(60, 32, 10, 0.5);

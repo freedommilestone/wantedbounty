@@ -14,9 +14,7 @@ import {
   ShieldIcon,
   UploadCloudIcon,
   VerifiedBadge,
-  WalletBadgeIcon,
   WalletIcon,
-  WantedMiniIcon,
 } from "./components/icons";
 import { tornPaper } from "./torn";
 import { useWallet } from "./wallet";
@@ -43,10 +41,10 @@ const PREVIEW_EDGE = tornPaper(23, 20, 1.1);
 const NOTE_EDGE = tornPaper(9, 12, 2.4);
 
 const steps = [
-  { Icon: CompassIcon, title: "1. Upload", text: "Add your photo and choose your details." },
-  { Icon: WantedMiniIcon, title: "2. Customize", text: "Set your name, bounty, title and art style." },
-  { Icon: WalletBadgeIcon, title: "3. Pay with BERI", text: `Connect your wallet and confirm the ${FEE} BERI fee.` },
-  { Icon: WantedMiniIcon, title: "4. Get your poster", text: "Receive your One Piece–style wanted poster and share it with the community." },
+  { icon: "/icons/step-compass.jpg", title: "1. Upload", text: "Add your photo and choose your details." },
+  { icon: "/icons/step-wanted.jpg", title: "2. Customize", text: "Set your name, bounty, title and art style." },
+  { icon: "/icons/step-wallet.jpg", title: "3. Pay with BERI", text: `Connect your wallet and confirm the ${FEE} BERI fee.` },
+  { icon: "/icons/step-poster.jpg", title: "4. Get your poster", text: "Receive your One Piece–style wanted poster and share it with the community." },
 ];
 
 export function CreatePosterPage() {
@@ -379,9 +377,9 @@ export function CreatePosterPage() {
             <h2 className="steps__ribbon">How It Works</h2>
             <div className="steps__row">
               <ol className="steps__list">
-                {steps.map(({ Icon, title: stepTitle, text }) => (
+                {steps.map(({ icon, title: stepTitle, text }) => (
                   <li key={stepTitle}>
-                    <Icon className="steps__icon" />
+                    <img className="steps__icon" src={icon} alt="" />
                     <h3>{stepTitle}</h3>
                     <p>{text}</p>
                   </li>

@@ -18,7 +18,7 @@ import {
   SkullIcon,
   StrawHatIcon,
 } from "./components/icons";
-import { navigate, usePath } from "./router";
+import { Link, usePath } from "./router";
 import { tornEdges, tornPaper } from "./torn";
 import { shortAddress, useWallet, WalletProvider, type BeriHoldings } from "./wallet";
 import "./App.css";
@@ -113,8 +113,6 @@ function HoldingsStatus() {
 function HomePage() {
   const { address, holdings, isHolder } = useWallet();
 
-  const startPoster = () => navigate("/create");
-
   return (
     <>
       <SiteHeader active="home" />
@@ -136,11 +134,11 @@ function HomePage() {
                 for the BERI community.
               </p>
               <div className="cta-shadow">
-                <button className="cta" type="button" style={{ clipPath: CTA_EDGE }} onClick={startPoster}>
+                <Link className="cta" href="/create" style={{ clipPath: CTA_EDGE }}>
                   <EditIcon />
                   {isHolder ? "Edit your poster" : "Create your poster"}
                   <ArrowRight />
-                </button>
+                </Link>
               </div>
               <HoldingsStatus />
               <div className="hero__beri">
