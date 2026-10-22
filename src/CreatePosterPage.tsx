@@ -22,23 +22,31 @@ import "./CreatePosterPage.css";
 
 const FEE = POSTER_FEE;
 const MAX_UPLOAD_BYTES = 10 * 1024 * 1024;
-const PLACEHOLDER_BOUNTY = "1,500,000,000";
-const DEFAULT_PORTRAIT = "/portraits/hero.jpg";
+const PLACEHOLDER_BOUNTY = "1,250,000";
+const DEFAULT_PORTRAIT = "/portraits/create-captain.jpg";
 
 const TITLES = ["Captain", "First Mate", "Navigator", "Swordsman", "Sniper", "Cook", "Doctor", "Shipwright", "Musician"];
 
 const ART_STYLES = [
-  { id: "classic", label: "Classic Ink", sample: "/portraits/hero.jpg" },
+  { id: "classic", label: "Classic Ink", sample: "/portraits/create-captain.jpg" },
   { id: "golden", label: "Golden Age", sample: "/portraits/navigator.jpg" },
   { id: "storm", label: "Storm-Worn", sample: "/portraits/swordsman.jpg" },
 ] as const;
 
 type ArtStyle = (typeof ART_STYLES)[number]["id"];
 
-const BANNER_EDGE = tornPaper(41, 18, 2.6);
-const FORM_EDGE = tornPaper(17, 22, 0.9);
-const PREVIEW_EDGE = tornPaper(23, 20, 1.1);
-const NOTE_EDGE = tornPaper(9, 12, 2.4);
+// Fine irregular tears follow the reference's tapered banner silhouette.
+const bannerOutline = [[0, 8], [4, 5], [42, 1], [43, 12], [58, 14], [63, 19], [80, 24], [85, 29], [98, 34], [99, 48], [96, 59], [82, 64], [79, 76], [68, 83], [60, 94], [34, 96], [15, 99], [4, 94], [2, 72]];
+const BANNER_EDGE = `polygon(${bannerOutline.flatMap(([x, y], index) => {
+  const [nx, ny] = bannerOutline[(index + 1) % bannerOutline.length];
+  return Array.from({ length: 10 }, (_, step) => {
+    const jitter = Math.sin(index * 71 + step * 43) * .45;
+    return `${x + (nx - x) * step / 10 + jitter}% ${y + (ny - y) * step / 10 + jitter}%`;
+  });
+}).join(",")})`;
+const FORM_EDGE = tornPaper(17, 170, 0.7);
+const PREVIEW_EDGE = tornPaper(23, 170, 0.8);
+const NOTE_EDGE = tornPaper(9, 70, 1.5);
 
 const steps = [
   { icon: "/icons/step-compass.jpg", title: "1. Upload", text: "Add your photo and choose your details." },

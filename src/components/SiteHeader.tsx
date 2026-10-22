@@ -13,7 +13,7 @@ export function SiteHeader({ active }: { active: Page }) {
   ];
 
   return (
-    <header className="site-header">
+    <header className={`site-header ${active === "create" ? "site-header--create" : ""}`}>
       <div className="container site-header__inner">
         <Link className="brand" href="/">
           <HelmLogo className="brand__logo" />
