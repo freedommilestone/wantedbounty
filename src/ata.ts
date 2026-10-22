@@ -38,8 +38,9 @@ function concat(parts: Uint8Array[]): Uint8Array {
   return out;
 }
 
-function decodeBase58(value: string): Uint8Array {
+export function decodeBase58(value: string): Uint8Array {
   if (!/^[1-9A-HJ-NP-Za-km-z]+$/.test(value)) throw new Error("Invalid Solana address.");
+  if (/^1+$/.test(value)) return new Uint8Array(value.length);
   const bytes = [0];
   for (const char of value) {
     let carry = ALPHABET.indexOf(char);
@@ -57,7 +58,7 @@ function decodeBase58(value: string): Uint8Array {
   return Uint8Array.from(bytes.reverse());
 }
 
-function encodeBase58(bytes: Uint8Array): string {
+export function encodeBase58(bytes: Uint8Array): string {
   let zeroes = 0;
   while (zeroes < bytes.length && bytes[zeroes] === 0) zeroes += 1;
   const digits = [0];

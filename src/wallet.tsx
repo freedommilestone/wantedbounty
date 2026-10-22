@@ -1,5 +1,6 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState, type ReactNode } from "react";
-import { associatedTokenAddress } from "./ata";
+import { associatedTokenAddress, encodeBase58 } from "./ata";
+import { buildBeriTransfer } from "./payment";
 
 const STORAGE_KEY = "wantedbounty:wallet";
 const LEGACY_STORAGE_KEY = "wantedbounty:phantom";
@@ -56,6 +57,12 @@ interface StandardDisconnect {
   disconnect(): Promise<void>;
 }
 
+interface StandardSignAndSend {
+  signAndSendTransaction(
+    ...inputs: { account: unknown; chain: string; transaction: Uint8Array }[]
+  ): Promise<{ signature: Uint8Array }[]>;
+}
+
 interface StandardEvents {
   on(event: "change", listener: (properties: { accounts?: readonly SolanaAccount[] }) => void): () => void;
 }
@@ -99,6 +106,8 @@ interface WalletContextValue {
   holdings: BeriHoldings;
   isHolder: boolean;
   refreshHoldings: () => void;
+  /** Sends `amount` whole BERI to the treasury and resolves with the transaction signature once confirmed. */
+  payBeri: (amount: number, onSent?: (signature: string) => void) => Promise<string>;
 }
 
 const WalletContext = createContext<WalletContextValue | null>(null);
@@ -158,6 +167,32 @@ function hasMetaMaskExtension() {
 
 function isMetaMaskSolana(wallet: SolanaStandardWallet) {
   return wallet.name === "MetaMask" && wallet.chains.some((chain) => chain.startsWith("solana:"));
+}
+
+function isPhantomSolana(wallet: SolanaStandardWallet) {
+  return wallet.name === "Phantom" && wallet.chains.some((chain) => chain.startsWith("solana:"));
+}
+
+const CONFIRM_TIMEOUT_MS = 75_000;
+
+async function waitForConfirmation(signature: string) {
+  const deadline = Date.now() + CONFIRM_TIMEOUT_MS;
+  while (Date.now() < deadline) {
+    await new Promise((resolve) => window.setTimeout(resolve, 1500));
+    try {
+      const { value } = await rpc<{ value: ({ err: unknown; confirmationStatus?: string } | null)[] }>(
+        "getSignatureStatuses",
+        [[signature], { searchTransactionHistory: true }],
+      );
+      const status = value?.[0];
+      if (status?.err) throw new Error("The payment failed on the Solana network. Nothing was charged.");
+      if (status && (status.confirmationStatus === "confirmed" || status.confirmationStatus === "finalized")) return;
+    } catch (err) {
+      if (err instanceof Error && /failed on the Solana network/.test(err.message)) throw err;
+      /* transient RPC hiccup, keep polling */
+    }
+  }
+  throw new Error("The payment hasn't confirmed yet. Check your wallet's activity before trying again.");
 }
 
 function savedWallet(): WalletKind | null {
@@ -345,6 +380,7 @@ export function WalletProvider({ children }: { children: ReactNode }) {
   const [holdings, setHoldings] = useState<BeriHoldings>({ state: "idle" });
   const [scanNonce, setScanNonce] = useState(0);
   const walletRef = useRef<WalletKind | null>(null);
+  const phantomStandard = useRef<SolanaStandardWallet | null>(null);
   const restoreAttempted = useRef(false);
 
   const reset = useCallback(() => {
@@ -374,6 +410,7 @@ export function WalletProvider({ children }: { children: ReactNode }) {
     const api = {
       register(next: SolanaStandardWallet) {
         if (isMetaMaskSolana(next)) setMetamask(next);
+        if (isPhantomSolana(next)) phantomStandard.current = next;
       },
     };
     const onRegister = (event: WalletStandardRegisterEvent) => {
@@ -533,6 +570,48 @@ export function WalletProvider({ children }: { children: ReactNode }) {
     reset();
   }, [metamask, reset]);
 
+  const payBeri = useCallback(
+    async (amount: number, onSent?: (signature: string) => void) => {
+      const kind = walletRef.current;
+      const owner = address;
+      if (!kind || !owner) throw new Error("Connect your wallet first.");
+      const walletName = kind === "phantom" ? "Phantom" : "MetaMask";
+      const standard = kind === "metamask" ? metamask : phantomStandard.current;
+      const signer = standard?.features["solana:signAndSendTransaction"] as StandardSignAndSend | undefined;
+      if (!standard || !signer) {
+        throw new Error(`${walletName} can't send this payment. Update the wallet and try again.`);
+      }
+
+      try {
+        const { transaction } = await buildBeriTransfer(rpc, { owner, mint: BERI_MINT, amount });
+
+        let account = standard.accounts.find((item) => item.address === owner);
+        if (!account) {
+          const connectFeature = standard.features["standard:connect"] as StandardConnect | undefined;
+          const result = await connectFeature?.connect();
+          account = result?.accounts.find((item) => item.address === owner);
+        }
+        if (!account) throw new Error(`${walletName} isn't using the connected account. Reconnect and try again.`);
+
+        const [sent] = await signer.signAndSendTransaction({ account, chain: "solana:mainnet", transaction });
+        const signature = encodeBase58(sent.signature);
+        onSent?.(signature);
+        await waitForConfirmation(signature);
+        setScanNonce((nonce) => nonce + 1);
+        return signature;
+      } catch (err) {
+        const code =
+          typeof err === "object" && err && "code" in err ? Number((err as { code: unknown }).code) : Number.NaN;
+        const message = err instanceof Error ? err.message : "";
+        if (code === 4001 || /reject|denied|cancel|declin/i.test(message)) {
+          throw new Error("Payment cancelled. Nothing was charged.");
+        }
+        throw err instanceof Error ? err : new Error("The payment couldn't be sent.");
+      }
+    },
+    [address, metamask],
+  );
+
   const value = useMemo<WalletContextValue>(
     () => ({
       modalOpen,
@@ -554,6 +633,7 @@ export function WalletProvider({ children }: { children: ReactNode }) {
       holdings,
       isHolder: holdings.state === "ready" && holdings.amount > 0,
       refreshHoldings: () => setScanNonce((nonce) => nonce + 1),
+      payBeri,
     }),
     [
       modalOpen,
@@ -568,6 +648,7 @@ export function WalletProvider({ children }: { children: ReactNode }) {
       status,
       error,
       holdings,
+      payBeri,
     ],
   );
 

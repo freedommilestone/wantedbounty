@@ -1,6 +1,22 @@
 import { useEffect, useRef, useState } from "react";
 import { shortAddress, useWallet, type BeriHoldings } from "../wallet";
-import { CheckIcon, ChevronDown, CopyIcon, LogoutIcon, MetaMaskIcon, PhantomIcon, RefreshIcon, WalletIcon } from "./icons";
+import {
+  CheckIcon,
+  ChevronDown,
+  CopyIcon,
+  LogoutIcon,
+  MetaMaskIcon,
+  PhantomIcon,
+  RefreshIcon,
+  VerifiedBadge,
+  WalletIcon,
+} from "./icons";
+
+function connectedLabel(holdings: BeriHoldings, address: string) {
+  if (holdings.state === "ready") return `฿ ${holdings.display} BERI`;
+  if (holdings.state === "loading") return "Scanning…";
+  return shortAddress(address);
+}
 
 function holdingsLabel(holdings: BeriHoldings) {
   switch (holdings.state) {
@@ -67,8 +83,15 @@ export function WalletButton() {
         aria-expanded={menuOpen}
         onClick={() => setMenuOpen((open) => !open)}
       >
-        <span className="wallet-dot" />
-        {shortAddress(address)}
+        <span className="wallet-btn__icon">
+          <WalletIcon />
+        </span>
+        <span className="wallet-btn__text">
+          <small>
+            <VerifiedBadge /> Wallet Connected
+          </small>
+          <strong>{connectedLabel(holdings, address)}</strong>
+        </span>
         <ChevronDown />
       </button>
 

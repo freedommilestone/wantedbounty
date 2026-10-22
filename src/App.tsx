@@ -1,5 +1,6 @@
 import { useRef, type ReactNode } from "react";
-import { WalletButton } from "./components/WalletButton";
+import { CreatePosterPage } from "./CreatePosterPage";
+import { SiteHeader } from "./components/SiteHeader";
 import { WalletModal } from "./components/WalletModal";
 import { WantedPoster } from "./components/WantedPoster";
 import {
@@ -17,6 +18,7 @@ import {
   SkullIcon,
   StrawHatIcon,
 } from "./components/icons";
+import { navigate, usePath } from "./router";
 import { tornEdges, tornPaper } from "./torn";
 import { shortAddress, useWallet, WalletProvider, type BeriHoldings } from "./wallet";
 import "./App.css";
@@ -42,9 +44,12 @@ const fleet = [
 ];
 
 export default function App() {
+  const path = usePath();
+  const page = path.replace(/\/+$/, "") === "/create" ? <CreatePosterPage /> : <HomePage />;
+
   return (
     <WalletProvider>
-      <HomePage />
+      {page}
       <WalletModal />
     </WalletProvider>
   );
@@ -106,37 +111,13 @@ function HoldingsStatus() {
 }
 
 function HomePage() {
-  const { address, holdings, isHolder, openModal } = useWallet();
+  const { address, holdings, isHolder } = useWallet();
 
-  const startPoster = () => {
-    if (address) document.getElementById("top")?.scrollIntoView({ behavior: "smooth" });
-    else openModal();
-  };
+  const startPoster = () => navigate("/create");
 
   return (
     <>
-      <header className="site-header">
-        <div className="container site-header__inner">
-          <a className="brand" href="#top">
-            <HelmLogo className="brand__logo" />
-            <span>
-              <span className="brand__name">Wanted Bounty</span>
-              <span className="brand__tag">$BERI • Community • Legendary</span>
-            </span>
-          </a>
-          <nav className="nav" aria-label="Main">
-            <a className="is-active" href="#top" aria-current="page">
-              Home
-            </a>
-            <button type="button" onClick={startPoster}>
-              Create Poster
-            </button>
-            <a href="#explore">Explore</a>
-            <a href="#how-it-works">How It Works</a>
-          </nav>
-          <WalletButton />
-        </div>
-      </header>
+      <SiteHeader active="home" />
 
       <main>
         <section className="hero" id="top">

@@ -202,6 +202,74 @@ export const LogoutIcon = (p: IconProps) => (
   <Stroke {...p} size={17} d="M14 4h4.5A1.5 1.5 0 0 1 20 5.5v13a1.5 1.5 0 0 1-1.5 1.5H14M10 16l-4-4 4-4M6 12h10" />
 );
 export const CloseIcon = (p: IconProps) => <Stroke {...p} size={20} d="M6 6l12 12M18 6 6 18" />;
+export const EyeIcon = (p: IconProps) => (
+  <Stroke {...p} d="M2.5 12S6 5.5 12 5.5 21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12ZM12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z" />
+);
+export const UploadCloudIcon = (p: IconProps) => (
+  <Stroke {...p} size={30} d="M7.5 18.5H6.8a4.3 4.3 0 0 1-.6-8.6 6 6 0 0 1 11.6 1.3 3.7 3.7 0 0 1 0 7.3h-1.3M12 20v-8.5M8.8 14.6 12 11.4l3.2 3.2" />
+);
+export const ShieldIcon = (p: IconProps) => (
+  <Stroke {...p} size={18} d="M12 3 4.5 6v5.5c0 4.6 3.1 8.1 7.5 9.5 4.4-1.4 7.5-4.9 7.5-9.5V6L12 3ZM8.8 12l2.2 2.2 4.3-4.4" />
+);
+export const LockIcon = (p: IconProps) => (
+  <Stroke {...p} size={26} d="M6.5 10.5h11a1.5 1.5 0 0 1 1.5 1.5v7a1.5 1.5 0 0 1-1.5 1.5h-11A1.5 1.5 0 0 1 5 19v-7a1.5 1.5 0 0 1 1.5-1.5ZM8.5 10.5V7.8a3.5 3.5 0 0 1 7 0v2.7M12 14.5v2" />
+);
+
+export function VerifiedBadge({ className }: IconProps) {
+  return (
+    <svg className={className} viewBox="0 0 16 16" width="13" height="13" aria-hidden="true">
+      <circle cx="8" cy="8" r="7.5" fill="#2f8a46" />
+      <path d="M4.6 8.2 7 10.4l4.4-4.6" fill="none" stroke="#fff" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  );
+}
+
+export function BeriCoin({ className }: IconProps) {
+  return (
+    <svg className={className} viewBox="0 0 32 32" aria-hidden="true">
+      <circle cx="16" cy="16" r="15" fill="#2a1a0e" />
+      <circle cx="16" cy="16" r="12.2" fill="none" stroke="#d6a04a" strokeWidth="1.4" />
+      <text
+        x="16"
+        y="22.5"
+        textAnchor="middle"
+        fontFamily="'Playfair Display', Georgia, serif"
+        fontWeight="900"
+        fontSize="18"
+        fill="#ebc57f"
+      >
+        ฿
+      </text>
+    </svg>
+  );
+}
+
+export function WantedMiniIcon({ className }: IconProps) {
+  return (
+    <svg className={className} viewBox="0 0 48 60" aria-hidden="true">
+      <path d="M4 3h40l-2 6 2 6-2 8 2 7-2 8 2 7-2 7 2 6H4l2-6-2-7 2-7-2-8 2-7-2-8 2-6Z" fill="#e8d1a0" stroke="currentColor" strokeWidth="2" />
+      <text x="24" y="15" textAnchor="middle" fontFamily="'Playfair Display', serif" fontWeight="900" fontSize="9.5" fill="currentColor">
+        WANTED
+      </text>
+      <rect x="11" y="19" width="26" height="20" fill="none" stroke="currentColor" strokeWidth="1.8" />
+      <circle cx="24" cy="26.5" r="4" fill="currentColor" />
+      <path d="M16 39c1.5-5 5-7 8-7s6.5 2 8 7Z" fill="currentColor" />
+      <path d="M12 45h24M15 50h18" stroke="currentColor" strokeWidth="2" />
+    </svg>
+  );
+}
+
+export function WalletBadgeIcon({ className }: IconProps) {
+  return (
+    <svg className={className} viewBox="0 0 48 48" aria-hidden="true">
+      <circle cx="24" cy="24" r="21" fill="none" stroke="currentColor" strokeWidth="2.2" />
+      <g fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinejoin="round">
+        <path d="M13 18.5h20a2 2 0 0 1 2 2V32a2 2 0 0 1-2 2H15a2 2 0 0 1-2-2V17a2.5 2.5 0 0 1 2.5-2.5H31" />
+        <path d="M35 23h-5.5a2.5 2.5 0 0 0 0 5H35Z" />
+      </g>
+    </svg>
+  );
+}
 export const RefreshIcon = (p: IconProps) => (
   <Stroke {...p} size={18} d="M20 11a8 8 0 0 0-14.6-4.5L4 8M4 4v4h4M4 13a8 8 0 0 0 14.6 4.5L20 16M20 20v-4h-4" />
 );

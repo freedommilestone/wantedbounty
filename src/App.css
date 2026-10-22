@@ -118,7 +118,39 @@
 }
 
 .wallet-btn--connected {
+  gap: 12px;
+  padding: 7px 14px 7px 8px;
+  border-radius: 12px;
   font-variant-numeric: tabular-nums;
+}
+
+.wallet-btn__icon {
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border: 1px solid rgba(42, 26, 14, 0.35);
+  border-radius: 8px;
+  background: rgba(255, 248, 230, 0.5);
+}
+
+.wallet-btn__text {
+  display: grid;
+  text-align: left;
+  line-height: 1.15;
+}
+
+.wallet-btn__text small {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--ink-soft);
+}
+
+.wallet-btn__text strong {
+  font-size: 0.98rem;
 }
 
 .wallet-dot {
@@ -498,7 +530,7 @@
 .poster__bounty {
   font-family: "Playfair Display", serif;
   font-weight: 800;
-  font-size: 7.8cqw;
+  font-size: var(--bounty-size, 7.8cqw);
   line-height: 1;
   letter-spacing: 0.01em;
   white-space: nowrap;
