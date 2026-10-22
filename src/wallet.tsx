@@ -1,8 +1,9 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState, type ReactNode } from "react";
+import { associatedTokenAddress } from "./ata";
 
 const STORAGE_KEY = "wantedbounty:wallet";
 const LEGACY_STORAGE_KEY = "wantedbounty:phantom";
-const BERI_MINT = (import.meta.env.VITE_BERI_MINT ?? "GbYRS9bPStDoDCHtgc4PpuguaMAhux5s3qA2LAgxFXzt").trim();
+const BERI_MINT = import.meta.env.VITE_BERI_MINT?.trim() || "GbYRS9bPStDoDCHtgc4PpuguaMAhux5s3qA2LAgxFXzt";
 const TOKEN_PROGRAMS = [
   "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
   "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb",
@@ -17,17 +18,22 @@ export type BeriHoldings =
   | { state: "idle" }
   | { state: "loading" }
   | { state: "unconfigured" }
-  | { state: "error" }
+  | { state: "error"; message: string }
   | { state: "ready"; amount: number; display: string };
+
+interface SolanaPublicKey {
+  toString(): string;
+  toBase58?: () => string;
+}
 
 interface PhantomSolanaProvider {
   isPhantom?: boolean;
-  publicKey: { toString(): string } | null;
-  connect(options?: { onlyIfTrusted?: boolean }): Promise<{ publicKey: { toString(): string } }>;
+  publicKey: SolanaPublicKey | null;
+  connect(options?: { onlyIfTrusted?: boolean }): Promise<{ publicKey: SolanaPublicKey }>;
   disconnect(): Promise<void>;
-  on(event: "accountChanged", handler: (publicKey: { toString(): string } | null) => void): void;
+  on(event: "accountChanged", handler: (publicKey: SolanaPublicKey | null) => void): void;
   on(event: "disconnect", handler: () => void): void;
-  off(event: "accountChanged", handler: (publicKey: { toString(): string } | null) => void): void;
+  off(event: "accountChanged", handler: (publicKey: SolanaPublicKey | null) => void): void;
   off(event: "disconnect", handler: () => void): void;
 }
 
@@ -126,7 +132,15 @@ export function shortAddress(address: string) {
 function rpcUrl() {
   const configured = import.meta.env.VITE_SOLANA_RPC_URL?.trim();
   if (configured) return configured;
-  return import.meta.env.DEV ? "/solana-rpc" : "https://api.mainnet-beta.solana.com";
+  const host = typeof window !== "undefined" ? window.location.hostname : "";
+  if (import.meta.env.DEV || host === "localhost" || host === "127.0.0.1") return "/solana-rpc";
+  return "https://api.mainnet-beta.solana.com";
+}
+
+function readAddress(publicKey: SolanaPublicKey | string | null | undefined): string | null {
+  if (!publicKey) return null;
+  const value = typeof publicKey === "string" ? publicKey : (publicKey.toBase58?.() ?? publicKey.toString());
+  return /^[1-9A-HJ-NP-Za-km-z]{32,44}$/.test(value) ? value : null;
 }
 
 function getPhantom(): PhantomSolanaProvider | null {
@@ -200,8 +214,9 @@ async function connectPhantom() {
   const phantom = getPhantom();
   if (!phantom) throw new Error("Phantom isn't installed.");
   const { publicKey } = await phantom.connect();
-  if (!publicKey) throw new Error("Phantom didn't share an account.");
-  return publicKey.toString();
+  const address = readAddress(publicKey);
+  if (!address) throw new Error("Phantom didn't share an account.");
+  return address;
 }
 
 async function connectMetaMask(metamask: SolanaStandardWallet | null) {
@@ -226,60 +241,86 @@ function formatRaw(raw: bigint, decimals: number) {
   return `${wholeText}.${fractionText}`;
 }
 
+interface TokenInfo {
+  mint?: string;
+  tokenAmount?: { amount?: string; decimals?: number };
+}
+
 interface ParsedTokenAccount {
-  account?: {
-    data?: {
-      parsed?: {
-        info?: {
-          mint?: string;
-          tokenAmount?: { amount?: string; decimals?: number };
-        };
-      };
-    };
-  };
+  pubkey?: string;
+  data?: { parsed?: { info?: TokenInfo } };
+  account?: { data?: { parsed?: { info?: TokenInfo } } };
 }
 
 async function rpc<T>(method: string, params: unknown[]): Promise<T> {
-  const response = await fetch(rpcUrl(), {
-    method: "POST",
-    headers: { "content-type": "application/json" },
-    body: JSON.stringify({ jsonrpc: "2.0", id: 1, method, params }),
-  });
-  if (!response.ok) throw new Error(`Solana RPC responded ${response.status}.`);
-  const body = (await response.json()) as { result?: T; error?: { message?: string } };
-  if (body.error) throw new Error(body.error.message || "Solana RPC error.");
-  return body.result as T;
+  let lastError: Error | null = null;
+  for (let attempt = 0; attempt < 2; attempt += 1) {
+    const response = await fetch(rpcUrl(), {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({ jsonrpc: "2.0", id: 1, method, params }),
+    });
+    if (response.status === 429 || response.status === 503) {
+      lastError = new Error(`Solana RPC responded ${response.status}.`);
+      await new Promise((resolve) => window.setTimeout(resolve, 500));
+      continue;
+    }
+    if (!response.ok) throw new Error(`Solana RPC responded ${response.status}.`);
+    const body = (await response.json()) as { result?: T; error?: { message?: string } };
+    if (body.error) throw new Error(body.error.message || "Solana RPC error.");
+    return body.result as T;
+  }
+  throw lastError ?? new Error("Solana RPC error.");
+}
+
+interface TokenBalance {
+  raw: bigint;
+  decimals: number;
+}
+
+function balanceFromInfo(info: TokenInfo | undefined): TokenBalance | null {
+  if (!info || info.mint !== BERI_MINT || !info.tokenAmount?.amount) return null;
+  return {
+    raw: BigInt(info.tokenAmount.amount),
+    decimals: typeof info.tokenAmount.decimals === "number" ? info.tokenAmount.decimals : 6,
+  };
 }
 
 async function fetchBeriHoldings(owner: string): Promise<BeriHoldings> {
   if (!BERI_MINT) return { state: "unconfigured" };
 
-  const settled = await Promise.allSettled(
-    TOKEN_PROGRAMS.map((programId) =>
-      rpc<{ value: ParsedTokenAccount[] }>("getTokenAccountsByOwner", [
-        owner,
-        { programId },
-        { encoding: "jsonParsed" },
-      ]),
-    ),
-  );
+  const atas = TOKEN_PROGRAMS.map((programId) => associatedTokenAddress(owner, programId, BERI_MINT));
+  const settled = await Promise.allSettled([
+    rpc<{ value: (ParsedTokenAccount | null)[] }>("getMultipleAccounts", [atas, { encoding: "jsonParsed" }]),
+    rpc<{ value: ParsedTokenAccount[] }>("getTokenAccountsByOwner", [owner, { mint: BERI_MINT }, { encoding: "jsonParsed" }]),
+  ]);
 
   if (settled.every((result) => result.status === "rejected")) {
-    const reason = settled[0].status === "rejected" ? settled[0].reason : null;
-    throw reason instanceof Error ? reason : new Error("Couldn't read token accounts.");
+    const reason = settled.find((result) => result.status === "rejected");
+    const error = reason?.status === "rejected" ? reason.reason : null;
+    throw error instanceof Error ? error : new Error("Couldn't read token accounts.");
+  }
+
+  const balances = new Map<string, TokenBalance>();
+  const accounts = settled[0].status === "fulfilled" ? settled[0].value?.value : undefined;
+  accounts?.forEach((account, index) => {
+    const balance = balanceFromInfo(account?.data?.parsed?.info);
+    const address = atas[index];
+    if (balance && address) balances.set(address, balance);
+  });
+
+  if (settled[1].status === "fulfilled") {
+    for (const item of settled[1].value?.value ?? []) {
+      const balance = balanceFromInfo(item.account?.data?.parsed?.info);
+      if (balance && item.pubkey) balances.set(item.pubkey, balance);
+    }
   }
 
   let raw = 0n;
   let decimals = 6;
-  for (const result of settled) {
-    if (result.status !== "fulfilled") continue;
-    for (const item of result.value?.value ?? []) {
-      const info = item.account?.data?.parsed?.info;
-      if (info?.mint !== BERI_MINT) continue;
-      const amount = info.tokenAmount?.amount;
-      if (amount) raw += BigInt(amount);
-      if (typeof info.tokenAmount?.decimals === "number") decimals = info.tokenAmount.decimals;
-    }
+  for (const balance of balances.values()) {
+    raw += balance.raw;
+    decimals = balance.decimals;
   }
 
   const ui = Number(raw) / 10 ** decimals;
@@ -358,9 +399,10 @@ export function WalletProvider({ children }: { children: ReactNode }) {
       try {
         if (kind === "phantom" && phantom) {
           const { publicKey } = await phantom.connect({ onlyIfTrusted: true });
-          if (cancelled || !publicKey) return;
+          const restored = readAddress(publicKey);
+          if (cancelled || !restored) return;
           walletRef.current = "phantom";
-          setAddress(publicKey.toString());
+          setAddress(restored);
           setWallet("phantom");
           setStatus("connected");
           rememberWallet("phantom");
@@ -388,10 +430,11 @@ export function WalletProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     if (!phantom || wallet !== "phantom") return;
-    const onAccount = (publicKey: { toString(): string } | null) => {
+    const onAccount = (publicKey: SolanaPublicKey | null) => {
       if (walletRef.current !== "phantom") return;
-      if (publicKey) setAddress(publicKey.toString());
-      else reset();
+      const next = readAddress(publicKey);
+      if (next) setAddress(next);
+      else if (!publicKey) reset();
     };
     const onDisconnect = () => {
       if (walletRef.current === "phantom") reset();
@@ -427,8 +470,13 @@ export function WalletProvider({ children }: { children: ReactNode }) {
       .then((next) => {
         if (!cancelled) setHoldings(next);
       })
-      .catch(() => {
-        if (!cancelled) setHoldings({ state: "error" });
+      .catch((err: unknown) => {
+        if (!cancelled) {
+          setHoldings({
+            state: "error",
+            message: err instanceof Error ? err.message : "The Solana network didn't respond.",
+          });
+        }
       });
     return () => {
       cancelled = true;

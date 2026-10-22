@@ -86,7 +86,7 @@ function HoldingsStatus() {
     case "error":
       message = (
         <>
-          Couldn’t read your $BERI balance.{" "}
+          Couldn’t read your $BERI balance. {holdings.message}{" "}
           <button type="button" onClick={refreshHoldings}>
             Try again
           </button>
