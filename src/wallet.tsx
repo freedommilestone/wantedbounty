@@ -133,8 +133,9 @@ function rpcUrl() {
   const configured = import.meta.env.VITE_SOLANA_RPC_URL?.trim();
   if (configured) return configured;
   const host = typeof window !== "undefined" ? window.location.hostname : "";
+  // Local Vite strips the browser Origin header. The live site uses the same-origin proxy in /api.
   if (import.meta.env.DEV || host === "localhost" || host === "127.0.0.1") return "/solana-rpc";
-  return "https://api.mainnet-beta.solana.com";
+  return "/api/solana-rpc";
 }
 
 function readAddress(publicKey: SolanaPublicKey | string | null | undefined): string | null {
