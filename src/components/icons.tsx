@@ -23,24 +23,7 @@ export function ShipWheel({ className, children }: IconProps & { children?: Reac
 }
 
 export function HelmLogo({ className }: IconProps) {
-  return (
-    <ShipWheel className={className}>
-      <text
-        x="32"
-        y="45"
-        textAnchor="middle"
-        fontFamily="'Playfair Display', Georgia, serif"
-        fontWeight="900"
-        fontSize="38"
-        fill="currentColor"
-        stroke="#120c07"
-        strokeWidth="2.4"
-        paintOrder="stroke"
-      >
-        ฿
-      </text>
-    </ShipWheel>
-  );
+  return <img className={className} src="/brand/wanted-bounty-logo.png" alt="Wanted Bounty" style={{ objectFit: "contain" }} />;
 }
 
 export function BeriTarget({ className }: IconProps) {

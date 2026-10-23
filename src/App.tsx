@@ -22,9 +22,10 @@ import { Link, usePath } from "./router";
 import { tornEdges, tornPaper } from "./torn";
 import { shortAddress, useWallet, WalletProvider, type BeriHoldings } from "./wallet";
 import "./App.css";
+import "./HomePage.css";
 
-const FEATURES_EDGE = tornEdges(11, { top: 16, bottom: 12 });
-const FLEET_EDGE = tornEdges(29, { top: 14, bottom: 18 });
+const FEATURES_EDGE = tornEdges(11, { top: 8, bottom: 7, steps: 220 });
+const FLEET_EDGE = tornEdges(29, { top: 7, bottom: 8, steps: 220 });
 const CTA_EDGE = tornPaper(5, 22, 1.4);
 
 const features = [
@@ -114,7 +115,7 @@ function HomePage() {
   const { address, holdings, isHolder } = useWallet();
 
   return (
-    <>
+    <div className="home-page">
       <SiteHeader active="home" />
 
       <main>
@@ -152,9 +153,10 @@ function HomePage() {
               name={isHolder && address ? shortAddress(address) : "Your Name"}
               nameIsAddress={isHolder}
               bounty={heroBounty(isHolder, holdings)}
-              portrait="/portraits/hero.jpg"
+              portrait="/portraits/create-captain.jpg"
               seed={7}
             />
+            <div className="home-motto" aria-hidden="true"><span>Every legend<br />has a price.</span><CompassRose /></div>
           </div>
         </section>
 
@@ -199,7 +201,7 @@ function HomePage() {
         <p className="site-footer__motto">More than a token — a crew</p>
         <p className="site-footer__ticker">$BERI</p>
       </footer>
-    </>
+    </div>
   );
 }
 

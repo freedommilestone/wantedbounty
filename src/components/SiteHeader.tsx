@@ -13,12 +13,12 @@ export function SiteHeader({ active }: { active: Page }) {
   ];
 
   return (
-    <header className={`site-header ${active === "create" ? "site-header--create" : ""}`}>
+    <header className={`site-header ${active === "create" ? "site-header--create" : "site-header--home"}`}>
       <div className="container site-header__inner">
         <Link className="brand" href="/">
           <HelmLogo className="brand__logo" />
           <span>
-            <span className="brand__name">Wanted Bounty</span>
+            <span className="brand__name">{active === "home" ? "Beri Bounty" : "Wanted Bounty"}</span>
             <span className="brand__tag">$BERI • Community • Legendary</span>
           </span>
         </Link>
