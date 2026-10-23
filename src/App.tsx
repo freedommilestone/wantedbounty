@@ -1,4 +1,5 @@
 import { useRef, type ReactNode } from "react";
+import { ReferenceHome } from "./ReferenceHome";
 import { CreatePosterPage } from "./CreatePosterPage";
 import { SiteHeader } from "./components/SiteHeader";
 import { WalletModal } from "./components/WalletModal";
@@ -46,7 +47,7 @@ const fleet = [
 
 export default function App() {
   const path = usePath();
-  const page = path.replace(/\/+$/, "") === "/create" ? <CreatePosterPage /> : <HomePage />;
+  const page = path.replace(/\/+$/, "") === "/create" ? <CreatePosterPage /> : <><ReferenceHome /><HomePage /></>;
 
   return (
     <WalletProvider>
