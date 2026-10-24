@@ -121,3 +121,46 @@
 @media (min-width: 1051px) and (max-width: 1449px) {
   .home-page .hero__poster { width: 335px; margin-top: -15px; margin-bottom: -20px; }
 }
+/* Independent components: selectable text, native controls, and individual art assets. */
+.home-page .fleet__all { border: 0; padding: 0; background: none; font-family: inherit; cursor: pointer; }
+.bounty-card__open { display: block; width: 100%; padding: 0; border: 0; background: none; text-align: inherit; }
+.home-page .carousel--all .carousel__track { grid-auto-flow: row; grid-template-columns: repeat(5,minmax(0,1fr)); overflow: visible; }
+.home-page .carousel--all .carousel__arrow { display: none; }
+.home-gallery { position: fixed; inset: 0; margin: auto; width: min(420px,90vw); max-height: 92vh; overflow: auto; padding: 35px 25px 20px; border: 2px solid #644220; border-radius: 8px; background: #ead0a5; color: #301708; text-align: center; }
+.home-gallery::backdrop { background: #110c08cc; }
+.home-gallery__close { position: absolute; right: 8px; top: 2px; border: 0; background: none; font-size: 30px; }
+.home-gallery__nav { display: flex; justify-content: space-between; align-items: center; gap: 8px; margin: 20px 0; }
+.home-gallery__nav button { padding: 7px; border: 1px solid #70502c; background: #f1ddbb; border-radius: 3px; }
+.home-gallery a { color: inherit; }
+.site-menu-toggle { display: none; }
+@media (max-width: 900px) {
+  .site-menu-toggle { display: block; border: 0; background: transparent; color: inherit; font-size: 24px; padding: 4px; margin-left: auto; }
+  .site-header--create .site-menu-toggle { color: #edd4a4; }
+  .site-header .nav--open { display: flex; position: absolute; left: 0; right: 0; top: 100%; z-index: 50; flex-wrap: wrap; justify-content: center; gap: 20px; padding: 20px; background: #edd5ac; border-block: 1px solid #735331; }
+  .site-header .nav--open a { color: #301708; }
+  .home-page .carousel--all .carousel__track { grid-template-columns: repeat(3,minmax(0,1fr)); }
+}
+@media (max-width: 600px) {
+  .home-page .brand__name { font-size: 17px; }
+  .home-page .brand__logo { width: 34px; }
+  .home-page .site-header__inner { gap: 5px; }
+  .home-page .wallet-btn { padding: 9px; font-size: 11px; }
+  .home-page .carousel--all .carousel__track { grid-template-columns: repeat(2,minmax(0,1fr)); }
+  .home-page .carousel--all { padding-inline: 5px; }
+}
+.home-page .cta, .home-page .wallet-btn {
+  background: url('/textures/button-parchment.png') center / 100% 145% no-repeat;
+  border: 0; box-shadow: none; clip-path: none !important;
+}
+.home-page .cta { min-height: 61px; padding: 17px 28px; }
+.home-page .wallet-btn { min-height: 50px; }
+.home-page .hero__poster .poster__photo { aspect-ratio: 1.4; }
+.home-page .poster__photo img { object-position: center; }
+.home-page .hero__poster .poster__name { font-weight: 700; }
+.home-page .feature__icon { overflow: visible; }
+.home-page .hero__title { letter-spacing: -.055em; }
+.home-page .hero__copy { max-width: 100%; }
+@media (max-width: 600px) {
+  .home-page .wallet-btn { min-height: 40px; }
+  .home-page .cta { padding: 15px 20px; }
+}

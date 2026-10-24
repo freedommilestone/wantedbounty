@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Link } from "../router";
 import { HelmLogo } from "./icons";
 import { WalletButton } from "./WalletButton";
@@ -5,6 +6,7 @@ import { WalletButton } from "./WalletButton";
 type Page = "home" | "create";
 
 export function SiteHeader({ active }: { active: Page }) {
+  const [menuOpen, setMenuOpen] = useState(false);
   const links: { label: string; href: string; page?: Page }[] = [
     { label: "Home", href: "/", page: "home" },
     { label: "Create Poster", href: "/create", page: "create" },
@@ -22,12 +24,14 @@ export function SiteHeader({ active }: { active: Page }) {
             <span className="brand__tag">$BERI • Community • Legendary</span>
           </span>
         </Link>
-        <nav className="nav" aria-label="Main">
+        <button className="site-menu-toggle" type="button" aria-label="Toggle navigation" aria-expanded={menuOpen} aria-controls="site-navigation" onClick={() => setMenuOpen(!menuOpen)}>☰</button>
+        <nav id="site-navigation" className={`nav ${menuOpen ? "nav--open" : ""}`} aria-label="Main">
           {links.map(({ label, href, page }) => {
             const current = page === active;
             return (
               <Link
                 key={label}
+                onClick={() => setMenuOpen(false)}
                 href={href}
                 className={current ? "is-active" : undefined}
                 aria-current={current ? "page" : undefined}

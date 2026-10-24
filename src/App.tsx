@@ -1,5 +1,4 @@
-import { useRef, type ReactNode } from "react";
-import { ReferenceHome } from "./ReferenceHome";
+import { useRef, useState, type ReactNode } from "react";
 import { CreatePosterPage } from "./CreatePosterPage";
 import { SiteHeader } from "./components/SiteHeader";
 import { WalletModal } from "./components/WalletModal";
@@ -10,15 +9,12 @@ import {
   ChevronLeft,
   ChevronRight,
   CliffsArt,
-  CompassIcon,
   CompassRose,
-  DiamondIcon,
   EditIcon,
   HelmLogo,
-  ShipWheel,
   SkullIcon,
-  StrawHatIcon,
 } from "./components/icons";
+import { HomeWheel, HomeCompass, HomeHat, HomeDiamond } from "./components/HomeIcons";
 import { Link, usePath } from "./router";
 import { tornEdges, tornPaper } from "./torn";
 import { shortAddress, useWallet, WalletProvider, type BeriHoldings } from "./wallet";
@@ -30,24 +26,24 @@ const FLEET_EDGE = tornEdges(29, { top: 7, bottom: 8, steps: 220 });
 const CTA_EDGE = tornPaper(5, 22, 1.4);
 
 const features = [
-  { Icon: ShipWheel, title: "Personalize\nyour poster", text: "Add your name, image, bounty and make it yours." },
-  { Icon: StrawHatIcon, title: "BERI holder\nidentity", text: "Show the world you're part of the BERI crew." },
-  { Icon: CompassIcon, title: "Share & explore", text: "Discover other holders' posters and get inspired." },
-  { Icon: DiamondIcon, title: "Build the legend", text: "More posters. More community. Bigger bounties." },
+  { Icon: HomeWheel, title: "Personalize\nyour poster", text: "Add your name, image, bounty and make it yours." },
+  { Icon: HomeHat, title: "BERI holder\nidentity", text: "Show the world you're part of the BERI crew." },
+  { Icon: HomeCompass, title: "Share & explore", text: "Discover other holders' posters and get inspired." },
+  { Icon: HomeDiamond, title: "Build the legend", text: "More posters. More community. Bigger bounties." },
 ];
 
 const fleet = [
-  { name: "Shanks", bounty: "320,000,000", handle: "@shanks", time: "2h ago", portrait: "/portraits/black-tide.jpg" },
-  { name: "Lady Nami", bounty: "950,000,000", handle: "@nami_hodler", time: "5h ago", portrait: "/portraits/navigator.jpg" },
-  { name: "Zoro", bounty: "1,200,000,000", handle: "@santoryu", time: "7h ago", portrait: "/portraits/swordsman.jpg" },
-  { name: "Luffy", bounty: "1,800,000,000", handle: "@strawhat", time: "12h ago", portrait: "/portraits/hero.jpg" },
-  { name: "Robin", bounty: "1,000,000,000", handle: "@robin", time: "1d ago", portrait: "/portraits/ocean-rose.jpg" },
+  { name: "Shanks", bounty: "320,000,000", handle: "@shanks", time: "2h ago", portrait: "/portraits/home-shanks.jpg" },
+  { name: "Lady Nami", bounty: "950,000,000", handle: "@nami_hodler", time: "5h ago", portrait: "/portraits/home-nami.jpg" },
+  { name: "Zoro", bounty: "1,200,000,000", handle: "@santoryu", time: "7h ago", portrait: "/portraits/home-zoro.jpg" },
+  { name: "Luffy", bounty: "1,800,000,000", handle: "@strawhat", time: "12h ago", portrait: "/portraits/home-luffy.jpg" },
+  { name: "Robin", bounty: "1,000,000,000", handle: "@robin", time: "1d ago", portrait: "/portraits/home-robin.jpg" },
   { name: "Red Hawk", bounty: "640,000,000", handle: "@redhawk", time: "1d ago", portrait: "/portraits/red-hawk.jpg" },
 ];
 
 export default function App() {
   const path = usePath();
-  const page = path.replace(/\/+$/, "") === "/create" ? <CreatePosterPage /> : <><ReferenceHome /><HomePage /></>;
+  const page = path.replace(/\/+$/, "") === "/create" ? <CreatePosterPage /> : <HomePage />;
 
   return (
     <WalletProvider>
@@ -114,6 +110,10 @@ function HoldingsStatus() {
 
 function HomePage() {
   const { address, holdings, isHolder } = useWallet();
+  const [showAll, setShowAll] = useState(false);
+  const [selected, setSelected] = useState(0);
+  const galleryRef = useRef<HTMLDialogElement>(null);
+  const openPoster = (index: number) => { setSelected(index); galleryRef.current?.showModal(); };
 
   return (
     <div className="home-page">
@@ -154,7 +154,7 @@ function HomePage() {
               name={isHolder && address ? shortAddress(address) : "Your Name"}
               nameIsAddress={isHolder}
               bounty={heroBounty(isHolder, holdings)}
-              portrait="/portraits/create-captain.jpg"
+              portrait="/portraits/home-luffy.jpg"
               seed={7}
             />
             <div className="home-motto" aria-hidden="true"><span>Every legend<br />has a price.</span><CompassRose /></div>
@@ -185,15 +185,26 @@ function HomePage() {
                     <SkullIcon className="fleet__ornament" />
                   </div>
                 </div>
-                <a className="fleet__all" href="#explore">
-                  View All Posters <ArrowRight />
-                </a>
+                <button className="fleet__all" type="button" onClick={() => setShowAll(!showAll)} aria-expanded={showAll}>
+                  {showAll ? "Show carousel" : "View All Posters"} <ArrowRight />
+                </button>
               </div>
-              <FleetCarousel />
+              <FleetCarousel showAll={showAll} onSelect={openPoster} />
             </div>
           </section>
         </div>
       </main>
+
+      <dialog className="home-gallery" ref={galleryRef} onClick={event => { if (event.target === event.currentTarget) galleryRef.current?.close(); }}>
+        <button className="home-gallery__close" type="button" onClick={() => galleryRef.current?.close()} aria-label="Close poster">×</button>
+        <WantedPoster name={fleet[selected].name} bounty={fleet[selected].bounty} portrait={fleet[selected].portrait} />
+        <div className="home-gallery__nav">
+          <button type="button" onClick={() => setSelected((selected + fleet.length - 1) % fleet.length)} aria-label="Previous gallery poster">← Previous</button>
+          <span>{selected + 1} / {fleet.length}</span>
+          <button type="button" onClick={() => setSelected((selected + 1) % fleet.length)} aria-label="Next gallery poster">Next →</button>
+        </div>
+        <Link href="/create" onClick={() => galleryRef.current?.close()}>Create your own poster →</Link>
+      </dialog>
 
       <footer className="site-footer">
         <CompassRose className="site-footer__compass" />
@@ -206,7 +217,7 @@ function HomePage() {
   );
 }
 
-function FleetCarousel() {
+function FleetCarousel({ showAll, onSelect }: { showAll: boolean; onSelect: (index: number) => void }) {
   const trackRef = useRef<HTMLDivElement>(null);
 
   const scroll = (direction: -1 | 1) => {
@@ -215,14 +226,16 @@ function FleetCarousel() {
   };
 
   return (
-    <div className="carousel">
+    <div className={`carousel ${showAll ? "carousel--all" : ""}`}>
       <button className="carousel__arrow carousel__arrow--prev" type="button" aria-label="Previous posters" onClick={() => scroll(-1)}>
         <ChevronLeft />
       </button>
       <div className="carousel__track" ref={trackRef}>
         {fleet.map((item, index) => (
           <article className="bounty-card" key={item.handle}>
-            <WantedPoster name={item.name} bounty={item.bounty} portrait={item.portrait} seed={13 + index * 7} />
+            <button className="bounty-card__open" type="button" onClick={() => onSelect(index)} aria-label={`View ${item.name} poster`}>
+              <WantedPoster name={item.name} bounty={item.bounty} portrait={item.portrait} seed={13 + index * 7} />
+            </button>
             <div className="bounty-card__meta">
               <img src={item.portrait} alt="" />
               <div>
