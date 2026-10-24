@@ -17,7 +17,7 @@ export function SiteHeader({ active }: { active: Page }) {
     <header className={`site-header ${active === "create" ? "site-header--create" : "site-header--home"}`}>
       <div className="container site-header__inner">
         <Link className="brand" href="/" aria-label="Wanted Bounty home">
-          <img className="brand__logo" src="/brand/beri-monogram.png" alt="" style={{ objectFit: "contain" }} />
+          <img className="brand__logo" src="/brand/beri-monogram.png" alt="" style={{ objectFit: "contain", transform: "scale(0.8)" }} />
         </Link>
         <button className="site-menu-toggle" type="button" aria-label="Toggle navigation" aria-expanded={menuOpen} aria-controls="site-navigation" onClick={() => setMenuOpen(!menuOpen)}>☰</button>
         <nav id="site-navigation" className={`nav ${menuOpen ? "nav--open" : ""}`} aria-label="Main">
