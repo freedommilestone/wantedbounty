@@ -1,0 +1,87 @@
+.mobile-fleet, .mobile-footer-sign, .mobile-nav-wallet { display: none; }
+@media (max-width: 900px) {
+  /* Coordinates follow the 781px mobile artwork; content remains live HTML. */
+  .home-page { font-size: 1.2804097311vw; background: #ecd3aa url('/scene/home-mobile-plate.jpg') top center / 100% auto no-repeat; }
+  .home-page .site-header, .home-page .hero, .home-page .parchment, .home-page .site-footer { background: transparent; border: 0; box-shadow: none; }
+  .home-page .site-header::after { display:none; }
+  .home-page .site-header__inner { width: 68em; height: 10em; gap: 1.4em; }
+  .home-page .brand { gap: 1.3em; }
+  .home-page .brand__logo { width: 9em; height: 9em; }
+  .home-page .brand__name { font-size: 4.3em; }
+  .home-page .brand__tag { display:block; font-size: 1.2em; letter-spacing:.3em; margin-top:.5em; }
+  .home-page .site-menu-toggle { display:block; font-size: 4em; width:44px; height:44px; line-height:1; padding:0; }
+  .home-page .site-header__inner > .wallet-btn { display:none; }
+  .home-page .nav { display:none; }
+  .home-page .nav--open { display:flex; padding:20px; gap:20px; }
+  .home-page .nav a { font-size:16px; }
+  .home-page .mobile-nav-wallet { display:block; }
+  .home-page .mobile-nav-wallet .wallet-btn { font-size:14px; }
+  .home-page .hero { margin:0; }
+  .home-page .hero__inner { position:relative; display:block; width:100%; height:73em; min-height:0; padding:0; }
+  .home-page .hero__copy { position:absolute; top:24.7em; left:5em; width:35.8em; }
+  .home-page .hero__eyebrow { font-size:1.8em; letter-spacing:.08em; }
+  .home-page .hero__title { font-size:8.9em; line-height:.88; margin:.07em 0 .14em; letter-spacing:-.065em; }
+  .home-page .hero__target { width:.85em; height:.85em; }
+  .home-page .hero__lede { font-size:1.9em; line-height:1.4; }
+  .home-page .hero__lede br { display:none; }
+  .home-page .cta-shadow { margin-top:2.2em; }
+  .home-page .cta { font-size:2em; padding:.8em 1.3em; gap:.7em; min-height:3.3em; white-space:nowrap; }
+  .home-page .cta svg { width:1.5em; height:1.5em; }
+  .home-page .hero__beri { display:none; }
+  .home-page .hero__status { font-size:12px; padding:8px; background:#f2dfbc; position:relative; z-index:10; }
+  .home-page .hero__poster { position:absolute; width:32em; left:42em; top:17.5em; margin:0; transform:rotate(-10deg); }
+  .home-page .hero__poster .poster__photo { aspect-ratio:1.35; }
+  .home-page .home-motto { display:block; top:5em; left:5em; right:auto; width:22em; }
+  .home-page .home-motto span { font-size:3.8em; }
+  .home-page .home-motto svg { position:absolute; width:9em; height:9em; left:22em; top:5em; margin:0; }
+  .home-page .paper-shadow { margin:0; filter:none; }
+  .home-page .features, .home-page .fleet { clip-path:none !important; }
+  .home-page .features { height:27em; padding:4em 0 0; }
+  .home-page .features__grid { width:73em; display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:0; }
+  .home-page .feature { padding:0 1.1em; border:0; }
+  .home-page .feature + .feature { border-left:1px solid #7e573633; }
+  .home-page .feature__icon { width:7em; height:7em; margin:0 auto 1em; }
+  .home-page .feature:nth-child(2) .feature__icon { width:9em; }
+  .home-page .feature h3 { font-size:1.65em; line-height:1.2; min-height:2.5em; margin-bottom:.7em; }
+  .home-page .feature p { font-size:1.5em; line-height:1.3; }
+  .home-page .fleet { height:53em; padding:2.6em 0 0; }
+  .home-page .fleet .container { width:74em; }
+  .home-page .fleet__head { display:block; position:relative; height:13em; }
+  .home-page .fleet__heading { width:42em; margin:auto; }
+  .home-page .fleet__title { position:relative; font-size:4.2em; line-height:1.08; display:block; text-align:center; }
+  .home-page .fleet__heading-star { position:absolute; left:-.2em; top:0; width:1.1em; height:1.1em; }
+  .home-page .fleet__title::before, .home-page .fleet__title::after { display:none; }
+  .home-page .fleet__divider { gap:1em; margin-top:.3em; }
+  .home-page .fleet__divider::before, .home-page .fleet__divider::after { width:11em; }
+  .home-page .fleet__ornament { width:3.4em; height:3.4em; }
+  .home-page .fleet__all { position:absolute; right:1em; bottom:1.4em; font-size:1.5em; margin:0; gap:.5em; }
+  .home-page .fleet__all svg { width:1.3em; height:1.3em; }
+  .home-page .carousel { display:none; }
+  .mobile-fleet { display:block; position:relative; }
+  .mobile-fleet__cards { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:5em; padding:1em 5.5em 0; touch-action:pan-y; }
+  .mobile-fleet .bounty-card:nth-child(2) { transform:scale(1.13); transform-origin:top center; }
+  .home-page .mobile-fleet .poster__photo { aspect-ratio:1.4; }
+  .home-page .mobile-fleet .bounty-card__meta { margin-top:.9em; gap:.8em; padding:0; }
+  .home-page .mobile-fleet .bounty-card__meta img { width:3.5em; height:3.5em; border:0; }
+  .home-page .mobile-fleet .bounty-card__meta strong { font-size:1.4em; }
+  .home-page .mobile-fleet .bounty-card__meta span { font-size:1.4em; }
+  .mobile-fleet__prev, .mobile-fleet__next { position:absolute; top:9em; width:4.4em; height:5em; border:0; background:none; color:inherit; padding:0; }
+  .mobile-fleet__prev { left:0; }.mobile-fleet__next { right:0; }
+  .mobile-fleet__prev svg,.mobile-fleet__next svg { width:100%; height:100%; }
+  .mobile-fleet__dots { display:flex; justify-content:center; gap:.4em; margin-top:5em; }
+  .mobile-fleet__dots button { position:relative; width:3em; height:3em; padding:0; border:0; background:none; }
+  .mobile-fleet__dots button::after { content:''; position:absolute; width:1em; height:1em; background:#917655; border-radius:50%; inset:0; margin:auto; }
+  .mobile-fleet__dots button[aria-current]::after { width:1.4em; height:1.4em; background:#40200f; }
+  .home-page .site-footer { position:relative; height:38.2em; min-height:0; margin:0; padding:0; }
+  .home-page .site-footer > :not(.mobile-footer-sign) { display:none; }
+  .mobile-footer-sign { display:flex; flex-direction:column; position:absolute; top:11em; right:1em; width:16em; transform:rotate(-14deg); text-align:center; gap:2.5em; }
+  .mobile-footer-sign span { font:bold 2em/1.05 Georgia,serif; text-transform:uppercase; }
+  .home-page--expanded .fleet { height:auto; padding-bottom:4em; }
+  .mobile-fleet--all .mobile-fleet__cards { grid-template-columns:repeat(2,minmax(0,1fr)); gap:3em; }
+  .mobile-fleet--all .bounty-card:nth-child(2) { transform:none; }
+}
+@media (max-width: 900px) {
+  .mobile-footer-sign { gap:4.5em; }
+  .home-page--expanded .fleet { background:#ecd3aa url('/textures/parchment-v2.jpg') center / cover; }
+  .home-page--expanded .site-footer { background:#ecd3aa url('/scene/home-mobile-plate.jpg') center bottom / 100% auto no-repeat; }
+}

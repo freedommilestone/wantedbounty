@@ -41,6 +41,7 @@ export function SiteHeader({ active }: { active: Page }) {
               </Link>
             );
           })}
+          {active === "home" && <div className="mobile-nav-wallet"><WalletButton /></div>}
         </nav>
         <WalletButton />
       </div>

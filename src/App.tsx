@@ -20,6 +20,7 @@ import { shortAddress, useWallet, WalletProvider, type BeriHoldings } from "./wa
 import "./App.css";
 import "./HomePage.css";
 import "./HomeReferenceLayout.css";
+import "./HomeMobile.css";
 
 const FEATURES_EDGE = organicEdges(11, { top: 22, bottom: 12 });
 const FLEET_EDGE = organicEdges(29, { top: 17, bottom: 20 });
@@ -190,6 +191,7 @@ function HomePage() {
                 </button>
               </div>
               <FleetCarousel showAll={showAll} onSelect={openPoster} />
+              <MobileFleet showAll={showAll} onSelect={openPoster} />
             </div>
           </section>
         </div>
@@ -212,6 +214,7 @@ function HomePage() {
         <HelmLogo className="site-footer__logo" />
         <p className="site-footer__motto">More than a token — a crew</p>
         <p className="site-footer__ticker">$BERI</p>
+        <div className="mobile-footer-sign"><span>More than<br />a token</span><span>— A crew</span><span>$BERI</span></div>
       </footer>
     </div>
   );
@@ -251,4 +254,24 @@ function FleetCarousel({ showAll, onSelect }: { showAll: boolean; onSelect: (ind
       </button>
     </div>
   );
+}
+
+function MobileFleet({ showAll, onSelect }: { showAll: boolean; onSelect: (index: number) => void }) {
+  const [page, setPage] = useState(0);
+  const start = useRef<number | null>(null);
+  const order = [2, 3, 1, 0, 4, 5];
+  const move = (delta: number) => setPage(value => (value + delta + 5) % 5);
+  const visible = showAll ? order : [0, 1, 2].map(offset => order[(page + offset) % order.length]);
+  return <div className={`mobile-fleet ${showAll ? "mobile-fleet--all" : ""}`}>
+    <div className="mobile-fleet__cards" onTouchStart={event => { start.current = event.touches[0].clientX; }} onTouchEnd={event => { if (start.current !== null && !showAll) { const delta = event.changedTouches[0].clientX - start.current; if (Math.abs(delta) > 35) move(delta < 0 ? 1 : -1); } start.current = null; }}>
+      {visible.map((index) => <article className="bounty-card" key={fleet[index].handle}>
+        <button className="bounty-card__open" onClick={() => onSelect(index)} aria-label={`View ${fleet[index].name} poster`}>
+          <WantedPoster name={index === 1 ? "Nami" : fleet[index].name} bounty={fleet[index].bounty} portrait={fleet[index].portrait} seed={13 + index * 7} />
+        </button>
+        <div className="bounty-card__meta"><img src={fleet[index].portrait} alt="" /><div><strong>{fleet[index].handle}</strong><span>{fleet[index].time}</span></div></div>
+      </article>)}
+    </div>
+    {!showAll && <><button className="mobile-fleet__prev" onClick={() => move(-1)} aria-label="Previous mobile posters"><ChevronLeft /></button><button className="mobile-fleet__next" onClick={() => move(1)} aria-label="Next mobile posters"><ChevronRight /></button>
+    <div className="mobile-fleet__dots" aria-label="Poster carousel pages">{Array.from({length:5},(_,index)=><button key={index} aria-label={`Poster page ${index + 1}`} aria-current={page === index ? "true" : undefined} onClick={() => setPage(index)} />)}</div></>}
+  </div>;
 }
