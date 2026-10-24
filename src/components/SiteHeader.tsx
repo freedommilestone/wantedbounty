@@ -1,7 +1,5 @@
 import { useState } from "react";
 import { Link } from "../router";
-import { HomeEmblem } from "./HomeIcons";
-import { HelmLogo } from "./icons";
 import { WalletButton } from "./WalletButton";
 
 type Page = "home" | "create";
@@ -18,12 +16,8 @@ export function SiteHeader({ active }: { active: Page }) {
   return (
     <header className={`site-header ${active === "create" ? "site-header--create" : "site-header--home"}`}>
       <div className="container site-header__inner">
-        <Link className="brand" href="/">
-          {active === "home" ? <HomeEmblem className="brand__logo" cherries /> : <HelmLogo className="brand__logo" />}
-          <span>
-            <span className="brand__name">{active === "home" ? "Beri Bounty" : "Wanted Bounty"}</span>
-            <span className="brand__tag">$BERI • Community • Legendary</span>
-          </span>
+        <Link className="brand" href="/" aria-label="Wanted Bounty home">
+          <img className="brand__logo" src="/brand/beri-monogram.png" alt="" style={{ objectFit: "contain" }} />
         </Link>
         <button className="site-menu-toggle" type="button" aria-label="Toggle navigation" aria-expanded={menuOpen} aria-controls="site-navigation" onClick={() => setMenuOpen(!menuOpen)}>☰</button>
         <nav id="site-navigation" className={`nav ${menuOpen ? "nav--open" : ""}`} aria-label="Main">
