@@ -120,3 +120,9 @@
   .creator-page .create__preview::before { inset:3em 2.2em 1.8em; }
 }
 @media(max-width:600px) { .creator-page .step__number { font-size:1.65em; } }
+/* The desktop note paper is already part of the scenery; avoid a second shaded rectangle. */
+.creator-page .steps__note { box-shadow:none; }
+@media(min-width:1101px) {
+  .creator-page .steps__note { background:none; clip-path:none !important; }
+  .creator-page .steps__note-shadow { transform:rotate(-3deg); }
+}
