@@ -2,13 +2,12 @@ import { useEffect, useRef, useState, type CSSProperties } from "react";
 import "./HomePreloader.css";
 
 let shownThisVisit = false;
-const layers = [
-  [8, 330, 12, -3.8, 14, 0], [48, 290, 13, -5.6, -15, 0],
-  [-8, 260, 14, -7, -22, 0], [32, 230, 13, -8.3, 17, 0],
-  [63, 280, 14, -9, -18, 0], [40, 170, 12, -3, -24, 0],
-  [76, 230, 12, -4, -18, 0], [20, 155, 13, -6, 30, 0],
-  [57, 180, 13, -7.2, -15, 0], [0, 170, 12, -3, 20, 0],
-];
+// Two posters share each lane, separated by half a complete fall cycle.
+const layers = Array.from({ length: 10 }, (_, index) => {
+  const lane = index % 5;
+  const duration = 9 + lane * .6;
+  return { left: 3 + lane * 20, duration, delay: -duration * (lane * .07 + (index >= 5 ? .5 : 0)) };
+});
 
 export function HomePreloader() {
   const [visible, setVisible] = useState(!shownThisVisit);
@@ -24,14 +23,27 @@ export function HomePreloader() {
     const previousOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
     let cancelled = false;
-    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const minimum = window.setTimeout(() => {
-      const scenery = new Image();
-      scenery.src = window.innerWidth <= 900 ? "/scene/home-mobile-plate.jpg" : "/scene/home-background-plate.jpg";
-      scenery.decode().catch(() => {}).finally(() => { if (!cancelled) setLeaving(true); });
-    }, reduced ? 300 : 3000);
-    const maximum = window.setTimeout(dismiss, 5500);
-    return () => { cancelled = true; clearTimeout(minimum); clearTimeout(maximum); panel?.close(); document.body.style.overflow = previousOverflow; };
+    let loadHandler: (() => void) | undefined;
+    const loaded = new Promise<void>(resolve => {
+      if (document.readyState === "complete") resolve();
+      else { loadHandler = () => resolve(); window.addEventListener("load", loadHandler, { once: true }); }
+    });
+    const assets = [
+      window.innerWidth <= 900 ? "/scene/home-mobile-plate.jpg" : "/scene/home-background-plate.jpg",
+      "/textures/home-poster-paper.jpg", "/textures/button-parchment.png", "/brand/beri-monogram.png",
+      ...["luffy", "zoro", "nami", "shanks", "robin"].map(name => `/portraits/home-${name}.jpg`),
+    ].map(src => { const image = new Image(); image.src = src; return image.decode(); });
+    let minimum: number;
+    const delay = new Promise<void>(resolve => { minimum = window.setTimeout(resolve, 2000); });
+    Promise.all([delay, loaded, document.fonts.ready, Promise.allSettled(assets)])
+      .then(() => { if (!cancelled) setLeaving(true); });
+    return () => {
+      cancelled = true;
+      clearTimeout(minimum);
+      if (loadHandler) window.removeEventListener("load", loadHandler);
+      panel?.close();
+      document.body.style.overflow = previousOverflow;
+    };
   }, [visible]);
 
   useEffect(() => {
@@ -43,8 +55,8 @@ export function HomePreloader() {
   if (!visible) return null;
   return <dialog ref={dialog} className={`home-preloader ${leaving ? "home-preloader--leaving" : ""}`} aria-label="Entering Wanted Bounty" onCancel={event => { event.preventDefault(); dismiss(); }}>
     <div className="home-preloader__sky" aria-hidden="true">
-      {layers.map(([left, width, duration, delay, angle, blur], index) => {
-        return <div className="home-preloader__fall" key={index} style={{ "--left": `${left}%`, "--width": `${width}px`, "--duration": `${duration}s`, "--delay": `${delay}s`, "--angle": `${angle}deg`, "--blur": `${blur}px` } as CSSProperties}>
+      {layers.map(({ left, duration, delay }, index) => {
+        return <div className="home-preloader__fall" key={index} style={{ "--left": `${left}%`, "--duration": `${duration}s`, "--delay": `${delay}s` } as CSSProperties}>
           <div className="home-preloader__flutter"><div className="home-preloader__art" style={{ backgroundImage: `url(/scene/${index < 5 ? "flying-poster-sprites" : "flying-poster-crew"}.png)`, backgroundPosition: `${(index % 5) * 25}% center` }} /></div>
         </div>;
       })}
