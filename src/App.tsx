@@ -1,4 +1,5 @@
 import { useRef, useState, type ReactNode } from "react";
+import { HomePreloader } from "./components/HomePreloader";
 import { CreatePosterPage } from "./CreatePosterPage";
 import { SiteHeader } from "./components/SiteHeader";
 import { WalletModal } from "./components/WalletModal";
@@ -118,6 +119,7 @@ function HomePage() {
 
   return (
     <div className={`home-page ${showAll ? "home-page--expanded" : ""}`}>
+      <HomePreloader />
       <SiteHeader active="home" />
 
       <main>
