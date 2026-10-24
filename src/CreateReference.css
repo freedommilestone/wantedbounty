@@ -1,0 +1,104 @@
+/* Light parchment creator. Background artwork contains no interface or copy. */
+.creator-page { color:#2d190c; background:#ead0a4; }
+.creator-page .site-header--create { background:#eed8b1 url('/textures/parchment-v2.jpg') center / cover; border:0; }
+.creator-page .nav a, .creator-page .site-menu-toggle { color:#2d190c; }
+.creator-page .nav .is-active::after { background:#813225; }
+.creator-page .wallet-btn { background:url('/textures/button-parchment.png') center / 100% 145%; border:0; color:#28180d; box-shadow:none; }
+.creator-page .create { background:none; color:#2d190c; }
+.creator-page .create__stage { padding:0; }
+.creator-page .create__panel-shadow, .creator-page .create__banner-shadow { filter:none; }
+.creator-page .create__panel { background:#eed5aa url('/textures/home-poster-paper.jpg') center / 100% 100%; box-shadow:none; }
+.creator-page .pay__button { background:linear-gradient(120deg,#642a1a,#3f1a12); border-color:#bd955b; }
+.creator-page .step__number { background:#352014; border:3px double #d2b17a; }
+.creator-page .steps, .creator-page .steps .container { background:#ecd0a5 url('/textures/home-poster-paper.jpg') center / 100% 100%; border:0; }
+.creator-page .steps__icon, .creator-page .steps__note-icon, .creator-page .steps__list h3, .creator-page .steps__list p { color:#2d190c; }
+.creator-page .steps__wallet-ring { border-color:#2d190c; }
+.creator-page .steps__ribbon { color:#2d190c; background:#e9c997 url('/textures/button-parchment.png') center / 100% 150%; border-color:#7e542b; box-shadow:none; }
+.creator-page .steps__ribbon::before,.creator-page .steps__ribbon::after { color:#513116; }
+.creator-page .create__poster .poster { background:#ddbd87 url('/textures/poster-reference.jpg') center / 100% 100%; }
+.creator-page .create__poster { transform:none; }
+@media(min-width:1101px) {
+  .creator-page { font-size:.8230452675vw; background:#e7c99b url('/scene/create-light-plate.jpg') top center / 100% auto no-repeat; }
+  .creator-page .create { font-size:inherit; }
+  .creator-page .site-header--create { background:none; }
+  .creator-page .site-header__inner { width:104em; height:8.2em; }
+  .creator-page .brand__logo { width:8em; height:8em; }
+  .creator-page .nav { gap:3.8em; }
+  .creator-page .nav a { font-size:1.5em; }
+  .creator-page .wallet-btn { font-size:1.5em; padding:1em 2em; }
+  .creator-page .create .container { width:111em; max-width:none; }
+  .creator-page .create__intro { height:27em; display:block; position:relative; margin:0; }
+  .creator-page .create__banner-shadow { position:absolute; left:8em; top:1.5em; width:69em; }
+  .creator-page .create__banner { background:none; min-height:0; padding:2.4em 3.7em 0; }
+  .creator-page .create__title { transform:none; margin:0 0 .7em; }
+  .creator-page .create__title span:first-child { font-size:4em; line-height:.95; }
+  .creator-page .create__title span:last-child { font-size:8em; line-height:1; letter-spacing:-.045em; }
+  .creator-page .create__lede { margin:0 0 0 .7em; max-width:26em; font-size:1.75em; line-height:1.25; }
+  .creator-page .create__lede strong { font-size:1.2em; }
+  .creator-page .create__motto { position:absolute; right:15em; top:3.5em; padding:0; margin:0; }
+  .creator-page .create__motto p { font-size:3em; }
+  .creator-page .create__compass { position:absolute; top:0; left:15em; width:9em; margin:0; }
+  .creator-page .create__grid { grid-template-columns:63em 48em; margin:0; min-height:69.5em; }
+  .creator-page .create__panel-shadow--preview { margin:0; }
+  .creator-page .create__panel { background:none; clip-path:none !important; }
+  .creator-page .create__form { padding:1.5em 3.8em 3em 4.8em; }
+  .creator-page .step { grid-template-columns:5.5em minmax(0,1fr); gap:1.5em; }
+  .creator-page .step__number { width:1.65em; height:1.65em; font-size:3.3em; }
+  .creator-page .step__title { font-size:2.5em; padding-top:.2em; }
+  .creator-page .step__hint { font-size:1.3em; margin-top:.2em; }
+  .creator-page .step + .step { margin-top:1.8em; padding-top:1.7em; }
+  .creator-page .upload { margin-top:1.4em; gap:1.5em; }
+  .creator-page .upload__thumb { width:13.5em; height:12em; }
+  .creator-page .upload__drop { height:10.8em; }
+  .creator-page .fields { margin-top:1.3em; gap:1.3em 1.7em; }
+  .creator-page .field__label { font-size:1.4em; }
+  .creator-page .field__control { font-size:1.4em; height:2.8em; background:#fff4dd45; }
+  .creator-page .style-option { font-size:1.05em; }
+  .creator-page .style-option img { aspect-ratio:1.13; }
+  .creator-page .pay { margin-top:1.5em; gap:1.4em; }
+  .creator-page .pay__wallet { min-height:7.8em; }
+  .creator-page .pay__secure { margin-top:1.4em; }
+  .creator-page .create__preview { padding:2em 3.6em 2.3em; }
+  .creator-page .create__preview::before { inset:3em 2.2em 1.8em; }
+  .creator-page .create__ribbon { font-size:1.7em; padding:.2em 1.3em; margin:0; }
+  .creator-page .create__poster { width:100%; margin-top:1.4em; }
+  .creator-page .create__poster .poster__photo { aspect-ratio:1.45; }
+  .creator-page .create__poster .poster__wanted { font-size:23cqw; }
+  .creator-page .create__assurances { margin-top:auto; font-size:1em; }
+  .creator-page .steps { height:24.8em; padding:1.5em 0 1em; background:none; }
+  .creator-page .steps .container { background:none; width:111em; }
+  .creator-page .steps__ribbon { font-size:2em; min-width:14em; margin-top:-.2em; padding:.2em 1em; }
+  .creator-page .steps__row { grid-template-columns:85em 24em; gap:2em; margin-top:1.1em; }
+  .creator-page .steps__list h3 { font-size:1.6em; }
+  .creator-page .steps__list p { font-size:1.3em; line-height:1.35; margin-top:.7em; }
+  .creator-page .steps__icon { width:5.5em; height:5.5em; margin-bottom:.8em; }
+  .creator-page .steps__note { background:none; padding:2.8em 1em .5em; }
+  .creator-page .steps__note-icon { top:-1.5em; }
+}
+@media(max-width:1100px) {
+  .creator-page .create { background:#d8bc8e url('/scene/create-reference.jpg') center top / auto 1100px no-repeat; }
+  .creator-page .create__stage { padding:2em 0; }
+  .creator-page .create__title { transform:none; }
+  .creator-page .create__grid { gap:2em; }
+  .creator-page .create__poster { max-width:440px; }
+  .creator-page .steps { padding:2em 0; }
+  .creator-page .steps .container { background:none; }
+  .creator-page .steps__note { background:#ecd0a5 url('/textures/home-poster-paper.jpg') center / 100% 100%; }
+}
+.creator-page .poster__photo::after { opacity:.15; }
+.creator-page .art--classic img { filter:sepia(.12) saturate(.85); }
+.creator-page .upload__thumb > span { font-size:1.3em; }
+@media(min-width:1101px) {
+  .creator-page .step + .step { margin-top:1.1em; padding-top:1em; }
+  .creator-page .create__grid { height:69.5em; min-height:69.5em; }
+  .creator-page .create__poster { width:94%; }
+  .creator-page .create__poster .poster__photo { aspect-ratio:1.5; }
+  .creator-page .create__poster .poster__fine { font-size:1.3cqw; }
+  .creator-page .create__poster .poster__marine { font-size:8cqw; }
+  .creator-page .create__assurances { padding-top:1em; }
+  .creator-page .steps__note-shadow { filter:none; }
+}
+@media(min-width:1101px) {
+  .creator-page .create__panel-shadow { min-height:0; }
+  .creator-page .create__form { padding-bottom:1em; }
+}

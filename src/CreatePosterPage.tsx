@@ -19,16 +19,17 @@ import {
 import { tornPaper } from "./torn";
 import { useWallet } from "./wallet";
 import "./CreatePosterPage.css";
+import "./CreateReference.css";
 
 const FEE = POSTER_FEE;
 const MAX_UPLOAD_BYTES = 10 * 1024 * 1024;
 const PLACEHOLDER_BOUNTY = "1,250,000";
-const DEFAULT_PORTRAIT = "/portraits/create-captain.jpg";
+const DEFAULT_PORTRAIT = "/portraits/home-luffy.jpg";
 
 const TITLES = ["Captain", "First Mate", "Navigator", "Swordsman", "Sniper", "Cook", "Doctor", "Shipwright", "Musician"];
 
 const ART_STYLES = [
-  { id: "classic", label: "Classic Ink", sample: "/portraits/create-captain.jpg" },
+  { id: "classic", label: "Classic Ink", sample: "/portraits/home-luffy.jpg" },
   { id: "golden", label: "Golden Age", sample: "/portraits/navigator.jpg" },
   { id: "storm", label: "Storm-Worn", sample: "/portraits/swordsman.jpg" },
 ] as const;
@@ -177,7 +178,7 @@ export function CreatePosterPage() {
     (phase !== "paid" && Boolean(address) && (holdings.state === "loading" || (holdings.state === "ready" && !canAfford)));
 
   return (
-    <>
+    <div className="creator-page">
       <SiteHeader active="create" />
 
       <main className="create">
@@ -247,7 +248,7 @@ export function CreatePosterPage() {
                           className="field__control"
                           value={name}
                           maxLength={24}
-                          placeholder="Jake Zheng"
+                          placeholder="Your Name"
                           onChange={(event) => setName(event.target.value)}
                         />
                       </label>
@@ -416,17 +417,17 @@ export function CreatePosterPage() {
           </div>
         </section>
       </main>
-    </>
+    </div>
   );
 }
 
 function GuideIcon({ step }: { step: number }) {
-  if (step === 0) return <CompassIcon className="steps__icon" />;
+  if (step === 1) return <svg className="steps__icon" viewBox="0 0 64 64" aria-hidden="true"><g fill="none" stroke="currentColor" strokeWidth="3" strokeLinejoin="round"><path d="m12 8 44 44-8 8L4 16Zm7 8-5 5m15 5-5 5m15 5-5 5M12 46l34-38 10 10-34 38-14 4Z"/><path d="m12 46 10 10M40 14l10 10M8 60l4-14"/></g></svg>;
+  if (step === 3) return <svg className="steps__icon" viewBox="0 0 64 64" aria-hidden="true"><g fill="none" stroke="currentColor" strokeWidth="2.5"><circle cx="32" cy="18" r="9"/><circle cx="13" cy="23" r="7"/><circle cx="51" cy="23" r="7"/><path d="M17 55V43c0-19 30-19 30 0v12ZM17 33C5 29 2 40 3 49h14m30-16c12-4 15 7 14 16H47"/></g></svg>;
   if (step === 2) return <span className="steps__icon steps__wallet-ring"><WalletIcon /></span>;
   return (
     <svg className="steps__icon steps__poster-icon" viewBox="0 0 64 72" aria-hidden="true">
-      <g transform={step === 1 ? "rotate(-8 32 36)" : "rotate(3 32 36)"} fill="none" stroke="currentColor" strokeWidth="1.3">
-        {step === 1 && <path d="M12 13 49 6 58 63 19 69Z" />}
+      <g transform="rotate(-5 32 36)" fill="none" stroke="currentColor" strokeWidth="1.3">
         <path d="M15 7 19 9 23 6 27 8 32 6 37 8 42 6 49 8 48 16 50 22 48 28 50 36 48 43 50 51 48 64 43 63 38 65 33 63 27 65 22 63 15 65 16 56 14 49 16 42 14 35 16 27 14 20Z" />
         <text x="32" y="19" fill="currentColor" stroke="none" textAnchor="middle" fontFamily="Georgia,serif" fontWeight="bold" fontSize="8">WANTED</text>
         <path d="M20 24H44V46H20Z" />
