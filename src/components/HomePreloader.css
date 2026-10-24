@@ -2,18 +2,14 @@
 .home-preloader::backdrop { background:#ead0a3; }
 .home-preloader--leaving { opacity:0; }
 .home-preloader__sky { position:absolute; inset:0; overflow:hidden; perspective:1100px; pointer-events:none; }
-.home-preloader__fall { position:absolute; left:var(--left); top:0; width:var(--width); filter:blur(var(--blur)) drop-shadow(5px 12px 10px #50301644); animation:poster-fall var(--duration) var(--delay) linear infinite; will-change:transform; }
+.home-preloader__fall { position:absolute; left:var(--left); top:0; width:var(--width); filter:blur(var(--blur)) drop-shadow(3px 9px 7px #50301638); animation:poster-fall var(--duration) var(--delay) linear infinite; will-change:transform; }
 .home-preloader__flutter { animation:poster-flutter 3.8s var(--delay) ease-in-out infinite alternate; transform-origin:50% 15%; }
-.home-preloader .poster { background:#dfbb83 url('/textures/home-poster-paper.jpg') center / 100% 100%; color:#35200f; }
-.home-preloader .poster__wanted { font-family:'Roboto Serif',Georgia,serif; font-stretch:55%; font-size:21cqw; }
-.home-preloader .poster__photo { aspect-ratio:1.2; }
-.home-preloader .poster__name { font-size:calc(var(--name-size) * .9); }
 .home-preloader__scrap { position:absolute; top:0; width:14px; height:22px; background:#9c432c; clip-path:polygon(0 0,75% 17%,100% 90%,20% 74%); animation:scrap-fall linear infinite; }
 .home-preloader__scrap:nth-child(even) { background:#c39558; }
-.home-preloader__status { position:absolute; z-index:3; bottom:max(24px,env(safe-area-inset-bottom)); left:50%; transform:translateX(-50%); display:flex; align-items:center; gap:24px; padding:12px 20px; border:1px solid #79502b66; border-radius:4px; background:#f6e4c5ed; box-shadow:0 4px 20px #55371b22; white-space:nowrap; font:16px Georgia,serif; }
-.home-preloader__status button { min-height:44px; padding:8px 12px; border:0; background:transparent; color:inherit; font:inherit; cursor:pointer; text-decoration:underline; text-underline-offset:4px; }
-@keyframes poster-fall { from { transform:translate3d(-40px,-500px,0) rotate(var(--angle)); } to { transform:translate3d(65px,calc(100dvh + 450px),0) rotate(calc(var(--angle) + 35deg)); } }
+@keyframes poster-fall { from { transform:translate3d(-40px,-500px,0) rotate(var(--angle)); } to { transform:translate3d(65px,calc(100dvh + 450px),0) rotate(calc(var(--angle) + 15deg)); } }
 @keyframes poster-flutter { from { transform:rotateY(-14deg) rotateZ(-7deg) skewY(-2deg); } to { transform:rotateY(17deg) rotateZ(8deg) skewY(3deg); } }
 @keyframes scrap-fall { from { transform:translate3d(-10px,-60px,0) rotate(0deg); } to { transform:translate3d(80px,calc(100dvh + 60px),0) rotate(460deg); } }
-@media(max-width:600px) { .home-preloader { background-size:100% 100%; }.home-preloader__fall { width:calc(var(--width) * .65); }.home-preloader__status { font-size:14px; gap:12px; padding:8px 12px; } }
+@media(max-width:600px) { .home-preloader { background-size:100% 100%; }.home-preloader__fall { width:calc(var(--width) * .65); } }
 @media(prefers-reduced-motion:reduce) { .home-preloader__fall, .home-preloader__flutter, .home-preloader__scrap { animation:none; }.home-preloader__fall { top:25%; transform:rotate(var(--angle)); }.home-preloader { transition:none; } }
+
+.home-preloader__art { width:100%; aspect-ratio:2 / 3; background-image:url("/scene/flying-poster-sprites.png"); background-repeat:no-repeat; background-size:500% 100%; }
