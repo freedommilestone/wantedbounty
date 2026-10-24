@@ -5,9 +5,9 @@ let shownThisVisit = false;
 const layers = [
   [8, 330, 12, -3.8, 14, 0], [48, 290, 13, -5.6, -15, 0],
   [-8, 260, 14, -7, -22, 0], [32, 230, 13, -8.3, 17, 0],
-  [63, 280, 14, -9, -18, 0], [46, 90, 12, -3, -24, 2],
-  [90, 300, 7.5, -1.2, -18, 4], [28, 80, 13, -10, 30, 2],
-  [57, 135, 10, -8, -15, 1], [5, 100, 12, -1, 20, 2],
+  [63, 280, 14, -9, -18, 0], [40, 170, 12, -3, -24, 0],
+  [76, 230, 12, -4, -18, 0], [20, 155, 13, -6, 30, 0],
+  [57, 180, 13, -7.2, -15, 0], [0, 170, 12, -3, 20, 0],
 ];
 
 export function HomePreloader() {
@@ -45,7 +45,7 @@ export function HomePreloader() {
     <div className="home-preloader__sky" aria-hidden="true">
       {layers.map(([left, width, duration, delay, angle, blur], index) => {
         return <div className="home-preloader__fall" key={index} style={{ "--left": `${left}%`, "--width": `${width}px`, "--duration": `${duration}s`, "--delay": `${delay}s`, "--angle": `${angle}deg`, "--blur": `${blur}px` } as CSSProperties}>
-          <div className="home-preloader__flutter"><div className="home-preloader__art" style={{ backgroundPosition: `${(index % 5) * 25}% center` }} /></div>
+          <div className="home-preloader__flutter"><div className="home-preloader__art" style={{ backgroundImage: `url(/scene/${index < 5 ? "flying-poster-sprites" : "flying-poster-crew"}.png)`, backgroundPosition: `${(index % 5) * 25}% center` }} /></div>
         </div>;
       })}
       {Array.from({length:12},(_,i)=><i key={i} className="home-preloader__scrap" style={{left:`${i * 9}%`,animationDelay:`${-i * .7}s`,animationDuration:`${5 + i % 4}s`}} />)}
