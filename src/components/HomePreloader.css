@@ -2,14 +2,12 @@
 .home-preloader::backdrop { background:#ead0a3; }
 .home-preloader--leaving { opacity:0; }
 .home-preloader__sky { position:absolute; inset:0; overflow:hidden; perspective:1100px; pointer-events:none; }
-.home-preloader__fall { position:absolute; left:var(--left); top:0; width:min(14vw,22dvh,210px); filter:drop-shadow(3px 9px 7px #50301638); animation:poster-fall var(--duration) var(--delay) linear infinite; will-change:transform; }
-.home-preloader__flutter { animation:poster-flutter 3.8s var(--delay) ease-in-out infinite alternate; transform-origin:50% 15%; }
+.home-preloader__fall { position:absolute; left:0; top:0; will-change:transform; }
+.home-preloader__flutter { transform-origin:center; }
 .home-preloader__scrap { position:absolute; top:0; width:14px; height:22px; background:#9c432c; clip-path:polygon(0 0,75% 17%,100% 90%,20% 74%); animation:scrap-fall linear infinite; }
 .home-preloader__scrap:nth-child(even) { background:#c39558; }
-@keyframes poster-fall { from { transform:translate3d(0,-40dvh,0); } to { transform:translate3d(0,140dvh,0); } }
-@keyframes poster-flutter { from { transform:rotateY(-10deg) rotateZ(-5deg); } to { transform:rotateY(10deg) rotateZ(5deg); } }
 @keyframes scrap-fall { from { transform:translate3d(-10px,-60px,0) rotate(0deg); } to { transform:translate3d(80px,calc(100dvh + 60px),0) rotate(460deg); } }
 @media(max-width:600px) { .home-preloader { background-size:100% 100%; } }
-@media(prefers-reduced-motion:reduce) { .home-preloader__fall, .home-preloader__flutter, .home-preloader__scrap { animation:none; }.home-preloader__fall { top:15%; }.home-preloader__fall:nth-child(n+6) { top:60%; }.home-preloader { transition:none; } }
+@media(prefers-reduced-motion:reduce) { .home-preloader__fall, .home-preloader__flutter, .home-preloader__scrap { animation:none; }.home-preloader { transition:none; } }
 
 .home-preloader__art { width:100%; aspect-ratio:2 / 3; background-image:url("/scene/flying-poster-sprites.png"); background-repeat:no-repeat; background-size:500% 100%; }

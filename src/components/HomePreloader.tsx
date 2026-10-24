@@ -1,19 +1,67 @@
-import { useEffect, useRef, useState, type CSSProperties } from "react";
+import { useEffect, useRef, useState } from "react";
 import "./HomePreloader.css";
 
 let shownThisVisit = false;
-// Two posters share each lane, separated by half a complete fall cycle.
-const layers = Array.from({ length: 10 }, (_, index) => {
-  const lane = index % 5;
-  const duration = 9 + lane * .6;
-  return { left: 3 + lane * 20, duration, delay: -duration * (lane * .07 + (index >= 5 ? .5 : 0)) };
-});
+const layers = Array.from({ length: 10 }, (_, index) => index);
 
 export function HomePreloader() {
   const [visible, setVisible] = useState(!shownThisVisit);
   const [leaving, setLeaving] = useState(false);
   const dialog = useRef<HTMLDialogElement>(null);
   const dismiss = () => setLeaving(true);
+
+  useEffect(() => {
+    if (!visible) return;
+    const elements = Array.from(dialog.current!.querySelectorAll<HTMLElement>(".home-preloader__fall"));
+    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const random = (min: number, max: number) => min + Math.random() * (max - min);
+    type Particle = { x: number; y: number; width: number; radius: number; angle: number; phase: number; drift: number };
+    let particles: Particle[] = [];
+    let width = window.innerWidth, height = window.innerHeight;
+    const clear = (x: number, y: number, radius: number, ignore = -1) => particles.every((p, i) => i === ignore || Math.hypot(x - p.x, y - p.y) > radius + p.radius + 10);
+    const reset = () => {
+      width = window.innerWidth; height = window.innerHeight; particles = [];
+      elements.forEach((element, index) => {
+        const size = random(.13, .27) * Math.min(width, 950);
+        const radius = size * .94;
+        let x = 0, y = 0;
+        for (let attempt = 0; attempt < 600; attempt++) {
+          x = random(radius * .7, width - radius * .7);
+          y = random(-height * .6, height);
+          if (clear(x, y, radius)) break;
+          if (attempt === 599) y = -height - index * radius * 3;
+        }
+        particles.push({ x, y, width: size, radius, angle: random(-28, 28), phase: random(0, Math.PI * 2), drift: random(5, 16) });
+        element.style.width = `${size}px`;
+        element.style.filter = `blur(${size < width * .16 ? .7 : 0}px) drop-shadow(3px 9px 7px #50301638)`;
+      });
+    };
+    reset();
+    let frame = 0, previous = performance.now(), elapsed = 0;
+    const tick = (now: number) => {
+      const dt = Math.min((now - previous) / 1000, .05); previous = now; elapsed += dt;
+      // Shared downward velocity preserves vertical separation; lateral drift is collision checked.
+      particles.forEach(p => { if (!reduced) p.y += dt * Math.max(45, height * .075); });
+      particles.forEach((p, index) => {
+        if (!reduced) {
+          const nextX = p.x + Math.sin(elapsed * .7 + p.phase) * p.drift * dt;
+          if (nextX > p.radius * .5 && nextX < width - p.radius * .5 && clear(nextX, p.y, p.radius, index)) p.x = nextX;
+          if (p.y - p.radius > height) {
+            for (let attempt = 0; attempt < 60; attempt++) {
+              const x = random(p.radius * .7, width - p.radius * .7), y = -p.radius - random(5, height * .3);
+              if (clear(x, y, p.radius, index)) { p.x = x; p.y = y; p.angle = random(-28, 28); break; }
+            }
+          }
+        }
+        const angle = p.angle + (reduced ? 0 : Math.sin(elapsed + p.phase) * 6);
+        elements[index].style.transform = `translate3d(${p.x - p.width / 2}px,${p.y - p.width * .75}px,0) rotate(${angle}deg)`;
+      });
+      if (!reduced) frame = requestAnimationFrame(tick);
+    };
+    frame = requestAnimationFrame(tick);
+    window.addEventListener("resize", reset);
+    return () => { cancelAnimationFrame(frame); window.removeEventListener("resize", reset); };
+  }, [visible]);
 
   useEffect(() => {
     if (!visible) return;
@@ -55,8 +103,8 @@ export function HomePreloader() {
   if (!visible) return null;
   return <dialog ref={dialog} className={`home-preloader ${leaving ? "home-preloader--leaving" : ""}`} aria-label="Entering Wanted Bounty" onCancel={event => { event.preventDefault(); dismiss(); }}>
     <div className="home-preloader__sky" aria-hidden="true">
-      {layers.map(({ left, duration, delay }, index) => {
-        return <div className="home-preloader__fall" key={index} style={{ "--left": `${left}%`, "--duration": `${duration}s`, "--delay": `${delay}s` } as CSSProperties}>
+      {layers.map((index) => {
+        return <div className="home-preloader__fall" key={index}>
           <div className="home-preloader__flutter"><div className="home-preloader__art" style={{ backgroundImage: `url(/scene/${index < 5 ? "flying-poster-sprites" : "flying-poster-crew"}.png)`, backgroundPosition: `${(index % 5) * 25}% center` }} /></div>
         </div>;
       })}
