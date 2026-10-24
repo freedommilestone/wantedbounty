@@ -33,3 +33,13 @@ export function tornPaper(seed: number, steps = 14, depth = 1.8) {
   for (let i = steps; i > 0; i--) points.push(`${pct(jitter())} ${pct((i / steps) * 100)}`);
   return `polygon(${points.join(", ")})`;
 }
+
+/** Broad uneven paper contours with small fiber tears, rather than regular saw teeth. */
+export function organicEdges(seed: number, { top = 0, bottom = 0, steps = 240 } = {}) {
+  const next = seeded(seed);
+  const points: string[] = [];
+  const depth = (i: number, amount: number) => amount * (.45 + .2 * Math.sin(i * .071 + seed) + .16 * Math.sin(i * .23) + .13 * next());
+  for (let i = 0; i <= steps; i++) points.push(`${i / steps * 100}% ${depth(i, top).toFixed(2)}px`);
+  for (let i = steps; i >= 0; i--) points.push(`${i / steps * 100}% calc(100% - ${depth(i, bottom).toFixed(2)}px)`);
+  return `polygon(${points.join(",")})`;
+}

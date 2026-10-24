@@ -164,3 +164,41 @@
   .home-page .wallet-btn { min-height: 40px; }
   .home-page .cta { padding: 15px 20px; }
 }
+
+/* Continuous illustration and irregular parchment seams from the reference. */
+.home-page .site-header { border-bottom: 0; background-color: #ecd5ae; background-image: linear-gradient(#fff0d1b0,#ecd5aed9), url('/textures/parchment-v2.jpg'); }
+.home-page .site-header::after { content: ''; position: absolute; z-index: -1; left: 0; right: 0; bottom: -23px; height: 30px; background: url('/textures/header-paper-edge.svg') center / 100% 100% no-repeat; pointer-events: none; }
+.home-page .site-header__inner { height: 78px; }
+.home-page .hero { margin-top: -1px; background-position: center bottom; }
+.home-page .hero__inner { padding-top: 49px; padding-bottom: 36px; }
+.home-page .hero__poster { z-index: 6; }
+.home-page .hero__title { font-size: clamp(66px, 8.7vw, 110px); }
+.home-page .paper-shadow--features { margin-top: -20px; filter: drop-shadow(0 -2px 1px #70432088); }
+.home-page .features { padding-top: 34px; padding-bottom: 36px; }
+.home-page .paper-shadow--fleet { margin-top: -17px; filter: drop-shadow(0 -2px 1px #70432066); }
+.home-page .fleet { padding-top: 30px; padding-bottom: 29px; }
+.home-page .parchment { background-image: linear-gradient(#fff0d39a,#fff0d39a), url('/textures/parchment-v2.jpg'); box-shadow: inset 0 0 28px #a76a2933; }
+.home-page .site-footer { margin-top: -25px; min-height: 185px; padding-top: 57px; background-size: 100% 100%; background-position: center bottom; }
+.home-page .site-footer__compass { top: 50px; }
+.home-page .site-footer__motto { max-width: 260px; }
+@media (min-width: 1051px) and (max-width: 1449px) {
+  .home-page .hero__poster { width: 350px; margin-top: -20px; margin-bottom: -32px; }
+}
+@media (max-width: 900px) {
+  .home-page .hero__title { font-size: 8.5vw; }
+  .home-page .hero__inner { padding-top: 40px; }
+  .home-page .site-footer { background-size: auto 100%; }
+}
+@media (max-width: 600px) {
+  .home-page .site-header__inner { height: 70px; }
+  .home-page .hero__title { font-size: 18vw; }
+  .home-page .hero__inner { padding-bottom: 48px; }
+  .home-page .hero__poster { margin: 0; }
+  .home-page .site-footer { min-height: 180px; }
+}
+.home-page .site-footer { background-size: 100% auto; }
+.home-page .paper-shadow--fleet { z-index: 7; margin-top: -20px; }
+.home-page .paper-shadow--features { filter: drop-shadow(0 -1px 1px #70432088); }
+.home-page .fleet { padding-top: 35px; }
+.home-page .site-footer__compass { top: 44px; }
+@media (max-width: 900px) { .home-page .site-footer { background-size: auto 300px; } }

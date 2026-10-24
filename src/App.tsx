@@ -16,13 +16,13 @@ import {
 } from "./components/icons";
 import { HomeWheel, HomeCompass, HomeHat, HomeDiamond } from "./components/HomeIcons";
 import { Link, usePath } from "./router";
-import { tornEdges, tornPaper } from "./torn";
+import { organicEdges, tornPaper } from "./torn";
 import { shortAddress, useWallet, WalletProvider, type BeriHoldings } from "./wallet";
 import "./App.css";
 import "./HomePage.css";
 
-const FEATURES_EDGE = tornEdges(11, { top: 8, bottom: 7, steps: 220 });
-const FLEET_EDGE = tornEdges(29, { top: 7, bottom: 8, steps: 220 });
+const FEATURES_EDGE = organicEdges(11, { top: 22, bottom: 12 });
+const FLEET_EDGE = organicEdges(29, { top: 17, bottom: 20 });
 const CTA_EDGE = tornPaper(5, 22, 1.4);
 
 const features = [
