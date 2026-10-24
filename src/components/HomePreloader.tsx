@@ -28,7 +28,7 @@ export function HomePreloader() {
         const radius = size * .94;
         let x = 0, y = 0;
         for (let attempt = 0; attempt < 600; attempt++) {
-          x = near ? (index === 0 ? 0 : width) : random(radius * .7, width - radius * .7);
+          x = near ? (index === 0 ? radius * .65 : width - radius * .65) : random(radius * .7, width - radius * .7);
           y = random(near ? 0 : -height * .4, height);
           if (clear(x, y, radius)) break;
           if (attempt === 599) y = -height - index * radius * 3;
@@ -37,8 +37,8 @@ export function HomePreloader() {
         element.style.width = `${size}px`;
         element.dataset.depth = near ? "near" : distant ? "far" : "middle";
         element.style.zIndex = near ? "3" : distant ? "1" : "2";
-        element.style.opacity = distant ? ".8" : "1";
-        element.style.filter = `blur(${near ? Math.max(2.5, size * .012) : distant ? 1.1 : 0}px) drop-shadow(3px 9px 7px #50301638)`;
+        element.style.opacity = "1";
+        element.style.filter = "drop-shadow(3px 9px 7px #50301638)";
       });
     };
     reset();
@@ -53,7 +53,7 @@ export function HomePreloader() {
           if (nextX > p.radius * .5 && nextX < width - p.radius * .5 && clear(nextX, p.y, p.radius, index)) p.x = nextX;
           if (p.y - p.radius > height) {
             for (let attempt = 0; attempt < 60; attempt++) {
-              const x = p.near ? (index === 0 ? 0 : width) : random(p.radius * .7, width - p.radius * .7), y = -p.radius - random(5, height * .3);
+              const x = p.near ? (index === 0 ? p.radius * .65 : width - p.radius * .65) : random(p.radius * .7, width - p.radius * .7), y = -p.radius - random(5, height * .3);
               if (clear(x, y, p.radius, index)) { p.x = x; p.y = y; p.angle = random(-28, 28); break; }
             }
           }
