@@ -2,7 +2,7 @@ import { toPng } from "html-to-image";
 import { useEffect, useRef, useState, type ChangeEvent, type DragEvent, type ReactNode } from "react";
 import { SiteHeader } from "./components/SiteHeader";
 import { POSTER_FEE } from "./payment";
-import { WantedPoster } from "./components/WantedPoster";
+import { CreatorPoster } from "./components/CreatorPoster";
 import {
   ArrowRight,
   BeriCoin,
@@ -360,14 +360,11 @@ export function CreatePosterPage() {
                   <p className="create__ribbon">
                     <EyeIcon /> Live Preview
                   </p>
-                  <WantedPoster
-                    className="create__poster"
+                  <CreatorPoster
                     name={posterName}
                     bounty={bounty}
-                    bountySuffix=" BERI"
                     portrait={photo?.url ?? DEFAULT_PORTRAIT}
                     photoClassName={`art--${artStyle}`}
-                    seed={31}
                     fine={`By order of the Beri Fleet, ${title} ${posterName} is wanted on every sea. Any crew member who brings word of their whereabouts shall be rewarded in full.`}
                   />
                   <div className="create__assurances">

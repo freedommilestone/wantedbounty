@@ -102,3 +102,21 @@
   .creator-page .create__panel-shadow { min-height:0; }
   .creator-page .create__form { padding-bottom:1em; }
 }
+/* Independent engraved labels and button borders. */
+.creator-page .create__ribbon { border:3px double #d0a567; background:#22150c; box-shadow:0 0 0 1px #442a15; letter-spacing:.08em; }
+.creator-page .pay__button { border:3px double #ddbd87; box-shadow:0 0 0 1px #653822,inset 0 0 0 2px #4a2115; }
+.creator-page .steps__ribbon { background:url('/textures/button-parchment.png') center / 100% 145% no-repeat; border:0; padding-block:.5em; }
+.creator-page .steps__ribbon::before,.creator-page .steps__ribbon::after { display:none; }
+.creator-page .step__number { font-size:2.8em; width:1.85em; height:1.85em; }
+@media(min-width:1101px) {
+  .creator-page .create__title span:first-child { font-size:3.8em; }
+  .creator-page .create__title span:last-child { font-size:7.8em; }
+  .creator-page .create__lede { font-size:1.65em; max-width:28em; }
+  .creator-page .create__lede strong { font-size:1.25em; }
+  .creator-page .step__title { font-size:2.35em; }
+  .creator-page .step__hint { font-size:1.2em; }
+  .creator-page .step + .step { margin-top:1.5em; padding-top:1.3em; }
+  .creator-page .create__assurances { margin-top:1.4em; }
+  .creator-page .create__preview::before { inset:3em 2.2em 1.8em; }
+}
+@media(max-width:600px) { .creator-page .step__number { font-size:1.65em; } }
