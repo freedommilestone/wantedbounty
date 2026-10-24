@@ -5,7 +5,6 @@ import { WalletModal } from "./components/WalletModal";
 import { WantedPoster } from "./components/WantedPoster";
 import {
   ArrowRight,
-  BeriTarget,
   ChevronLeft,
   ChevronRight,
   CliffsArt,
@@ -14,12 +13,13 @@ import {
   HelmLogo,
   SkullIcon,
 } from "./components/icons";
-import { HomeWheel, HomeCompass, HomeHat, HomeDiamond } from "./components/HomeIcons";
+import { HomeWheel, HomeCompass, HomeHat, HomeDiamond, HomeEmblem } from "./components/HomeIcons";
 import { Link, usePath } from "./router";
 import { organicEdges, tornPaper } from "./torn";
 import { shortAddress, useWallet, WalletProvider, type BeriHoldings } from "./wallet";
 import "./App.css";
 import "./HomePage.css";
+import "./HomeReferenceLayout.css";
 
 const FEATURES_EDGE = organicEdges(11, { top: 22, bottom: 12 });
 const FLEET_EDGE = organicEdges(29, { top: 17, bottom: 20 });
@@ -116,7 +116,7 @@ function HomePage() {
   const openPoster = (index: number) => { setSelected(index); galleryRef.current?.showModal(); };
 
   return (
-    <div className="home-page">
+    <div className={`home-page ${showAll ? "home-page--expanded" : ""}`}>
       <SiteHeader active="home" />
 
       <main>
@@ -127,7 +127,7 @@ function HomePage() {
               <h1 className="hero__title" aria-label="Wanted Bounty">
                 <span>Wanted</span>
                 <span>
-                  B<BeriTarget className="hero__target" />
+                  B<HomeEmblem className="hero__target" />
                   unty
                 </span>
               </h1>
@@ -180,7 +180,7 @@ function HomePage() {
             <div className="container">
               <div className="fleet__head">
                 <div className="fleet__heading">
-                  <h2 className="fleet__title">The Fleet’s Latest Bounties</h2>
+                  <h2 className="fleet__title"><CompassRose className="fleet__heading-star" />The Fleet’s Latest Bounties</h2>
                   <div className="fleet__divider">
                     <SkullIcon className="fleet__ornament" />
                   </div>

@@ -16,3 +16,15 @@ export function HomeHat({className}:Props) {
 export function HomeDiamond({className}:Props) {
   return <svg className={className} viewBox="0 0 80 80" aria-hidden="true"><g fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinejoin="round"><path d="m10 28 15-19h30l15 19-30 43Z"/><path d="M10 28h60M25 9l-5 19 20 43 20-43-5-19M20 28 40 9l20 19M25 9l30 0M20 28h40M40 9v62"/><path d="m25 9 15 19L55 9" strokeWidth="1.5"/></g></svg>;
 }
+
+export function HomeEmblem({ className, cherries = false }: Props & { cherries?: boolean }) {
+  return <svg className={className} viewBox="0 0 88 88" aria-hidden="true">
+    <g stroke="currentColor" fill="none" strokeLinecap="round">
+      <circle cx="40" cy="40" r="28" strokeWidth="3"/><circle cx="40" cy="40" r="21" strokeWidth="1.7"/>
+      {Array.from({length:8},(_,i)=><g key={i} transform={`rotate(${i*45} 40 40)`}><path d="M40 5v9" strokeWidth="3"/><circle cx="40" cy="4" r="2.3" fill="currentColor"/></g>)}
+      <path d="M36 21v39m7-39v39" strokeWidth="1.3"/>
+    </g>
+    <text x="40" y="55" textAnchor="middle" fill="currentColor" fontFamily="Georgia,serif" fontSize="40" fontWeight="700">B</text>
+    {cherries && <g stroke="#3c210f" strokeWidth="1.2"><path d="M66 66q7-12 10-17m-1 4q-1 13 3 19" fill="none"/><path d="M74 54q-9-9-15-1 9 4 15 1m0-1q4-9 13-7-3 8-13 7" fill="#485638"/><circle cx="66" cy="70" r="7" fill="#a63126"/><circle cx="79" cy="75" r="7" fill="#b5402c"/><path d="m62 68 2-2m12 7 2-2" stroke="#e7a26e" strokeWidth="2"/></g>}
+  </svg>;
+}

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link } from "../router";
+import { HomeEmblem } from "./HomeIcons";
 import { HelmLogo } from "./icons";
 import { WalletButton } from "./WalletButton";
 
@@ -18,7 +19,7 @@ export function SiteHeader({ active }: { active: Page }) {
     <header className={`site-header ${active === "create" ? "site-header--create" : "site-header--home"}`}>
       <div className="container site-header__inner">
         <Link className="brand" href="/">
-          <HelmLogo className="brand__logo" />
+          {active === "home" ? <HomeEmblem className="brand__logo" cherries /> : <HelmLogo className="brand__logo" />}
           <span>
             <span className="brand__name">{active === "home" ? "Beri Bounty" : "Wanted Bounty"}</span>
             <span className="brand__tag">$BERI • Community • Legendary</span>
