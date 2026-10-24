@@ -15,25 +15,30 @@ export function HomePreloader() {
     const elements = Array.from(dialog.current!.querySelectorAll<HTMLElement>(".home-preloader__fall"));
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const random = (min: number, max: number) => min + Math.random() * (max - min);
-    type Particle = { x: number; y: number; width: number; radius: number; angle: number; phase: number; drift: number };
+    type Particle = { x: number; y: number; width: number; radius: number; angle: number; phase: number; drift: number; near: boolean };
     let particles: Particle[] = [];
     let width = window.innerWidth, height = window.innerHeight;
     const clear = (x: number, y: number, radius: number, ignore = -1) => particles.every((p, i) => i === ignore || Math.hypot(x - p.x, y - p.y) > radius + p.radius + 10);
     const reset = () => {
       width = window.innerWidth; height = window.innerHeight; particles = [];
       elements.forEach((element, index) => {
-        const size = random(.13, .27) * Math.min(width, 950);
+        const near = index < 2;
+        const distant = index >= 5;
+        const size = (near ? random(.44, .56) : distant ? random(.07, .13) : random(.23, .32)) * Math.min(width, 950);
         const radius = size * .94;
         let x = 0, y = 0;
         for (let attempt = 0; attempt < 600; attempt++) {
-          x = random(radius * .7, width - radius * .7);
-          y = random(-height * .6, height);
+          x = near ? (index === 0 ? 0 : width) : random(radius * .7, width - radius * .7);
+          y = random(near ? 0 : -height * .4, height);
           if (clear(x, y, radius)) break;
           if (attempt === 599) y = -height - index * radius * 3;
         }
-        particles.push({ x, y, width: size, radius, angle: random(-28, 28), phase: random(0, Math.PI * 2), drift: random(5, 16) });
+        particles.push({ x, y, width: size, radius, angle: random(-28, 28), phase: random(0, Math.PI * 2), drift: random(5, 16), near });
         element.style.width = `${size}px`;
-        element.style.filter = `blur(${size < width * .16 ? .7 : 0}px) drop-shadow(3px 9px 7px #50301638)`;
+        element.dataset.depth = near ? "near" : distant ? "far" : "middle";
+        element.style.zIndex = near ? "3" : distant ? "1" : "2";
+        element.style.opacity = distant ? ".8" : "1";
+        element.style.filter = `blur(${near ? Math.max(2.5, size * .012) : distant ? 1.1 : 0}px) drop-shadow(3px 9px 7px #50301638)`;
       });
     };
     reset();
@@ -48,7 +53,7 @@ export function HomePreloader() {
           if (nextX > p.radius * .5 && nextX < width - p.radius * .5 && clear(nextX, p.y, p.radius, index)) p.x = nextX;
           if (p.y - p.radius > height) {
             for (let attempt = 0; attempt < 60; attempt++) {
-              const x = random(p.radius * .7, width - p.radius * .7), y = -p.radius - random(5, height * .3);
+              const x = p.near ? (index === 0 ? 0 : width) : random(p.radius * .7, width - p.radius * .7), y = -p.radius - random(5, height * .3);
               if (clear(x, y, p.radius, index)) { p.x = x; p.y = y; p.angle = random(-28, 28); break; }
             }
           }
