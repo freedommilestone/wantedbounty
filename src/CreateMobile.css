@@ -79,3 +79,26 @@
   .creator-page .create-mobile-guide { background-image:url('/textures/creator-poster-frame.png'); background-color:transparent; clip-path:none; }
   .creator-page .create__form { padding-top:1em; padding-bottom:1.5em; }
 }
+/* Keep text within the usable paper area, independent of decorative torn edges. */
+@media(max-width:1100px) {
+  .creator-page .site-header__inner { width:92%; min-height:64px; height:8.2em; gap:12px; }
+  .creator-page .brand__logo { width:clamp(44px,7.5vw,68px); height:clamp(50px,8vw,72px); }
+  .creator-page .site-menu-toggle { width:44px; height:44px; padding:6px; font-size:28px; line-height:1; flex:none; }
+  .creator-page .site-header__inner > .wallet-btn { min-height:44px; font-size:clamp(12px,1.65vw,16px); padding:10px 18px; }
+  .creator-page .create__intro { height:auto; min-height:29em; padding:1.5em 0 2em; }
+  .creator-page .create__banner-shadow { position:relative; left:auto; top:auto; margin-left:6%; width:68%; }
+  .creator-page .create__banner { background:url('/textures/creator-poster-frame.png') center / 100% 100% no-repeat; padding:3.5em 4em 4em; }
+  .creator-page .create__title { margin:0 0 1em; }
+  .creator-page .create__title span:first-child { font-size:3.2em; line-height:1.05; }
+  .creator-page .create__title span:last-child { font-size:5.1em; line-height:1.08; letter-spacing:-.055em; white-space:nowrap; }
+  .creator-page .create__lede { width:100%; max-width:none; font-size:1.55em; line-height:1.3; }
+  .creator-page .create__lede strong { font-size:1.1em; }
+  .creator-page .create__motto { right:1em; top:3em; }
+  .creator-page .create__motto p { font-size:2.2em; }
+  .creator-page .create__compass { width:6em; }
+  .creator-page .create-mobile-guide { padding:2.5em 3.5em 3.5em; margin-bottom:1em; background:#efdbb6 url('/textures/home-poster-paper.jpg') center / 100% 100%; }
+  .creator-page .create-mobile-guide > h2 { position:relative; top:auto; left:auto; transform:none; margin:0 auto 1em; padding:.5em 1em; width:13em; max-width:90%; background-size:100% 145%; }
+  .creator-page .create-mobile-guide li { padding:0 .85em; min-width:0; }
+  .creator-page .create-mobile-guide h3 { font-size:1.7em; white-space:normal; min-height:2.2em; }
+  .creator-page .create-mobile-guide p { font-size:1.5em; line-height:1.3; overflow-wrap:break-word; }
+}
