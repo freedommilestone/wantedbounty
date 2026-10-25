@@ -127,3 +127,65 @@
     background:url('/scene/create-mobile-harbor.jpg') center bottom / 100% 104.846336% no-repeat;
   }
 }
+
+/* Mobile reference composition: banner, guide, editor, then a standalone poster. */
+@media (max-width:1100px) {
+  .creator-page .create__intro { min-height:27em; padding:1em 0 2em; }
+  .creator-page .create__banner-shadow { margin-left:10%; width:62%; }
+  .creator-page .create__banner {
+    background: url('/textures/title-banner.png') center / 100% 100% no-repeat;
+    padding:3.5em 4em 3.8em;
+  }
+  .creator-page .create__title { margin-bottom:.7em; }
+  .creator-page .create__title span:first-child { font-size:3.8em; }
+  .creator-page .create__title span:last-child { font-size:5.8em; letter-spacing:-.065em; }
+  .creator-page .create__lede { font-size:1.7em; line-height:1.25; }
+  .creator-page .create__lede strong { font-size:1.12em; }
+  .creator-page .create__motto { right:2em; top:2em; }
+  .creator-page .create__compass { width:7em; margin-top:3em; }
+  .creator-page .create-mobile-guide {
+    position:relative; margin:0 0 -.3em;
+    padding:5em 2.5em 2.5em;
+    background:transparent url('/textures/creator-poster-frame.png') center / 100% 100%;
+  }
+  .creator-page .create-mobile-guide > h2 {
+    position:absolute; top:-.5em; left:50%; transform:translateX(-50%);
+    width:11em; margin:0; font-size:2.8em; padding:.5em .8em;
+  }
+  .creator-page .create-mobile-guide .creator-guide-icon { width:6.5em; height:6.5em; margin-bottom:1em; }
+  .creator-page .create-mobile-guide h3 { font-size:1.85em; min-height:1.2em; }
+  .creator-page .create-mobile-guide p { font-size:1.65em; line-height:1.25; }
+  .creator-page .create__form {
+    background:transparent url('/textures/creator-poster-frame.png') center / 100% 100%;
+    clip-path:none!important; padding:2em 4.5em 3.5em;
+  }
+  .creator-page .step { grid-template-columns:6.5em minmax(0,1fr); gap:2.5em; }
+  .creator-page .step + .step { margin-top:1.6em; padding-top:1.6em; }
+  .creator-page .step__title { font-size:2.8em; }
+  .creator-page .upload__thumb { width:14.5em; height:12em; }
+  .creator-page .upload__drop-wrap { max-width:39em; }
+  .creator-page .fields { gap:1.2em 2.4em; }
+  .creator-page .field__control { height:2.7em; }
+  .creator-page .style-option img { aspect-ratio:1.45; }
+  .creator-page .pay__secure { font-size:1.15em; margin-top:.6em; }
+  .creator-page .create__preview { padding:0 0 1.5em; overflow:visible; }
+  .creator-page .create__ribbon { width:max-content; max-width:90%; font-size:2.8em; margin:-.3em auto -1.1em; position:relative; }
+  .creator-page .creator-poster { width:54em; max-width:none; margin:0 auto; }
+  .creator-page .create__assurances { display:none; }
+}
+@media (max-width:1100px) {
+  .creator-page .create__banner { padding:3.5em 4em 4.8em; }
+  .creator-page .create__lede { max-width:24em; font-size:1.6em; }
+  .creator-page .create-mobile-guide { padding-top:4.5em; padding-bottom:2em; }
+  .creator-page .create-mobile-guide p { font-size:1.5em; }
+  .creator-page .create-mobile-guide .creator-guide-icon { width:6em; height:6em; margin-bottom:.6em; }
+  .creator-page .create__form { padding:3.8em 5.5em 3.8em 4.5em; }
+  .creator-page .step + .step { margin-top:.7em; padding-top:.7em; }
+  .creator-page .step__title { margin-bottom:.2em; }
+  .creator-page .creator-poster { width:50em; }
+  .creator-page .creator-poster__sheet { aspect-ratio:480 / 560; }
+  .creator-page .creator-poster__portrait { top:23%; height:37%; }
+  .creator-page .creator-poster__alive { top:61%; }
+  .creator-page .creator-poster__name { top:68%; }
+  .creator-page .creator-poster__bounty { top:80%; }
+}
