@@ -1,7 +1,7 @@
 import { toPng } from "html-to-image";
 import { useEffect, useRef, useState, type ChangeEvent, type DragEvent, type ReactNode } from "react";
 import { SiteHeader } from "./components/SiteHeader";
-import { POSTER_FEE } from "./payment";
+import { POSTER_FEE, type PaymentToken } from "./payment";
 import { CreatorGuideIcon } from "./components/CreatorGuideIcon";
 import { CreatorPoster } from "./components/CreatorPoster";
 import {
@@ -14,7 +14,6 @@ import {
   LockIcon,
   ShieldIcon,
   UploadCloudIcon,
-  VerifiedBadge,
   WalletIcon,
 } from "./components/icons";
 import { tornPaper } from "./torn";
@@ -45,12 +44,12 @@ const NOTE_EDGE = tornPaper(9, 70, 1.5);
 const steps = [
   { title: "1. Upload", text: "Add your photo and choose your details." },
   { title: "2. Customize", text: "Set your name, bounty, title and art style." },
-  { title: "3. Pay with BERI", text: `Connect your wallet and confirm the ${FEE} BERI fee.` },
+  { title: "3. Pay $5", text: `Pay ${FEE} USDC or USDT on Solana with your wallet.` },
   { title: "4. Get your poster", text: "Receive your One Piece–style wanted poster and share it with the community." },
 ];
 
 export function CreatePosterPage() {
-  const { address, holdings, isHolder, openModal, payBeri } = useWallet();
+  const { address, holdings, isHolder, openModal, payForPoster } = useWallet();
   const fileRef = useRef<HTMLInputElement>(null);
   const previewRef = useRef<HTMLElement>(null);
   const [photo, setPhoto] = useState<{ url: string; name: string } | null>(null);
@@ -63,6 +62,7 @@ export function CreatePosterPage() {
   const [artStyle, setArtStyle] = useState<ArtStyle>("classic");
   const [payNote, setPayNote] = useState<string | null>(null);
   const [phase, setPhase] = useState<"idle" | "signing" | "confirming" | "paid">("idle");
+  const [paymentToken, setPaymentToken] = useState<PaymentToken>("USDC");
   const [receipt, setReceipt] = useState<string | null>(null);
 
   const bounty = customBounty ? Number(customBounty).toLocaleString("en-US") : isHolder && holdings.state === "ready" ? holdings.display : PLACEHOLDER_BOUNTY;
@@ -71,8 +71,6 @@ export function CreatePosterPage() {
     document.title = "Create Your Wanted Poster | Wanted Bounty";
   }, []);
   const posterName = name.trim() || "Your Name";
-  const balance = holdings.state === "ready" ? holdings.amount : 0;
-  const canAfford = balance >= FEE;
 
   const takeFile = (file: File | undefined) => {
     if (!file) return;
@@ -158,7 +156,7 @@ export function CreatePosterPage() {
     setPayNote(null);
     setPhase("signing");
     try {
-      const signature = await payBeri(FEE, () => setPhase("confirming"));
+      const signature = await payForPoster(paymentToken, () => setPhase("confirming"));
       setReceipt(signature);
       setPhase("paid");
     } catch (error) {
@@ -167,17 +165,13 @@ export function CreatePosterPage() {
     }
   };
 
-  let payLabel = `Pay ${FEE} BERI & Generate`;
+  let payLabel = `Pay ${FEE} ${paymentToken} & Generate`;
   if (!address) payLabel = "Connect Wallet to Pay";
   else if (phase === "paid") payLabel = "Download Your Poster";
   else if (phase === "signing") payLabel = "Approve in your wallet…";
   else if (phase === "confirming") payLabel = "Confirming payment…";
-  else if (holdings.state === "loading") payLabel = "Checking your BERI…";
 
-  const payDisabled =
-    phase === "signing" ||
-    phase === "confirming" ||
-    (phase !== "paid" && Boolean(address) && (holdings.state === "loading" || (holdings.state === "ready" && !canAfford)));
+  const payDisabled = phase === "signing" || phase === "confirming";
 
   return (
     <div className="creator-page">
@@ -309,15 +303,20 @@ export function CreatePosterPage() {
                     </div>
                   </Step>
 
-                  <Step number={3} title="Pay with BERI & Generate">
+                  <Step number={3} title="Pay $5 & Generate">
                     <div className="pay">
                       <div className="pay__wallet">
                         <span className="pay__wallet-icon">
                           <WalletIcon />
                         </span>
                         <div>
-                          <span className="pay__wallet-label">Your Wallet</span>
-                          <WalletBalance />
+                          <label className="pay__wallet-label" htmlFor="payment-token">Pay with · Solana</label>
+                          <select id="payment-token" className="pay__currency" value={paymentToken}
+                            disabled={phase !== "idle"}
+                            onChange={(event) => { setPaymentToken(event.target.value as PaymentToken); setPayNote(null); }}>
+                            <option value="USDC">5 USDC</option>
+                            <option value="USDT">5 USDT</option>
+                          </select>
                         </div>
                       </div>
                       <div className="pay__action">
@@ -331,9 +330,7 @@ export function CreatePosterPage() {
                           <ArrowRight />
                         </button>
                         <p>
-                          {address && holdings.state === "ready" && !canAfford
-                            ? `You need at least ${FEE} BERI to generate a poster.`
-                            : `This will create your poster and deduct ${FEE} BERI from your wallet.`}
+                          {FEE} {paymentToken} for your poster. SOL is needed for network and any token-account setup fees.
                         </p>
                       </div>
                     </div>
@@ -353,7 +350,7 @@ export function CreatePosterPage() {
                     <p className="pay__secure">
                       <ShieldIcon />
                       <span>
-                        The 500 BERI fee requires your wallet approval.
+                        The $5 fee is paid in USDC or USDT with your wallet approval.
                         <br />
                         Photo finishes are filters, not AI-generated artwork.
                       </span>
@@ -435,30 +432,5 @@ function Step({ number, title, hint, children }: { number: number; title: string
         {children}
       </div>
     </section>
-  );
-}
-
-function WalletBalance() {
-  const { address, holdings, openModal } = useWallet();
-
-  if (!address) {
-    return (
-      <button type="button" className="pay__connect" onClick={openModal}>
-        Connect wallet
-      </button>
-    );
-  }
-  if (holdings.state === "loading") return <strong className="pay__balance">Scanning…</strong>;
-  if (holdings.state !== "ready") return <strong className="pay__balance">Unavailable</strong>;
-
-  return (
-    <strong className="pay__balance">
-      {holdings.display} BERI
-      {holdings.amount > 0 && (
-        <span className="pay__verified">
-          <VerifiedBadge /> Verified
-        </span>
-      )}
-    </strong>
   );
 }

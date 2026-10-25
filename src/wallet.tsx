@@ -1,6 +1,6 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import { associatedTokenAddress, encodeBase58 } from "./ata";
-import { buildBeriTransfer } from "./payment";
+import { buildPosterPayment, type PaymentToken } from "./payment";
 
 const STORAGE_KEY = "wantedbounty:wallet";
 const LEGACY_STORAGE_KEY = "wantedbounty:phantom";
@@ -106,8 +106,8 @@ interface WalletContextValue {
   holdings: BeriHoldings;
   isHolder: boolean;
   refreshHoldings: () => void;
-  /** Sends `amount` whole BERI to the treasury and resolves with the transaction signature once confirmed. */
-  payBeri: (amount: number, onSent?: (signature: string) => void) => Promise<string>;
+  /** Pays the fixed stablecoin poster fee and resolves after confirmation. */
+  payForPoster: (token: PaymentToken, onSent?: (signature: string) => void) => Promise<string>;
 }
 
 const WalletContext = createContext<WalletContextValue | null>(null);
@@ -570,8 +570,8 @@ export function WalletProvider({ children }: { children: ReactNode }) {
     reset();
   }, [metamask, reset]);
 
-  const payBeri = useCallback(
-    async (amount: number, onSent?: (signature: string) => void) => {
+  const payForPoster = useCallback(
+    async (token: PaymentToken, onSent?: (signature: string) => void) => {
       const kind = walletRef.current;
       const owner = address;
       if (!kind || !owner) throw new Error("Connect your wallet first.");
@@ -583,7 +583,7 @@ export function WalletProvider({ children }: { children: ReactNode }) {
       }
 
       try {
-        const { transaction } = await buildBeriTransfer(rpc, { owner, mint: BERI_MINT, amount });
+        const { transaction } = await buildPosterPayment(rpc, { owner, token });
 
         let account = standard.accounts.find((item) => item.address === owner);
         if (!account) {
@@ -633,7 +633,7 @@ export function WalletProvider({ children }: { children: ReactNode }) {
       holdings,
       isHolder: holdings.state === "ready" && holdings.amount > 0,
       refreshHoldings: () => setScanNonce((nonce) => nonce + 1),
-      payBeri,
+      payForPoster,
     }),
     [
       modalOpen,
@@ -648,7 +648,7 @@ export function WalletProvider({ children }: { children: ReactNode }) {
       status,
       error,
       holdings,
-      payBeri,
+      payForPoster,
     ],
   );
 

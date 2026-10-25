@@ -4,8 +4,15 @@ import { associatedTokenAddress, decodeBase58 } from "./ata";
 export const TREASURY_ADDRESS =
   (import.meta.env?.VITE_TREASURY_ADDRESS as string | undefined)?.trim() || "3CQ2GbBy1ks8kyEpa89TV9b3LaC17FBhwR2iZUzVw4pP";
 
-/** Poster fee, in whole BERI. */
-export const POSTER_FEE = 500;
+/** Fixed fee in whole USD stablecoin units, on Solana mainnet. */
+export const POSTER_FEE = 5;
+// Canonical mainnet mints: https://solana.com/docs/payments/how-payments-work
+export const PAYMENT_TOKENS = {
+  USDC: "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+  USDT: "Es9vMFrzaCERmJfrF4H2FYD4KCoNkY11McCe8BenwNYB",
+} as const;
+export type PaymentToken = keyof typeof PAYMENT_TOKENS;
+const TOKEN_PROGRAM = "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA";
 
 const SYSTEM_PROGRAM = "11111111111111111111111111111111";
 const ASSOCIATED_TOKEN_PROGRAM = "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL";
@@ -32,7 +39,7 @@ interface ParsedTokenAccount {
   };
 }
 
-export interface BeriTransfer {
+export interface PosterTransfer {
   /** Serialized transaction with empty signature slots, ready for a wallet to sign. */
   transaction: Uint8Array;
   createsTreasuryAccount: boolean;
@@ -126,46 +133,18 @@ function transferCheckedData(raw: bigint, decimals: number): Uint8Array {
   return data;
 }
 
-/** Token-2022 mints with a transfer fee require the expected fee to be stated in the instruction. */
-function transferCheckedWithFeeData(raw: bigint, decimals: number, fee: bigint): Uint8Array {
-  const data = new Uint8Array(19);
-  data[0] = 26; // TransferFeeExtension
-  data[1] = 1; // TransferCheckedWithFee
-  const view = new DataView(data.buffer);
-  view.setBigUint64(2, raw, true);
-  data[10] = decimals;
-  view.setBigUint64(11, fee, true);
-  return data;
-}
-
-interface FeeSchedule {
-  epoch?: number | string;
-  maximumFee?: number | string;
-  transferFeeBasisPoints?: number | string;
-}
-
-function transferFee(raw: bigint, config: { newerTransferFee?: FeeSchedule; olderTransferFee?: FeeSchedule }, epoch: number): bigint {
-  const newer = config.newerTransferFee;
-  const schedule = newer && epoch >= Number(newer.epoch ?? 0) ? newer : (config.olderTransferFee ?? newer);
-  if (!schedule) return 0n;
-  const basisPoints = BigInt(schedule.transferFeeBasisPoints ?? 0);
-  if (basisPoints === 0n) return 0n;
-  const maximum = BigInt(schedule.maximumFee ?? 0);
-  const fee = (raw * basisPoints + 9999n) / 10000n;
-  return fee > maximum ? maximum : fee;
-}
-
-/**
- * Builds a BERI transfer from `owner` to the treasury's associated token account.
- * Works for both the classic token program and Token-2022.
- */
-export async function buildBeriTransfer(
+/** Builds a fixed-price payment using only the supported mainnet stablecoins. */
+export async function buildPosterPayment(
   rpc: RpcCall,
-  options: { owner: string; mint: string; amount: number; treasury?: string },
-): Promise<BeriTransfer> {
-  const { owner, mint, amount } = options;
-  const treasury = options.treasury ?? TREASURY_ADDRESS;
-
+  options: { owner: string; token: PaymentToken },
+): Promise<PosterTransfer> {
+  const { owner, token } = options;
+  if (!Object.prototype.hasOwnProperty.call(PAYMENT_TOKENS, token)) {
+    throw new Error("Choose USDC or USDT.");
+  }
+  const mint = PAYMENT_TOKENS[token];
+  const amount = POSTER_FEE;
+  const treasury = TREASURY_ADDRESS;
   const holdings = await rpc<{ value: ParsedTokenAccount[] }>("getTokenAccountsByOwner", [
     owner,
     { mint },
@@ -177,7 +156,7 @@ export async function buildBeriTransfer(
   let decimals = 6;
   for (const item of holdings.value ?? []) {
     const info = item.account.data?.parsed?.info;
-    if (!info?.tokenAmount?.amount || info.state === "frozen") continue;
+    if (!info?.tokenAmount?.amount || info.state === "frozen" || item.account.owner !== TOKEN_PROGRAM || info.tokenAmount.decimals !== 6) continue;
     const raw = BigInt(info.tokenAmount.amount);
     decimals = info.tokenAmount.decimals ?? decimals;
     total += raw;
@@ -185,25 +164,9 @@ export async function buildBeriTransfer(
   }
 
   const needed = BigInt(amount) * 10n ** BigInt(decimals);
-  if (!source || total < needed) throw new Error(`You need at least ${amount} BERI to pay for a poster.`);
+  if (!source || total < needed) throw new Error(`You need at least ${amount} ${token} to pay for a poster.`);
   if (source.raw < needed) {
-    throw new Error(`Your BERI is split across accounts. Move ${amount} BERI into one token account and try again.`);
-  }
-
-  const mintInfo = await rpc<{
-    value: {
-      data?: {
-        parsed?: {
-          info?: { extensions?: { extension?: string; state?: { newerTransferFee?: FeeSchedule; olderTransferFee?: FeeSchedule } }[] };
-        };
-      };
-    } | null;
-  }>("getAccountInfo", [mint, { encoding: "jsonParsed" }]);
-  const feeConfig = mintInfo.value?.data?.parsed?.info?.extensions?.find((entry) => entry.extension === "transferFeeConfig");
-  let fee: bigint | null = null;
-  if (feeConfig) {
-    const { epoch } = await rpc<{ epoch: number }>("getEpochInfo", []);
-    fee = transferFee(needed, feeConfig.state ?? {}, epoch);
+    throw new Error(`Your ${token} is split across accounts. Move ${amount} ${token} into one token account and try again.`);
   }
 
   const program = source.program;
@@ -239,7 +202,7 @@ export async function buildBeriTransfer(
       { key: destination, signer: false, writable: true },
       { key: owner, signer: true, writable: false },
     ],
-    data: fee === null ? transferCheckedData(needed, decimals) : transferCheckedWithFeeData(needed, decimals, fee),
+    data: transferCheckedData(needed, decimals),
   });
 
   return {
