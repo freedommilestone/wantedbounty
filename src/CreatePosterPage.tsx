@@ -1,7 +1,7 @@
 import { toPng } from "html-to-image";
 import { useEffect, useRef, useState, type ChangeEvent, type DragEvent, type ReactNode } from "react";
 import { SiteHeader } from "./components/SiteHeader";
-import { POSTER_FEE, type PaymentToken } from "./payment";
+import { POSTER_FEE, type PaymentToken, type SolQuote } from "./payment";
 import { CreatorGuideIcon } from "./components/CreatorGuideIcon";
 import { CreatorPoster } from "./components/CreatorPoster";
 import {
@@ -44,7 +44,7 @@ const NOTE_EDGE = tornPaper(9, 70, 1.5);
 const steps = [
   { title: "1. Upload", text: "Add your photo and choose your details." },
   { title: "2. Customize", text: "Set your name, bounty, title and art style." },
-  { title: "3. Pay $5", text: `Pay ${FEE} USDC or USDT on Solana with your wallet.` },
+  { title: "3. Pay $5", text: `Pay $5 in USDC, USDT or SOL on Solana with your wallet.` },
   { title: "4. Get your poster", text: "Receive your One Piece–style wanted poster and share it with the community." },
 ];
 
@@ -63,6 +63,26 @@ export function CreatePosterPage() {
   const [payNote, setPayNote] = useState<string | null>(null);
   const [phase, setPhase] = useState<"idle" | "signing" | "confirming" | "paid">("idle");
   const [paymentToken, setPaymentToken] = useState<PaymentToken>("USDC");
+  const [solQuote, setSolQuote] = useState<SolQuote | null>(null);
+  const [quoteLoading, setQuoteLoading] = useState(false);
+  const [now, setNow] = useState(Date.now());
+  const refreshQuote = async () => {
+    setSolQuote(null); setQuoteLoading(true); setPayNote(null);
+    try {
+      const response = await fetch("/api/sol-quote", { cache: "no-store" });
+      const data = await response.json();
+      if (!response.ok) throw new Error(data.error || "SOL pricing unavailable.");
+      setSolQuote(data); setNow(Date.now());
+    } catch { setPayNote("SOL pricing unavailable. Retry or choose USDC or USDT."); }
+    finally { setQuoteLoading(false); }
+  };
+  useEffect(() => {
+    if (paymentToken !== "SOL") return;
+    void refreshQuote();
+    const timer = window.setInterval(() => setNow(Date.now()), 1000);
+    return () => window.clearInterval(timer);
+  }, [paymentToken]);
+  const quoteValid = solQuote !== null && solQuote.expiresAt > now;
   const [receipt, setReceipt] = useState<string | null>(null);
 
   const bounty = customBounty ? Number(customBounty).toLocaleString("en-US") : isHolder && holdings.state === "ready" ? holdings.display : PLACEHOLDER_BOUNTY;
@@ -156,7 +176,7 @@ export function CreatePosterPage() {
     setPayNote(null);
     setPhase("signing");
     try {
-      const signature = await payForPoster(paymentToken, () => setPhase("confirming"));
+      const signature = await payForPoster(paymentToken, () => setPhase("confirming"), solQuote ?? undefined);
       setReceipt(signature);
       setPhase("paid");
     } catch (error) {
@@ -165,13 +185,13 @@ export function CreatePosterPage() {
     }
   };
 
-  let payLabel = `Pay ${FEE} ${paymentToken} & Generate`;
+  let payLabel = paymentToken === "SOL" ? "Pay with SOL & Generate" : `Pay ${FEE} ${paymentToken} & Generate`;
   if (!address) payLabel = "Connect Wallet to Pay";
   else if (phase === "paid") payLabel = "Download Your Poster";
   else if (phase === "signing") payLabel = "Approve in your wallet…";
   else if (phase === "confirming") payLabel = "Confirming payment…";
 
-  const payDisabled = phase === "signing" || phase === "confirming";
+  const payDisabled = phase === "signing" || phase === "confirming" || (phase !== "paid" && paymentToken === "SOL" && (!quoteValid || quoteLoading));
 
   return (
     <div className="creator-page">
@@ -316,6 +336,7 @@ export function CreatePosterPage() {
                             onChange={(event) => { setPaymentToken(event.target.value as PaymentToken); setPayNote(null); }}>
                             <option value="USDC">5 USDC</option>
                             <option value="USDT">5 USDT</option>
+                            <option value="SOL">$5 in SOL</option>
                           </select>
                         </div>
                       </div>
@@ -330,7 +351,11 @@ export function CreatePosterPage() {
                           <ArrowRight />
                         </button>
                         <p>
-                          {FEE} {paymentToken} for your poster. SOL is needed for network and any token-account setup fees.
+                          {paymentToken === "SOL" ? <>
+                            {quoteLoading ? "Getting SOL quote…" : solQuote ? `${(solQuote.lamports / 1e9).toFixed(9)} SOL · ${quoteValid ? Math.ceil((solQuote.expiresAt - now) / 1000) + "s to approve" : "Quote expired"}` : "Quote unavailable"}
+                            {phase === "idle" && !quoteLoading && <button type="button" onClick={refreshQuote} className="pay__quote-refresh">Refresh quote</button>}
+                            <br />$5 at quoted rate. SOL network fee is additional.
+                          </> : <>{FEE} {paymentToken} for your poster. SOL is needed for network and any token-account setup fees.</>}
                         </p>
                       </div>
                     </div>
@@ -350,7 +375,7 @@ export function CreatePosterPage() {
                     <p className="pay__secure">
                       <ShieldIcon />
                       <span>
-                        The $5 fee is paid in USDC or USDT with your wallet approval.
+                        The $5 fee is paid in USDC, USDT or SOL with your wallet approval.
                         <br />
                         Photo finishes are filters, not AI-generated artwork.
                       </span>

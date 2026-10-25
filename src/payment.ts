@@ -11,7 +11,8 @@ export const PAYMENT_TOKENS = {
   USDC: "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
   USDT: "Es9vMFrzaCERmJfrF4H2FYD4KCoNkY11McCe8BenwNYB",
 } as const;
-export type PaymentToken = keyof typeof PAYMENT_TOKENS;
+export type PaymentToken = keyof typeof PAYMENT_TOKENS | "SOL";
+export interface SolQuote { lamports: number; usdPrice: number; expiresAt: number; }
 const TOKEN_PROGRAM = "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA";
 
 const SYSTEM_PROGRAM = "11111111111111111111111111111111";
@@ -136,9 +137,33 @@ function transferCheckedData(raw: bigint, decimals: number): Uint8Array {
 /** Builds a fixed-price payment using only the supported mainnet stablecoins. */
 export async function buildPosterPayment(
   rpc: RpcCall,
-  options: { owner: string; token: PaymentToken },
+  options: { owner: string; token: PaymentToken; quote?: SolQuote },
 ): Promise<PosterTransfer> {
   const { owner, token } = options;
+  if (token === "SOL") {
+    const quote = options.quote;
+    if (!quote || !Number.isSafeInteger(quote.lamports) || quote.lamports <= 0 ||
+        !Number.isFinite(quote.usdPrice) || quote.usdPrice <= 0 ||
+        quote.lamports !== Math.ceil(POSTER_FEE / quote.usdPrice * 1e9) ||
+        !Number.isFinite(quote.expiresAt) || quote.expiresAt <= Date.now() ||
+        quote.expiresAt > Date.now() + 65000) {
+      throw new Error("SOL quote expired or invalid. Refresh the quote before paying.");
+    }
+    const blockhash = await rpc<{ value: { blockhash: string } }>("getLatestBlockhash", [{ commitment: "confirmed" }]);
+    if (quote.expiresAt <= Date.now()) throw new Error("SOL quote expired. Refresh before paying.");
+    const data = new Uint8Array(12);
+    const view = new DataView(data.buffer);
+    view.setUint32(0, 2, true); // SystemProgram.Transfer
+    view.setBigUint64(4, BigInt(quote.lamports), true);
+    return {
+      transaction: compileTransaction(owner, [{
+        programId: SYSTEM_PROGRAM,
+        keys: [{ key: owner, signer: true, writable: true }, { key: TREASURY_ADDRESS, signer: false, writable: true }],
+        data,
+      }], blockhash.value.blockhash),
+      createsTreasuryAccount: false,
+    };
+  }
   if (!Object.prototype.hasOwnProperty.call(PAYMENT_TOKENS, token)) {
     throw new Error("Choose USDC or USDT.");
   }

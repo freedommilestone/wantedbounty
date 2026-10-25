@@ -1,6 +1,6 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import { associatedTokenAddress, encodeBase58 } from "./ata";
-import { buildPosterPayment, type PaymentToken } from "./payment";
+import { buildPosterPayment, type PaymentToken, type SolQuote } from "./payment";
 
 const STORAGE_KEY = "wantedbounty:wallet";
 const LEGACY_STORAGE_KEY = "wantedbounty:phantom";
@@ -107,7 +107,7 @@ interface WalletContextValue {
   isHolder: boolean;
   refreshHoldings: () => void;
   /** Pays the fixed stablecoin poster fee and resolves after confirmation. */
-  payForPoster: (token: PaymentToken, onSent?: (signature: string) => void) => Promise<string>;
+  payForPoster: (token: PaymentToken, onSent?: (signature: string) => void, quote?: SolQuote) => Promise<string>;
 }
 
 const WalletContext = createContext<WalletContextValue | null>(null);
@@ -571,7 +571,7 @@ export function WalletProvider({ children }: { children: ReactNode }) {
   }, [metamask, reset]);
 
   const payForPoster = useCallback(
-    async (token: PaymentToken, onSent?: (signature: string) => void) => {
+    async (token: PaymentToken, onSent?: (signature: string) => void, quote?: SolQuote) => {
       const kind = walletRef.current;
       const owner = address;
       if (!kind || !owner) throw new Error("Connect your wallet first.");
@@ -583,7 +583,7 @@ export function WalletProvider({ children }: { children: ReactNode }) {
       }
 
       try {
-        const { transaction } = await buildPosterPayment(rpc, { owner, token });
+        const { transaction } = await buildPosterPayment(rpc, { owner, token, quote });
 
         let account = standard.accounts.find((item) => item.address === owner);
         if (!account) {
@@ -593,6 +593,9 @@ export function WalletProvider({ children }: { children: ReactNode }) {
         }
         if (!account) throw new Error(`${walletName} isn't using the connected account. Reconnect and try again.`);
 
+        if (token === "SOL" && (!quote || quote.expiresAt <= Date.now())) {
+          throw new Error("SOL quote expired. Refresh the quote before paying.");
+        }
         const [sent] = await signer.signAndSendTransaction({ account, chain: "solana:mainnet", transaction });
         const signature = encodeBase58(sent.signature);
         onSent?.(signature);

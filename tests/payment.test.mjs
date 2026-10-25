@@ -45,3 +45,16 @@ for (const token of ['USDC','USDT']) {
 test('unsupported token rejected without RPC',async()=>{
   await assert.rejects(buildPosterPayment(()=>{throw Error('RPC should not run');},{owner:TREASURY_ADDRESS,token:'BERI'}),/Choose USDC or USDT/);
 });
+test('SOL sends the quoted lamports using SystemProgram.Transfer',async()=>{
+ const quote={lamports:25000000,usdPrice:200,expiresAt:Date.now()+60000};
+ const result=await buildPosterPayment(async()=>({value:{blockhash:TREASURY_ADDRESS}}),{owner:PAYMENT_TOKENS.USDC,token:'SOL',quote});
+ const data=result.transaction.slice(-12);
+ assert.equal(new DataView(data.buffer,data.byteOffset).getUint32(0,true),2);
+ assert.equal(new DataView(data.buffer,data.byteOffset).getBigUint64(4,true),25000000n);
+ assert.equal(result.createsTreasuryAccount,false);
+});
+for(const quote of [undefined,{lamports:1,usdPrice:200,expiresAt:Date.now()+60000},{lamports:25000000,usdPrice:200,expiresAt:Date.now()-1}]){
+ test('reject invalid or expired SOL quote '+JSON.stringify(quote),async()=>{
+  await assert.rejects(buildPosterPayment(async()=>{throw Error('must not call RPC');},{owner:TREASURY_ADDRESS,token:'SOL',quote}),/quote expired or invalid/);
+ });
+}
