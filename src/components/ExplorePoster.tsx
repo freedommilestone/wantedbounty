@@ -2,12 +2,12 @@ import { useId } from "react";
 import "./ExplorePoster.css";
 
 /** Gallery-specific poster: fixed print coordinates keep small cards and previews identical. */
-export function ExplorePoster({name,bounty,portrait}:{name:string;bounty:number;portrait:string}) {
+export function ExplorePoster({name,bounty,portrait,portraitIndex=0}:{name:string;bounty:number;portrait:string;portraitIndex?:number}) {
   const id=useId().replace(/:/g,"");
   return <div className="explore-poster"><svg viewBox="0 0 160 200" role="img" aria-label={`Wanted: ${name}, ${bounty.toLocaleString("en-US")} BERI`}>
     <defs><clipPath id={id}><rect x="12" y="40" width="136" height="82"/></clipPath></defs>
     <text className="explore-poster-wanted" x="80" y="35" textAnchor="middle" textLength="145" lengthAdjust="spacingAndGlyphs">WANTED</text>
-    <image href={portrait} x="12" y="40" width="136" height="82" preserveAspectRatio="xMidYMid slice" clipPath={`url(#${id})`}/>
+    <svg x="12" y="40" width="136" height="82" viewBox={`${(portraitIndex%5)*100} ${Math.floor(portraitIndex/5)*100} 100 100`} preserveAspectRatio="none"><image href={portrait} width="500" height="300" preserveAspectRatio="none"/></svg>
     <rect x="12" y="40" width="136" height="82" fill="none" stroke="#38210e" strokeWidth=".7"/>
     <text x="80" y="135" textAnchor="middle" className="explore-poster-alive" textLength="119" lengthAdjust="spacingAndGlyphs">DEAD OR ALIVE</text>
     <text x="80" y="155" textAnchor="middle" className="explore-poster-name" textLength={Math.min(125,name.length*12)} lengthAdjust="spacingAndGlyphs">{name.toUpperCase()}</text>
