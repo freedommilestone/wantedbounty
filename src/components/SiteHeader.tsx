@@ -2,14 +2,14 @@ import { useState } from "react";
 import { Link } from "../router";
 import { WalletButton } from "./WalletButton";
 
-type Page = "home" | "create" | "how";
+type Page = "home" | "create" | "how" | "explore";
 
 export function SiteHeader({ active }: { active: Page }) {
   const [menuOpen, setMenuOpen] = useState(false);
   const links: { label: string; href: string; page?: Page }[] = [
     { label: "Home", href: "/", page: "home" },
     { label: "Create Poster", href: "/create", page: "create" },
-    { label: "Explore", href: "/#explore" },
+    { label: "Explore", href: "/explore", page: "explore" },
     { label: "How It Works", href: "/how-it-works", page: "how" },
   ];
 
