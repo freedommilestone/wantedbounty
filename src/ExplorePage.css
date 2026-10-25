@@ -37,3 +37,37 @@
 .explore-card .creator-poster__bounty{font-size:calc(var(--creator-bounty-size) * .84)}
 .explore-card .creator-poster__marine{font-size:7cqw;top:91%}
 .explore-card .creator-poster__fine{font-size:1.2cqw}
+/* Reference gallery proportions at 1215px, with independently typeset poster artwork. */
+@media(min-width:801px){
+ .explore-page .site-header__inner{height:76px}
+ .explore-hero{height:350px;padding:50px 28% 20px}
+ .explore-banner{width:135%;margin-left:-17.5%;padding:36px 18px 42px}
+ .explore-banner h1{font-family:Georgia,serif;font-size:clamp(45px,6.3vw,90px);font-weight:900;letter-spacing:-.055em;transform:scaleY(1.2);margin:8px 0 18px}
+ .explore-banner p{font-size:12px;max-width:90%;margin:0 auto;letter-spacing:1px}
+ .explore-hero>.explore-cta{margin-top:8px}
+ .explore-featured{padding:18px 20px 25px;margin:0 3%;background-image:url('/textures/home-poster-paper.jpg')}
+ .explore-featured>header{padding:0 3%;height:48px;align-items:flex-start}
+ .explore-featured h2{font-family:Georgia,serif;font-weight:800;font-size:25px;letter-spacing:-.8px}
+ .explore-featured header p{font-size:10px;margin-bottom:8px}
+ .explore-carousel{gap:28px}
+ .explore-featured-grid{gap:5.5%;padding:5px 12px 0}
+ .explore-card-meta{font-size:12px;margin:8px 0 0;gap:9px}
+ .explore-card-meta img{width:29px;height:29px}
+ .explore-catalog{grid-template-columns:250px minmax(0,1fr);gap:40px;padding:18px 4% 0}
+ .explore-filters{padding:23px 28px;min-height:470px;background-image:url('/textures/home-poster-paper.jpg')}
+ .explore-filters h2{font:800 17px Georgia,serif}
+ .explore-filters nav button{font-size:15px;padding:8px}
+ .explore-grid{gap:12px 4.5%}
+ .explore-toolbar{height:29px;margin-bottom:0}
+ .explore-search{width:270px}
+ .explore-demo{font-size:10px;margin:3px 0 8px}
+ .explore-grid .explore-card-meta{font-size:10px;margin-top:5px;gap:6px}
+ .explore-grid .explore-card-meta img{width:25px;height:25px}
+ .explore-footer{padding-bottom:16px}
+}
+@media(min-width:801px){
+ .explore-banner h1{font-family:'Roboto Serif',Georgia,serif;font-stretch:50%;font-size:clamp(42px,5.4vw,78px);font-weight:900;transform:scaleY(1.25);letter-spacing:-.055em}
+ .explore-banner p{font-size:11px;max-width:80%}
+ .explore-featured{clip-path:polygon(1% 0,98% .7%,100% 4%,99.5% 96%,98% 100%,2% 99%,0 96%,.5% 4%)}
+ .explore-filters{clip-path:polygon(1% 1%,98% 0,100% 4%,99% 97%,97% 100%,1% 99%,0 95%,.5% 5%)}
+}

@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { SiteHeader } from "./components/SiteHeader";
-import { CreatorPoster } from "./components/CreatorPoster";
+import { ExplorePoster } from "./components/ExplorePoster";
 import { CompassRose, ArrowRight } from "./components/icons";
 import { Link } from "./router";
 import "./ExplorePage.css";
@@ -19,7 +19,7 @@ const posters = [
 ];
 type Poster = typeof posters[number];
 function PosterArt({poster}:{poster:Poster}) {
-  return <CreatorPoster name={poster.name} bounty={poster.amount.toLocaleString("en-US")} portrait={`/portraits/${poster.image}.jpg`} photoClassName="" fine="An example from the Wanted Bounty fleet" />;
+  return <ExplorePoster name={poster.name} bounty={poster.amount} portrait={`/portraits/${poster.image}.jpg`} />;
 }
 export function ExplorePage() {
   const [sort,setSort]=useState("Trending");
