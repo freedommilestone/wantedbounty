@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { HowDesktop } from "./components/HowDesktop";
 import { SiteHeader } from "./components/SiteHeader";
 import { CreatorPoster } from "./components/CreatorPoster";
 import { CompassRose, ArrowRight } from "./components/icons";
@@ -15,6 +16,7 @@ export function HowItWorksPage() {
   return <div className="legend-page">
     <SiteHeader active="how" />
     <main>
+      <HowDesktop/>
       <section className="legend-hero">
         <p className="legend-motto">More than a token.<br/>A community.<br/>A legend in the making.</p>
         <div className="legend-title-paper"><h1>How It Works</h1><h2>Hold BERI. Build your legend.</h2><p>Join the crew and create your own<br/>One Piece–style wanted poster. Here’s how it all works.</p></div>
