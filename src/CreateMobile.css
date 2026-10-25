@@ -113,3 +113,17 @@
 .creator-page .pay__wallet > div { min-width:0; flex:1; }
 
 .pay__quote-refresh { color:inherit; font:inherit; text-decoration:underline; background:none; border:0; cursor:pointer; padding:0 .4em; }
+
+/* The scene includes an 82px header in its 1774px artwork.
+   Render that band once in the header, and only the harbor below it. */
+@media (max-width:1100px) {
+  .creator-page { background:#d5b98e; }
+  .creator-page .site-header--create {
+    background:#efd9b2 url('/scene/create-mobile-harbor.jpg') center top / 100% 2163.414634% no-repeat;
+    border:0;
+    box-shadow:none;
+  }
+  .creator-page .create {
+    background:url('/scene/create-mobile-harbor.jpg') center bottom / 100% 104.846336% no-repeat;
+  }
+}
