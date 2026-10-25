@@ -126,3 +126,23 @@
   .creator-page .steps__note { background:none; clip-path:none !important; }
   .creator-page .steps__note-shadow { transform:rotate(-3deg); }
 }
+/* Engraved serif typography and individually drawn guide symbols. */
+.creator-page .create__title { font-weight:750; }
+.creator-page .create__title span { font-variation-settings:"wdth" 50; letter-spacing:-.04em; }
+.creator-page .step__title, .creator-page .create__lede, .creator-page .field__label,
+.creator-page .field__control, .creator-page .step__hint, .creator-page .upload,
+.creator-page .pay__secure, .creator-page .create__assurances { font-family:Georgia,'Times New Roman',serif; }
+.creator-page .step__title { font-weight:700; letter-spacing:-.025em; }
+.creator-page .create__ribbon, .creator-page .steps__ribbon, .creator-page .steps__list h3,
+.creator-page .steps__note-title, .creator-page .pay__button { font-family:'Roboto Serif',Georgia,serif; font-stretch:60%; font-weight:750; letter-spacing:0; }
+.creator-page .creator-guide-icon { width:6em; height:6em; color:#2e190c; margin:0 auto .8em; overflow:visible; }
+.creator-page .creator-guide-icon--0 { width:5em; }
+.creator-page .steps__list p { font-family:Georgia,'Times New Roman',serif; font-weight:400; }
+.creator-page .steps__note-title { line-height:1.2; }
+@media(min-width:1101px) {
+  .creator-page .steps__list h3 { font-size:1.7em; }
+  .creator-page .steps__list p { font-size:1.3em; margin-top:.6em; }
+  .creator-page .create__title span:first-child { font-size:4.1em; }
+  .creator-page .create__title span:last-child { font-size:8.1em; }
+  .creator-page .create__lede { font-size:1.7em; line-height:1.25; }
+}

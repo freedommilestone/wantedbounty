@@ -2,6 +2,7 @@ import { toPng } from "html-to-image";
 import { useEffect, useRef, useState, type ChangeEvent, type DragEvent, type ReactNode } from "react";
 import { SiteHeader } from "./components/SiteHeader";
 import { POSTER_FEE } from "./payment";
+import { CreatorGuideIcon } from "./components/CreatorGuideIcon";
 import { CreatorPoster } from "./components/CreatorPoster";
 import {
   ArrowRight,
@@ -396,7 +397,7 @@ export function CreatePosterPage() {
               <ol className="steps__list">
                 {steps.map(({ title: stepTitle, text }, index) => (
                   <li key={stepTitle}>
-                    <GuideIcon step={index} />
+                    <CreatorGuideIcon step={index} />
                     <h3>{stepTitle}</h3>
                     <p>{text}</p>
                   </li>
@@ -415,22 +416,6 @@ export function CreatePosterPage() {
         </section>
       </main>
     </div>
-  );
-}
-
-function GuideIcon({ step }: { step: number }) {
-  if (step === 1) return <svg className="steps__icon" viewBox="0 0 64 64" aria-hidden="true"><g fill="none" stroke="currentColor" strokeWidth="3" strokeLinejoin="round"><path d="m12 8 44 44-8 8L4 16Zm7 8-5 5m15 5-5 5m15 5-5 5M12 46l34-38 10 10-34 38-14 4Z"/><path d="m12 46 10 10M40 14l10 10M8 60l4-14"/></g></svg>;
-  if (step === 3) return <svg className="steps__icon" viewBox="0 0 64 64" aria-hidden="true"><g fill="none" stroke="currentColor" strokeWidth="2.5"><circle cx="32" cy="18" r="9"/><circle cx="13" cy="23" r="7"/><circle cx="51" cy="23" r="7"/><path d="M17 55V43c0-19 30-19 30 0v12ZM17 33C5 29 2 40 3 49h14m30-16c12-4 15 7 14 16H47"/></g></svg>;
-  if (step === 2) return <span className="steps__icon steps__wallet-ring"><WalletIcon /></span>;
-  return (
-    <svg className="steps__icon steps__poster-icon" viewBox="0 0 64 72" aria-hidden="true">
-      <g transform="rotate(-5 32 36)" fill="none" stroke="currentColor" strokeWidth="1.3">
-        <path d="M15 7 19 9 23 6 27 8 32 6 37 8 42 6 49 8 48 16 50 22 48 28 50 36 48 43 50 51 48 64 43 63 38 65 33 63 27 65 22 63 15 65 16 56 14 49 16 42 14 35 16 27 14 20Z" />
-        <text x="32" y="19" fill="currentColor" stroke="none" textAnchor="middle" fontFamily="Georgia,serif" fontWeight="bold" fontSize="8">WANTED</text>
-        <path d="M20 24H44V46H20Z" />
-        <circle cx="32" cy="32" r="5" /><path d="M24 44c0-10 16-10 16 0M23 31q9-7 18 0M25 29q7-12 14 0M21 51h22M23 55h18M25 59h14" />
-      </g>
-    </svg>
   );
 }
 
