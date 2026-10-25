@@ -1,0 +1,83 @@
+.legend-page { color:#2c1308; background:#efd8ae url('/textures/parchment-v2.jpg') center/700px; font-family:Georgia,serif; }
+.legend-page .site-header { background:transparent; border-bottom:1px solid #654025; }
+.legend-page .site-header__inner { width:90%; }
+.legend-page .nav a,.legend-page .site-menu-toggle { color:#301709; }
+.legend-page .nav .is-active::after { background:#7d2817; }
+.legend-page .wallet-btn { color:#301709; background:url('/textures/button-parchment.png') center/100% 145%; border:0; box-shadow:none; }
+.legend-page main { max-width:1440px; margin:auto; overflow:hidden; }
+.legend-page h1,.legend-page h2,.legend-page h3,.legend-action { font-family:'Roboto Serif',Georgia,serif; font-stretch:condensed; }
+.legend-page h2 { font-size:clamp(22px,2.8vw,38px); line-height:1.08; text-transform:uppercase; margin:0 0 7px; font-weight:800; letter-spacing:-.04em; }
+.legend-page h3 { text-transform:uppercase; font-size:clamp(12px,1.4vw,20px); margin:0 0 12px; }
+.legend-page p { font-size:clamp(14px,1.65vw,22px); line-height:1.35; margin:0 0 14px; }
+.legend-hero { position:relative; min-height:36vw; max-height:520px; padding:3% 17% 10%; background:url('/scene/hero-sea.jpg') center/cover; }
+.legend-title-paper { position:relative; text-align:center; padding:6% 6% 9%; background:url('/textures/title-banner.png') center/100% 100%; }
+.legend-title-paper h1 { text-transform:uppercase; font-size:clamp(30px,6.6vw,90px); line-height:1; white-space:nowrap; margin:0 0 10px; letter-spacing:-.06em; font-weight:900; }
+.legend-title-paper h2 { font-size:clamp(14px,2.4vw,32px); }
+.legend-title-paper p { font-size:clamp(12px,1.65vw,22px); }
+.legend-motto { position:absolute; left:3%; top:20%; width:14%; transform:rotate(-13deg); font-family:Caveat,cursive; }
+.legend-compass { position:absolute; right:2%; top:8%; width:13%; text-align:center; }
+.legend-compass svg { width:75%; }
+.legend-compass p { font-family:Caveat,cursive; transform:rotate(-12deg); }
+.legend-journey { position:absolute; bottom:2%; left:18%; padding:12px 25px; background:url('/textures/button-parchment.png') center/100% 145%; font-size:clamp(12px,1.8vw,24px)!important; }
+.legend-row { position:relative; display:grid; grid-template-columns:1fr 1fr; min-height:265px; padding:25px 5%; gap:3%; background:url('/textures/parchment-v2.jpg') center/cover; border-block:2px solid #8e592b; box-shadow:inset 0 5px 16px #9b632c55; }
+.legend-row::before { content:""; position:absolute; inset:-7px 0 auto; height:12px; background:url('/textures/header-paper-edge.svg') center/100% 100%; pointer-events:none; }
+.legend-copy { position:relative; padding-left:64px; z-index:1; align-self:center; }
+.legend-number { position:absolute; left:0; top:0; display:grid; place-items:center; width:55px; height:60px; background:#371407; color:#f7dfae; border:4px double #d4a666; border-radius:48%; font:700 44px/1 Georgia,serif; }
+.legend-action { display:inline-flex; justify-content:center; align-items:center; gap:18px; padding:14px 25px; color:#2c1308; background:url('/textures/button-parchment.png') center/100% 145%; border:0; text-decoration:none; text-transform:uppercase; font-size:clamp(12px,1.4vw,19px); font-weight:800; cursor:pointer; }
+.legend-action svg { width:20px; height:20px; }
+.legend-action:hover { filter:brightness(1.07); }
+.legend-action:focus-visible { outline:3px solid #87441c; outline-offset:3px; }
+.legend-treasure { width:100%; height:100%; max-height:330px; object-fit:contain; align-self:end; }
+.legend-reward-art { position:relative; align-self:end; }
+.legend-reward-art img { width:100%; }
+.legend-coin { display:grid; place-items:center; width:150px; height:150px; border:8px double #e5b25d; border-radius:50%; box-shadow:7px 10px 0 #322416, inset 0 0 0 5px #664420; font:700 100px/1 Georgia,serif; color:#efd19b; background:#222521; }
+.legend-coin--zcash { position:absolute; left:30%; top:17%; }
+.legend-poster-fan { display:flex; align-items:end; justify-content:center; padding-top:20px; overflow:hidden; }
+.legend-poster-fan .creator-poster { width:44%; flex:none; margin:0 -7%; transform:rotate(-15deg) translateY(25px); }
+.legend-poster-fan .creator-poster:nth-child(2) { z-index:2; transform:rotate(-7deg); }
+.legend-poster-fan .creator-poster:nth-child(3) { transform:rotate(16deg) translateY(28px); }
+.legend-payment-art { display:flex; align-items:center; justify-content:center; gap:12px; position:relative; background:url('/scene/deck-strip.jpg') center/cover; border-radius:45% 45% 12% 12%; padding:35px 12px; }
+.legend-coin--usdc { background:#326699; }.legend-coin--usdt { background:#287e71; }
+.legend-sol { position:absolute; bottom:8px; color:#f3dcad; background:#271b13; padding:4px 18px; border:1px solid #cdaa6c; }
+.legend-bottom { display:grid; grid-template-columns:64% 36%; border-top:2px solid #825329; }
+.legend-ranking { display:grid; grid-template-columns:1fr 1fr; padding:24px; gap:12px; }
+.legend-ranking .legend-copy { padding-left:0; padding-top:66px; }
+.legend-board { align-self:center; padding:30px 18px; text-align:center; background:url('/textures/creator-poster-frame.png') center/100% 100%; }
+.legend-board img { width:70px; height:70px; object-fit:cover; border-radius:50%; margin:10px auto; }
+.legend-board strong,.legend-board small { display:block; margin:10px 0; }
+.legend-board div { padding:12px 0; border-top:1px solid #99713e; }
+.legend-control { border-left:1px solid #99713e; padding:24px; position:relative; }
+.legend-control .legend-number { position:relative; float:left; margin:0 10px 10px 0; }
+.legend-control p { clear:both; }.legend-control img { width:100px; height:100px; object-fit:cover; border-radius:50%; margin:20px 0 0 auto; }
+.legend-footer { text-align:center; min-height:280px; padding:28px 20% 45px; background:url('/scene/home-footer.jpg') center bottom/cover; }
+.legend-footer .legend-action { background:#742819; color:#f4dfb2; border:3px double #d5b17b; border-radius:3px; }
+.legend-footer-sign { margin-top:25px; text-transform:uppercase; letter-spacing:4px; line-height:1.5; }
+@media(min-width:1440px){.legend-hero{min-height:500px}}
+@media(max-width:700px){
+ .legend-page .site-header__inner{width:94%;gap:8px}.legend-page .brand__logo{width:48px;height:55px}.legend-page .wallet-btn{font-size:12px}
+ .legend-hero{padding:25px 10% 65px;min-height:290px}.legend-motto{display:none}.legend-compass{right:0;top:190px;width:14%}.legend-title-paper{padding:25px 15px 35px}.legend-title-paper h1{font-size:8vw}.legend-title-paper p br{display:none}.legend-journey{left:8%;bottom:10px}
+ .legend-row{padding:24px 4%;gap:8px;min-height:240px;grid-template-columns:58% 42%}.legend-copy{padding-left:0;padding-top:48px}.legend-number{width:39px;height:43px;font-size:30px}.legend-page h2{font-size:20px}.legend-page p{font-size:13px}.legend-page h3{font-size:11px}.legend-action{padding:12px 17px;font-size:11px;gap:7px}
+ .legend-row--reverse{grid-template-columns:40% 60%}.legend-coin{width:80px;height:80px;font-size:50px;border-width:5px}.legend-payment-art{flex-wrap:wrap;padding-bottom:32px}.legend-coin--zcash{left:15%;top:0}.legend-poster-fan{align-self:center}.legend-poster-fan .creator-poster{width:65%;margin:0 -18%}
+ .legend-bottom{grid-template-columns:1fr}.legend-ranking{padding:20px 4%}.legend-control{border-left:0;border-top:1px solid #99713e;padding:24px 4%}.legend-control img{display:none}.legend-footer{padding:30px 12%;min-height:280px}
+}
+/* Keep the vintage artwork and the independently rendered poster type consistent. */
+.legend-page { background-image:url('/textures/home-poster-paper.jpg'); }
+.legend-hero { background-image:url('/scene/create-mobile-harbor.jpg'); background-size:100% auto; background-position:center 7%; }
+.legend-motto { color:#28170d; background:#f2dcb578; padding:8px; }
+.legend-row { background-image:url('/textures/home-poster-paper.jpg'); padding-block:18px; min-height:220px; }
+.legend-treasure { max-height:260px; }
+.legend-reward-art img { max-height:260px; object-fit:contain; }
+.legend-page .creator-poster__wanted { font-size:21.5cqw; margin:0; line-height:1; }
+.legend-page .creator-poster__alive { font-size:7.6cqw; margin:0; line-height:1; }
+.legend-page .creator-poster__name { font-size:var(--creator-name-size); margin:0; line-height:1; }
+.legend-page .creator-poster__bounty { font-size:var(--creator-bounty-size); margin:0; line-height:1; }
+.legend-page .creator-poster__marine { font-size:8cqw; margin:0; line-height:1; }
+.legend-page .creator-poster__fine { font-size:1.4cqw; margin:0; }
+.legend-payment-art { background:transparent url('/scene/legend-treasure.png') center/contain no-repeat; border-radius:0; }
+.legend-title-paper { padding-inline:4%; }
+@media(min-width:701px) {
+ .legend-hero { min-height:34vw; padding-top:2%; }
+ .legend-page h2 { font-size:clamp(22px,2.5vw,36px); }
+ .legend-page p { font-size:clamp(14px,1.5vw,21px); }
+ .legend-title-paper h2 { font-size:clamp(14px,2.4vw,32px); }
+}

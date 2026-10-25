@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link } from "../router";
 import { WalletButton } from "./WalletButton";
 
-type Page = "home" | "create";
+type Page = "home" | "create" | "how";
 
 export function SiteHeader({ active }: { active: Page }) {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -10,7 +10,7 @@ export function SiteHeader({ active }: { active: Page }) {
     { label: "Home", href: "/", page: "home" },
     { label: "Create Poster", href: "/create", page: "create" },
     { label: "Explore", href: "/#explore" },
-    { label: "How It Works", href: active === "create" ? "/create#how-it-works" : "/#how-it-works" },
+    { label: "How It Works", href: "/how-it-works", page: "how" },
   ];
 
   return (
