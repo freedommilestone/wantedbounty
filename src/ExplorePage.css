@@ -73,7 +73,7 @@
 }
 /* Reference artwork is decoration only; navigation, typography and cards stay live. */
 @media(min-width:801px){
- .explore-page{font-size:clamp(7px,.8230452675vw,12px);background:#efd7af url('/scene/explore-reference-plate.png') center top/100% auto no-repeat}
+ .explore-page{font-size:clamp(7px,.8230452675vw,12px);background:#efd7af url('/scene/explore-reference-detail-v2.png') center top/100% auto no-repeat}
  .explore-page .site-header{background:transparent}
  .explore-page .site-header__inner{height:7.6em}
  .explore-page main{max-width:none}
