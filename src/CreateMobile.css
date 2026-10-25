@@ -1,0 +1,81 @@
+.create-mobile-guide { display:none; }
+@media(max-width:1100px) {
+  .creator-page { font-size:1.1273957159vw; background:#d5b98e url('/scene/create-mobile-harbor.jpg') center top / 100% auto no-repeat; }
+  .creator-page .create { font-size:inherit; background:none; }
+  .creator-page .site-header--create { background:#efd9b2 url('/textures/parchment-v2.jpg') center / cover; }
+  .creator-page .site-header__inner { width:82%; height:8.2em; min-height:0; gap:2em; }
+  .creator-page .brand__logo { width:7.5em; height:7.5em; }
+  .creator-page .site-menu-toggle { display:block; order:3; font-size:3.8em; margin-left:0; color:#2d190c; }
+  .creator-page .site-header__inner > .wallet-btn { margin-left:auto; min-height:4em; padding:.7em 1.4em; font-size:1.65em; }
+  .creator-page .nav { display:none; }
+  .creator-page .nav--open { display:flex; font-size:16px; }
+  .creator-page .nav--open a { font-size:16px; }
+  .creator-page .create__stage { padding:0; }
+  .creator-page .create .container { width:94%; }
+  .creator-page .create__intro { position:relative; display:block; height:27em; margin:0; }
+  .creator-page .create__banner-shadow { position:absolute; left:8em; top:1em; width:52em; }
+  .creator-page .create__banner { padding:2.2em 4em 2.6em; min-height:0; background:url('/textures/title-banner.png') center / 100% 110% no-repeat; }
+  .creator-page .create__title { margin:0 0 .9em; transform:none; }
+  .creator-page .create__title span:first-child { font-size:3.5em; }
+  .creator-page .create__title span:last-child { font-size:6em; line-height:.98; letter-spacing:-.06em; }
+  .creator-page .create__lede { margin:0; max-width:26em; font-size:1.6em; line-height:1.2; }
+  .creator-page .create__lede strong { font-size:1.15em; }
+  .creator-page .create__motto { display:block; position:absolute; right:4em; top:2em; margin:0; padding:0; }
+  .creator-page .create__motto p { font-size:2.5em; }
+  .creator-page .create__compass { width:7em; margin:2.5em auto 0; }
+  .create-mobile-guide { display:block; position:relative; padding:5em 2em 2em; background:url('/textures/home-poster-paper.jpg') center / 100% 100%; color:#2d190c; clip-path:polygon(1% 0,98% 1%,100% 97%,99% 100%,1% 99%,0 3%); }
+  .create-mobile-guide > h2 { position:absolute; top:-.5em; left:50%; transform:translateX(-50%); width:12em; padding:.4em 1em; text-align:center; background:url('/textures/button-parchment.png') center / 100% 150%; font:800 2.6em/1 'Roboto Serif',Georgia,serif; font-stretch:50%; text-transform:uppercase; white-space:nowrap; }
+  .create-mobile-guide ol { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); list-style:none; margin:0; padding:0; }
+  .create-mobile-guide li { text-align:center; padding:0 1em; }
+  .create-mobile-guide li + li { border-left:1px solid #86603b44; }
+  .creator-page .create-mobile-guide .creator-guide-icon { width:6.5em; height:6.5em; margin:0 auto .8em; }
+  .create-mobile-guide h3 { font:800 1.9em/1.1 'Roboto Serif',Georgia,serif; font-stretch:50%; text-transform:uppercase; margin:0 0 .5em; white-space:nowrap; }
+  .create-mobile-guide p { font:1.6em/1.25 Georgia,serif; margin:0; }
+  .creator-page .create__grid { display:block; margin:0; }
+  .creator-page .create__form { padding:1.2em 4.4em 2.5em; background:#eed6ad url('/textures/home-poster-paper.jpg') center / 100% 100%; }
+  .creator-page .step { grid-template-columns:6.5em minmax(0,1fr); gap:2em; }
+  .creator-page .step__number { font-size:4em; width:1.4em; height:1.4em; }
+  .creator-page .step__title { font-size:2.8em; padding-top:.1em; }
+  .creator-page .step__hint { font-size:1.6em; line-height:1.2; }
+  .creator-page .step + .step { margin-top:1.2em; padding-top:1.2em; }
+  .creator-page .upload { flex-direction:row; margin-top:1em; gap:1.2em; }
+  .creator-page .upload__thumb { width:14em; height:12em; }
+  .creator-page .upload__drop-wrap { flex:1; width:auto; }
+  .creator-page .upload__drop { height:10.5em; }
+  .creator-page .upload__drop strong { font-size:1.7em; }
+  .creator-page .upload__drop span { font-size:1.5em; }
+  .creator-page .upload__hint { font-size:1.3em; }
+  .creator-page .fields { grid-template-columns:repeat(2,minmax(0,1fr)); gap:1em 2.3em; margin-top:1em; }
+  .creator-page .field__label { font-size:1.6em; }
+  .creator-page .field__control { font-size:1.7em; height:2.5em; padding-inline:.6em; }
+  .creator-page .styles { gap:1em; }
+  .creator-page .style-option { font-size:1.3em; }
+  .creator-page .style-option img { aspect-ratio:1.25; }
+  .creator-page .bounty-input { gap:.4em; }
+  .creator-page .bounty-input__unit { padding-left:.5em; }
+  .creator-page .pay { grid-template-columns:1fr 1.05fr; gap:1.4em; margin:1.2em 0 0; }
+  .creator-page .pay__wallet { padding:1em; gap:1em; }
+  .creator-page .pay__wallet-icon { width:5.5em; height:5.5em; }
+  .creator-page .pay__wallet-label { font-size:1.3em; }
+  .creator-page .pay__balance { font-size:1.7em; }
+  .creator-page .pay__button { font-size:1.5em; min-height:3.7em; white-space:normal; }
+  .creator-page .pay__action p { font-size:1.4em; margin-top:.5em; }
+  .creator-page .pay__secure { margin:1em 0 0; font-size:1.2em; padding:.5em .8em; }
+  .creator-page .pay__note { font-size:1.5em; }
+  .creator-page .create__panel-shadow--preview { margin:0; }
+  .creator-page .create__preview { position:relative; padding:0 0 2em; background:none; clip-path:none!important; }
+  .creator-page .create__preview::before { display:none; }
+  .creator-page .create__ribbon { z-index:2; margin:-.25em auto -.2em; font-size:2.7em; padding:.25em 1.2em; }
+  .creator-page .creator-poster { width:54em; max-width:none; margin:0 auto; }
+  .creator-page .create__assurances { width:54em; margin:0 auto; padding:1em; background:#f2ddb8e8; grid-template-columns:1fr 1fr; font-size:.9em; }
+  .creator-page .create__assurances > div + div { border-left:1px solid #73512e66; }
+  .creator-page .steps { display:none; }
+}
+@media(max-width:1100px) {
+  .creator-page { background-size:100% 100%; }
+  .creator-page .site-header--create .site-menu-toggle { color:#2d190c; }
+  .creator-page .creator-poster { width:48em; }
+  .creator-page .create__assurances { width:48em; }
+  .creator-page .create-mobile-guide { background-image:url('/textures/creator-poster-frame.png'); background-color:transparent; clip-path:none; }
+  .creator-page .create__form { padding-top:1em; padding-bottom:1.5em; }
+}

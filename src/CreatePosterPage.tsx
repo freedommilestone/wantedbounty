@@ -21,6 +21,7 @@ import { tornPaper } from "./torn";
 import { useWallet } from "./wallet";
 import "./CreatePosterPage.css";
 import "./CreateReference.css";
+import "./CreateMobile.css";
 
 const FEE = POSTER_FEE;
 const MAX_UPLOAD_BYTES = 10 * 1024 * 1024;
@@ -208,6 +209,11 @@ export function CreatePosterPage() {
                 <CompassRose className="create__compass" />
               </div>
             </div>
+
+            <section className="create-mobile-guide" aria-labelledby="mobile-guide-title">
+              <h2 id="mobile-guide-title">How It Works</h2>
+              <ol>{steps.map(({title: label, text}, index) => <li key={label}><CreatorGuideIcon step={index} /><h3>{label}</h3><p>{text}</p></li>)}</ol>
+            </section>
 
             <div className="create__grid">
               <div className="create__panel-shadow">
