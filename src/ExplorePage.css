@@ -122,3 +122,9 @@
  .explore-footer{position:relative;margin-top:-3.5em;padding-bottom:1em;pointer-events:none}
  .explore-footer p{margin:0}
 }
+.explore-featured h2{display:flex;align-items:center;gap:14px}
+.explore-featured h2>svg{width:42px;height:38px;flex:none}
+.explore-skull{width:36px;height:34px;margin:12px auto 0}
+.explore-page .wallet-btn>.header-wallet-icon,.explore-page .wallet-btn__icon>.header-wallet-icon{width:32px;height:30px;flex:none}
+.explore-page .wallet-btn__icon{border:0;background:none;border-radius:0;width:36px}
+@media(max-width:520px){.explore-featured h2{gap:6px}.explore-featured h2>svg{width:28px;height:26px}.explore-page .wallet-btn>.header-wallet-icon{width:26px;height:25px}}

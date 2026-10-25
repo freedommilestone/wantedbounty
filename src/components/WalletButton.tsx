@@ -1,3 +1,4 @@
+import { HeaderWalletIcon as WalletIcon } from "./ReferenceIcons";
 import { useEffect, useRef, useState } from "react";
 import { shortAddress, useWallet, type BeriHoldings } from "../wallet";
 import {
@@ -9,7 +10,6 @@ import {
   PhantomIcon,
   RefreshIcon,
   VerifiedBadge,
-  WalletIcon,
 } from "./icons";
 
 function connectedLabel(holdings: BeriHoldings, address: string) {
