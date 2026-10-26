@@ -58,9 +58,9 @@ export function SiteHeader({ active }: { active: Page }) {
               </Link>
             );
           })}
-          {active === "home" && <div className="mobile-nav-wallet"><WalletButton /></div>}
+          {active === "home" && <div className="mobile-nav-wallet"><WalletButton showHoldings={active !== "home"} /></div>}
         </nav>
-        <WalletButton />
+        <WalletButton showHoldings={active !== "home"} />
       </div>
       {menuOpen && createPortal(
         <dialog ref={drawerRef} id="mobile-navigation" className="mobile-navigation" aria-label="Navigation"
@@ -82,7 +82,7 @@ export function SiteHeader({ active }: { active: Page }) {
                 <span className="mobile-navigation__label">{label}</span><span aria-hidden="true">→</span></Link>)}
           </nav>
           <div className="mobile-navigation__divider" aria-hidden="true"><span/><PirateSkullIcon/><span/></div>
-          <div className="mobile-navigation__wallet"><WalletButton /></div>
+          <div className="mobile-navigation__wallet"><WalletButton showHoldings={active !== "home"} /></div>
           <div className="mobile-navigation__scenery" aria-hidden="true" />
           </div>
         </dialog>, document.body)}

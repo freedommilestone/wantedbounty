@@ -33,7 +33,7 @@ function holdingsLabel(holdings: BeriHoldings) {
   }
 }
 
-export function WalletButton() {
+export function WalletButton({ showHoldings = true }: { showHoldings?: boolean }) {
   const { address, status, holdings, wallet, openModal, disconnect, refreshHoldings } = useWallet();
   const [menuOpen, setMenuOpen] = useState(false);
   const [copied, setCopied] = useState(false);
@@ -88,7 +88,7 @@ export function WalletButton() {
           <small>
             <VerifiedBadge /> Wallet Connected
           </small>
-          <strong>{connectedLabel(holdings, address)}</strong>
+          <strong>{showHoldings ? connectedLabel(holdings, address) : shortAddress(address)}</strong>
         </span>
         <ChevronDown />
       </button>
@@ -103,14 +103,14 @@ export function WalletButton() {
             </div>
           </div>
           <p className="wallet-menu__address">{address}</p>
-          <div className="wallet-menu__balance">
+          {showHoldings && <div className="wallet-menu__balance">
             <span>$BERI held</span>
             <strong>{holdingsLabel(holdings)}</strong>
-          </div>
-          <button type="button" role="menuitem" onClick={refreshHoldings} disabled={holdings.state === "loading"}>
+          </div>}
+          {showHoldings && <button type="button" role="menuitem" onClick={refreshHoldings} disabled={holdings.state === "loading"}>
             <RefreshIcon />
             Rescan balance
-          </button>
+          </button>}
           <button type="button" role="menuitem" onClick={copyAddress}>
             {copied ? <CheckIcon /> : <CopyIcon />}
             {copied ? "Copied" : "Copy address"}

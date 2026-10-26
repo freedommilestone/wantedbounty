@@ -1,4 +1,4 @@
-import { useRef, useState, type ReactNode } from "react";
+import { useRef, useState } from "react";
 import { HomePreloader } from "./components/HomePreloader";
 import { ExplorePage } from "./ExplorePage";
 import { HowItWorksPage } from "./HowItWorksPage";
@@ -19,7 +19,7 @@ import {
 import { HomeWheel, HomeCompass, HomeHat, HomeDiamond } from "./components/HomeIcons";
 import { Link, usePath } from "./router";
 import { organicEdges, tornPaper } from "./torn";
-import { shortAddress, useWallet, WalletProvider, type BeriHoldings } from "./wallet";
+import { WalletProvider } from "./wallet";
 import "./App.css";
 import "./HomePage.css";
 import "./HomeReferenceLayout.css";
@@ -61,61 +61,7 @@ export default function App() {
 
 const PLACEHOLDER_BOUNTY = "1,500,000,000";
 
-function heroBounty(isHolder: boolean, holdings: BeriHoldings) {
-  return isHolder && holdings.state === "ready" ? holdings.display : PLACEHOLDER_BOUNTY;
-}
-
-function HoldingsStatus() {
-  const { address, holdings, refreshHoldings } = useWallet();
-  if (!address) return null;
-
-  let message: ReactNode;
-  let tone = "info";
-  switch (holdings.state) {
-    case "loading":
-      message = "Scanning your wallet for $BERI…";
-      break;
-    case "ready":
-      if (holdings.amount > 0) {
-        message = (
-          <>
-            Bounty set by your <strong>฿ {holdings.display} $BERI</strong>.
-          </>
-        );
-        tone = "ok";
-      } else {
-        message = "No $BERI found in this wallet. Only $BERI holders can claim a wanted poster.";
-        tone = "warn";
-      }
-      break;
-    case "unconfigured":
-      message = "The $BERI token mint isn't configured yet, so balances can't be read.";
-      tone = "warn";
-      break;
-    case "error":
-      message = (
-        <>
-          Couldn’t read your $BERI balance. {holdings.message}{" "}
-          <button type="button" onClick={refreshHoldings}>
-            Try again
-          </button>
-        </>
-      );
-      tone = "warn";
-      break;
-    default:
-      return null;
-  }
-
-  return (
-    <p className={`hero__status hero__status--${tone}`} role="status">
-      {message}
-    </p>
-  );
-}
-
 function HomePage() {
-  const { address, holdings, isHolder } = useWallet();
   const [showAll, setShowAll] = useState(false);
   const [selected, setSelected] = useState(0);
   const galleryRef = useRef<HTMLDialogElement>(null);
@@ -142,22 +88,17 @@ function HomePage() {
               <div className="cta-shadow">
                 <Link className="cta" href="/create" style={{ clipPath: CTA_EDGE }}>
                   <EditIcon />
-                  {isHolder ? "Edit your poster" : "Create your poster"}
+                  Create your poster
                   <ArrowRight />
                 </Link>
-              </div>
-              <HoldingsStatus />
-              <div className="hero__beri">
-                <strong>$BERI</strong>
-                <span>The currency of dreams, freedom &amp; legends.</span>
               </div>
             </div>
 
             <WantedPoster
               className="hero__poster"
-              name={isHolder && address ? shortAddress(address) : "Your Name"}
-              nameIsAddress={isHolder}
-              bounty={heroBounty(isHolder, holdings)}
+              name="Your Name"
+              nameIsAddress={false}
+              bounty={PLACEHOLDER_BOUNTY}
               portrait="/portraits/home-luffy.jpg"
               seed={7}
             />
