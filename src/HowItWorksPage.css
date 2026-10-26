@@ -142,3 +142,50 @@
  .how-card--2 .how-copy{right:11em}
  .how-desktop-motto{top:1.8em}
 }
+/* Ocean reference, desktop only: separate interactive copy over the illustrated panels. */
+@media(min-width:901px){
+ .legend-page{background-image:url('/scene/how-ocean-desktop-v2.png')}
+ .legend-page .site-header__inner{width:77%;height:7.5em}
+ .how-desktop-hero{left:33%;top:6.5em;width:34%}
+ .legend-page .how-desktop-hero h1{font-size:6.1em;letter-spacing:-.05em;margin:0 0 .15em}
+ .legend-page .how-desktop-hero h2{font-size:2.2em}
+ .legend-page .how-desktop-hero p{font-size:1.5em;line-height:1.25}
+ .how-desktop-motto{left:auto;right:1.5%;top:1em;font-size:2em;line-height:1.3}
+ .how-desktop-motto svg{display:none}
+ .how-desktop-signs{display:none}
+ .how-desktop-grid{left:5%;top:25em;width:92%;grid-template-columns:33% 31.5% 34.5%;grid-template-rows:23em 28em;gap:1em .7%}
+ .how-card{padding:1.5em 1em 0 9em}
+ .how-number{left:2em;top:1em;width:5.4em;height:5.4em}
+ .legend-page .how-card h2{font-size:2.1em}
+ .legend-page .how-card h3{font-size:1.35em}
+ .how-card .how-copy{top:8em;left:3.5em;right:18em;bottom:auto}
+ .legend-page .how-card p{font-size:1.3em;line-height:1.25}
+ .how-card--2 .how-copy{top:7.3em;right:13em}
+ .how-card--3 .how-copy{top:7.5em;left:3em;right:19em}
+ .how-copy button,.how-copy a,.how-create-action{font-size:1.2em;padding:.7em 1.8em;background:url('/textures/button-parchment.png') center/100% 145%;text-decoration:none;margin-top:1.3em;white-space:nowrap}
+ .how-create-action{position:absolute;bottom:3.6em;left:2.5em;color:inherit;font-weight:bold}
+ .how-card-note{display:none}
+ .how-poster-title{font-size:2.6em;left:70%;top:27%;transform:rotate(-9deg)}
+ .how-card--4 .how-copy{left:10em;right:4em;top:7.1em}
+ .how-card--4 ul{right:4em;bottom:2.3em;font-size:1.15em;line-height:2.5}
+ .how-card--5 .how-copy{left:3.5em;right:4em;top:6.5em}
+ .how-bounty-board{left:10em;right:4em;top:13em;padding:0 1em}
+ .how-bounty-board header{font-size:1.25em}
+ .how-bounty-board strong{font-size:2.2em;margin:.7em 0}
+ .legend-page .how-bounty-board p{font-size:1.1em}
+ .how-card--6 .how-copy{left:3.5em;right:13em;top:6.5em}
+ .how-card--6 .how-copy a{width:14em;margin-top:.6em;padding:.7em .4em}
+ .how-desktop-footer{top:78.5em;left:35%;width:30%}
+ .legend-page .how-desktop-footer h2{font-size:2em}
+ .legend-page .how-desktop-footer p{font-size:1.2em;margin:.2em 0 .5em}
+ .how-desktop-footer>a{font-size:1.2em;padding:.6em 2em}
+ .how-footer-sign{font-size:2.2em;margin-top:.35em}
+ .how-footer-sign small{display:block;font:1rem Georgia,serif;font-size:.45em;text-transform:uppercase;letter-spacing:.2em}
+}
+@media(min-width:901px){
+ .how-hero-emblem{position:absolute;width:6em;height:6em;top:-6.2em;left:44%}
+ .how-poster-title{left:69%;top:28%;font-size:2.4em;letter-spacing:-.06em}
+ .how-poster-caption{position:absolute;left:70%;top:76%;font:1em/1.2 Georgia,serif;transform:rotate(-9deg);text-align:center}
+ .how-poster-caption b{font-size:1.5em}
+ .how-footer-sign>svg{display:block;width:1em;height:1em;margin:0 auto .1em}
+}
