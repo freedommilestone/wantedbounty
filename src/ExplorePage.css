@@ -136,3 +136,24 @@
  .explore-page{background-size:100% 100%}
  .explore-page .explore-footer{padding-bottom:6px}
 }
+
+/* Scale the desktop composition and its text together at every viewport width. */
+@media(min-width:801px){
+ .explore-page{font-size:.8230452675vw}
+ .explore-banner{container-type:inline-size;padding-inline:1.8em}
+ .explore-banner h1{font-size:12.8cqw;white-space:nowrap;max-width:100%}
+ .explore-banner p{font-size:2.05cqw;letter-spacing:.06em;max-width:100%;white-space:normal;line-height:1.4}
+ .explore-hero>.explore-cta{gap:.7em;padding:.4em 1em;line-height:1.15;text-align:center}
+ .explore-hero>.explore-cta svg{width:1.3em;height:1.3em;flex:none}
+ .explore-sign{overflow-wrap:break-word}
+ .explore-filters nav button{gap:.65em;min-width:0;line-height:1.25;white-space:normal}
+ .explore-filters h2{margin-bottom:.8em;line-height:1.2}
+ .explore-filters select{max-width:100%;min-width:0}
+ .explore-toolbar{height:auto;min-height:3em;gap:1.5em;flex-wrap:wrap}
+ .explore-search{min-width:0;max-width:55%;gap:.6em;padding:.3em .8em}
+ .explore-search input{min-width:0;padding:.25em}
+ .explore-featured h2{gap:.55em;letter-spacing:-.025em}
+ .explore-featured h2>svg{width:1.65em;height:1.5em}
+ .explore-featured header p{letter-spacing:.08em;margin:.3em 0 .8em}
+ .explore-featured header a{flex:none}
+}
