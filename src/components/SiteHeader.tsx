@@ -3,7 +3,7 @@ import { createPortal } from "react-dom";
 import "./MobileNavigation.css";
 import { Link } from "../router";
 import { useWallet } from "../wallet";
-import { HomeCompass, HomeWheel } from "./HomeIcons";
+import { HomeCompass, HomeWheel, HomeEmblem } from "./HomeIcons";
 import { WalletButton } from "./WalletButton";
 
 type Page = "home" | "create" | "how" | "explore";
@@ -68,8 +68,9 @@ export function SiteHeader({ active }: { active: Page }) {
             const box = event.currentTarget.getBoundingClientRect();
             if (event.clientX < box.left || event.clientX > box.right) setMenuOpen(false);
           } }}>
+          <div className="mobile-navigation__surface">
           <div className="mobile-navigation__heading">
-            <img src="/brand/beri-monogram.png" alt="Wanted Bounty" />
+            <div className="mobile-navigation__brand"><HomeEmblem cherries /><strong>BERI BOUNTY</strong><small>$BERI · COMMUNITY · LEGENDARY</small></div>
             <button type="button" autoFocus aria-label="Close navigation" onClick={() => setMenuOpen(false)}>×</button>
           </div>
           <nav aria-label="Mobile main">
@@ -81,6 +82,7 @@ export function SiteHeader({ active }: { active: Page }) {
           </nav>
           <div className="mobile-navigation__wallet"><WalletButton /></div>
           <div className="mobile-navigation__scenery" aria-hidden="true" />
+          </div>
         </dialog>, document.body)}
     </header>
   );

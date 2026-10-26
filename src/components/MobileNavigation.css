@@ -99,3 +99,23 @@ body .creator-page .site-header.site-header .wallet-btn--connected > svg:last-ch
 .mobile-navigation__wallet .wallet-menu {right:0;max-width:100%;}
 .mobile-navigation__scenery {height:240px;margin-top:0;background:linear-gradient(#edd3aa,transparent 25%),url('/scene/home-footer.jpg') center bottom / cover;}
 @media(max-width:360px){.mobile-navigation nav a{gap:8px;padding-inline:12px;font-size:18px}.mobile-navigation nav{padding-inline:12px;gap:12px}}
+
+/* Reference proportions: a single illustrated surface, with live controls above it. */
+.mobile-navigation {width:min(430px,86vw);container-type:inline-size;background:#ecd1a3;padding:0;}
+.mobile-navigation__surface {min-height:max(100dvh,252cqw);background:url('/scene/navigation-reference-v2.png') center top / 100% 100% no-repeat;padding-bottom:env(safe-area-inset-bottom);}
+.mobile-navigation__heading {height:50cqw;min-height:0;padding:11cqw 6cqw 4cqw;background:none;border:0;box-shadow:none;}
+.mobile-navigation__brand {display:flex;flex-direction:column;align-items:flex-start;color:#321607;}
+.mobile-navigation__brand>svg {width:23cqw;height:23cqw;margin-left:8cqw;margin-bottom:0;}
+.mobile-navigation__brand strong {font:900 6.4cqw/.95 Georgia,serif;letter-spacing:-.04em;}
+.mobile-navigation__brand small {font:700 1.8cqw/1.6 Georgia,serif;letter-spacing:.25em;white-space:nowrap;}
+.mobile-navigation__heading button {position:absolute;top:12cqw;right:3.5cqw;width:13cqw;height:13cqw;min-width:44px;min-height:44px;font-size:10cqw;line-height:1;padding:0;}
+.mobile-navigation nav {padding:8cqw 5cqw 0;gap:5cqw;}
+.mobile-navigation nav a,.mobile-navigation nav a[aria-current='page'] {height:18cqw;min-height:54px;box-sizing:border-box;padding:2cqw 5cqw;gap:3cqw;font:700 5.9cqw/1.1 Georgia,serif;background-size:100% 140%;box-shadow:none;}
+.mobile-navigation__icon {width:14cqw;padding-right:3cqw;box-sizing:border-box;}
+.mobile-navigation__icon svg {width:10cqw;height:10cqw;}
+.mobile-navigation__label {white-space:nowrap;letter-spacing:-.035em;}
+.mobile-navigation__wallet {padding:5cqw 5cqw 0;}
+.mobile-navigation__wallet .wallet-btn {min-height:14cqw;font:700 4.6cqw/1.1 Georgia,serif;gap:3cqw;}
+.mobile-navigation__wallet .wallet-btn__text small {font-size:3cqw;}
+.mobile-navigation__wallet .wallet-btn__text strong {font-size:4cqw;}
+.mobile-navigation__scenery {height:0;margin:0;background:none;}
