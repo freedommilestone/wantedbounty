@@ -219,3 +219,36 @@
  .creator-page .payment-feedback{height:3.2em;overflow:auto}
  .creator-page .payment-feedback .pay__note{margin:0;font-size:1.1em;line-height:1.35}
 }
+/* Anchor artwork to its native proportions instead of stretching it with feedback. */
+@media(min-width:1101px){
+ .creator-page{position:relative;isolation:isolate;background:#e7cda4;min-height:0}
+ .creator-page::before{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;background:url('/scene/create-harbor-desktop-v5.png') center top/100% 100% no-repeat;filter:saturate(.82) brightness(.98)}
+ .creator-page .create__form{clip-path:none!important;overflow:visible;padding-top:1.5em}
+ .creator-page .step__number{flex-shrink:0;line-height:1.15}
+ .creator-page .pay__action>p{height:2.8em;margin:.4em 0 0;overflow:auto}
+ .creator-page .step:last-child .step__body{position:relative}
+ .creator-page .payment-feedback{position:absolute;top:100%;left:0;right:0;height:auto;max-height:8em;overflow:auto;z-index:15}
+ .creator-page .payment-feedback:has(.pay__note){background:#fff0d1;border:1px solid #987248;border-radius:5px;padding:.8em;box-shadow:0 3px 10px #35200f40}
+ .creator-page .create__grid{min-height:56.5em}
+ .creator-page .steps{min-height:17.4em;padding-bottom:0}
+ .creator-page .creator-poster__sheet{background:none;isolation:isolate}
+ .creator-page .creator-poster__sheet::before{content:"";position:absolute;inset:0;z-index:-1;background:url('/textures/creator-poster-borderless-v2.png') center/100% 100% no-repeat;filter:saturate(.72) brightness(.98)}
+}
+@media(min-width:1101px){
+ .creator-page .fields{gap:.4em}
+ .creator-page .step+.step{margin-top:.3em}
+ .creator-page .pay__button{height:2.8em}
+ .creator-page .create__form{padding-bottom:.4em}
+ .creator-page::before{background-size:100% auto}
+}
+/* Georgia's old-style numerals descend below the currency sign; use lining figures for fees. */
+.creator-page .creator-price{
+ font-family:"Roboto Serif",serif;
+ font-size:1em;
+ font-weight:inherit;
+ font-style:normal;
+ font-variant-numeric:lining-nums;
+ font-feature-settings:"lnum" 1;
+ vertical-align:baseline;
+ white-space:nowrap;
+}

@@ -247,7 +247,7 @@ export function CreatePosterPage() {
 
             <section className="create-mobile-guide" aria-labelledby="mobile-guide-title">
               <h2 id="mobile-guide-title">How It Works</h2>
-              <ol>{steps.map(({title: label, text}, index) => <li key={label}><CreatorGuideIcon step={index} /><h3>{label}</h3><p>{text}</p></li>)}</ol>
+              <ol>{steps.map(({title: label, text}, index) => <li key={label}><CreatorGuideIcon step={index} /><h3>{priceText(label)}</h3><p>{priceText(text)}</p></li>)}</ol>
             </section>
 
             <div className="create__grid">
@@ -350,7 +350,7 @@ export function CreatePosterPage() {
                   </Step>
 
                   <Step number={3} title="Pay $5 to Create">
-                    <p className="desktop-only pay__description">A one-time fee of $5 to create your wanted poster.<br/>Includes a photo filter and download; supports the BERI community.</p>
+                    <p className="desktop-only pay__description">A one-time fee of <Price/> to create your wanted poster.<br/>Includes a photo filter and download; supports the BERI community.</p>
                     <div className="desktop-only payment-choices" role="group" aria-label="Payment currency">{(["USDC", "USDT", "SOL"] as PaymentToken[]).map(token => <button key={token} type="button" disabled={phase !== "idle"} aria-pressed={paymentToken === token} className={paymentToken === token ? "is-selected" : ""} onClick={() => { setPaymentToken(token); setPayNote(null); }}><PaymentChoiceIcon token={token}/><span>{token}</span></button>)}</div>
                     <div className="pay">
                       <div className="pay__wallet">
@@ -375,14 +375,14 @@ export function CreatePosterPage() {
                           disabled={payDisabled}
                           onClick={onPay}
                         >
-                          <LockIcon />{payLabel}
+                          <LockIcon /><span>{priceText(payLabel)}</span>
                           <ArrowRight />
                         </button>
                         <p>
                           {paymentToken === "SOL" ? <>
                             {quoteLoading ? "Getting SOL quote…" : solQuote ? `${(solQuote.lamports / 1e9).toFixed(9)} SOL · ${quoteValid ? Math.ceil((solQuote.expiresAt - now) / 1000) + "s to approve" : "Quote expired"}` : "Quote unavailable"}
                             {phase === "idle" && !quoteLoading && <button type="button" onClick={refreshQuote} className="pay__quote-refresh">Refresh quote</button>}
-                            <br />$5 at quoted rate. SOL network fee is additional.
+                            <br /><Price/> at quoted rate. SOL network fee is additional.
                           </> : <>{FEE} {paymentToken} for your poster. SOL is needed for network and any token-account setup fees.</>}
                         </p>
                       </div>
@@ -406,7 +406,7 @@ export function CreatePosterPage() {
                     <p className="pay__secure">
                       <ShieldIcon />
                       <span>
-                        The $5 fee is paid in USDC, USDT or SOL with your wallet approval.
+                        The <Price/> fee is paid in USDC, USDT or SOL with your wallet approval.
                         <br />
                         Photo finishes are filters, not AI-generated artwork.
                       </span>
@@ -459,8 +459,8 @@ export function CreatePosterPage() {
                 {steps.map(({ title: stepTitle, text }, index) => (
                   <li key={stepTitle}>
                     <span className="mobile-guide-icon"><CreatorGuideIcon step={index} /></span><DesktopGuideIcon step={index}/>
-                    <h3>{stepTitle}</h3>
-                    <p>{text}</p>
+                    <h3>{priceText(stepTitle)}</h3>
+                    <p>{priceText(text)}</p>
                   </li>
                 ))}
               </ol>
@@ -485,10 +485,16 @@ function Step({ number, title, hint, children }: { number: number; title: string
     <section className="step">
       <span className="step__number">{number}</span>
       <div className="step__body">
-        <h2 className="step__title">{title}</h2>
+        <h2 className="step__title">{priceText(title)}</h2>
         {hint && <p className="step__hint">{hint}</p>}
         {children}
       </div>
     </section>
   );
+}
+
+// Lining figures keep the currency sign and amount aligned in every serif text style.
+function Price() { return <span className="creator-price">$5</span>; }
+function priceText(text: string) {
+  return text.split(/(\$5)/g).map((part, index) => part === "$5" ? <Price key={index}/> : part);
 }
