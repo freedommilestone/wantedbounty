@@ -13,7 +13,7 @@ export function CreatorPoster({ name, condition = "DEAD OR ALIVE", bounty, portr
       </svg>
       <svg className="creator-poster__wanted" viewBox="0 0 520 140" role="img" aria-label="WANTED"><text x="260" y="119" textAnchor="middle" textLength="515" lengthAdjust="spacingAndGlyphs">WANTED</text></svg>
       <div className={`creator-poster__portrait ${photoClassName}`}><img src={portrait} alt={`Portrait of ${name}`} /></div>
-      <svg className="creator-poster__alive" viewBox="0 0 460 50" role="img" aria-label={condition}><text x="230" y="42" textAnchor="middle" textLength="450" lengthAdjust="spacingAndGlyphs">{condition}</text></svg>
+      <svg className="creator-poster__alive" viewBox="0 0 460 50" role="img" aria-label={condition}><text x="230" y="42" textAnchor="middle" textLength={condition === "DEAD OR ALIVE" ? 450 : undefined} lengthAdjust={condition === "DEAD OR ALIVE" ? "spacingAndGlyphs" : undefined}>{condition}</text></svg>
       <svg className="creator-poster__name" viewBox="0 0 460 90" role="img" aria-label={name}><text x="230" y="77" textAnchor="middle" textLength="450" lengthAdjust="spacingAndGlyphs">{name.toUpperCase()}</text></svg>
       <svg className="creator-poster__bounty" viewBox="0 0 450 55" role="img" aria-label={`${bounty} BERI`}><text x="225" y="43" textAnchor="middle" textLength="430" lengthAdjust="spacingAndGlyphs">฿ {bounty}<tspan className="creator-poster__desktop-unit" fontSize="30"> BERI</tspan><tspan className="creator-poster__standard-unit">−</tspan></text></svg>
       <PosterScroll className="creator-poster__scroll creator-poster__scroll--left" />
