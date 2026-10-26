@@ -16,7 +16,7 @@ import {
   HelmLogo,
   SkullIcon,
 } from "./components/icons";
-import { HomeWheel, HomeCompass, HomeHat, HomeDiamond, HomeEmblem } from "./components/HomeIcons";
+import { HomeWheel, HomeCompass, HomeHat, HomeDiamond } from "./components/HomeIcons";
 import { Link, usePath } from "./router";
 import { organicEdges, tornPaper } from "./torn";
 import { shortAddress, useWallet, WalletProvider, type BeriHoldings } from "./wallet";
@@ -132,10 +132,7 @@ function HomePage() {
               <p className="hero__eyebrow">Your name. Your story.</p>
               <h1 className="hero__title" aria-label="Wanted Bounty">
                 <span>Wanted</span>
-                <span>
-                  B<HomeEmblem className="hero__target" />
-                  unty
-                </span>
+                <span>Bounty</span>
               </h1>
               <p className="hero__lede">
                 Turn your identity into a wanted poster <br />
