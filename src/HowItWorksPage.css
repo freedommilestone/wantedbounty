@@ -308,3 +308,53 @@
  .legend-title-paper{background-image:url('/textures/creator-poster-frame.png');padding:28px 26px}
  .legend-title-paper h2{font-size:17px}
 }
+
+/* Reference-style mobile bands: live text and independently positioned illustration slices. */
+@media(max-width:900px){
+ .legend-hero{padding:0;height:auto;min-height:300px;background:url('/scene/how-mobile-reference.png') center 4.83% / 100% 530% no-repeat}
+ .legend-title-paper{position:relative;left:auto;top:auto;width:68%;margin:0 auto;padding:30px 4px 0;background:none;min-height:220px}
+ .legend-title-paper h1{font-size:clamp(26px,6.4vw,54px);white-space:nowrap;letter-spacing:-.06em}
+ .legend-title-paper h2{font-size:clamp(13px,2.5vw,21px);line-height:1.2}
+ .legend-title-paper p{font-size:clamp(12px,2vw,16px);line-height:1.35}
+ .legend-journey{margin:8px auto 0!important;width:fit-content;max-width:80%;font-size:12px!important;padding:12px 18px}
+ .legend-row{display:block;padding:24px 6% 22px;min-height:250px;background:url('/textures/parchment-v2.jpg') center/700px;border-top:2px solid #926032;isolation:isolate}
+ .legend-row::before{display:block;inset:-5px 0 auto;height:10px;background:url('/textures/header-paper-edge.svg') center/100% 100%}
+ .legend-row::after{content:"";position:absolute;right:0;bottom:0;width:48%;height:165px;z-index:-1;background-image:url('/scene/how-mobile-reference.png');background-repeat:no-repeat;background-size:201% 790%;background-position:100% 26.1%;pointer-events:none;mask-image:linear-gradient(to right,transparent,#000 15%)}
+ .legend-row--reverse::after{left:0;right:auto;background-position:0 40.5%;mask-image:linear-gradient(to left,transparent,#000 15%)}
+ .legend-row:nth-of-type(4)::after{background-position:100% 54.9%}
+ .legend-row:nth-of-type(5)::after{background-position:100% 68.4%}
+ .legend-row .legend-copy,.legend-row--reverse .legend-copy{width:100%;position:relative}
+ .legend-number{float:left;width:38px;height:42px;font-size:28px;margin:0 10px 8px 0}
+ .legend-page .legend-row h2{font-size:clamp(19px,3.4vw,30px);padding-top:3px;min-height:42px;letter-spacing:-.04em}
+ .legend-page .legend-row h3{font-size:12px;clear:both;margin-top:10px;max-width:55%}
+ .legend-page .legend-row p{font-size:14px;line-height:1.5;width:55%;margin-bottom:14px}
+ .legend-row .legend-action{font-size:11px;padding:11px 12px;max-width:57%;gap:6px}
+ .legend-row--reverse .legend-copy h3,.legend-row--reverse .legend-copy p{margin-left:45%}
+ .legend-row--reverse .legend-copy .legend-action{margin-left:45%;max-width:55%}
+ .legend-treasure,.legend-reward-art,.legend-poster-fan,.legend-payment-art{display:none}
+ .legend-bottom{display:grid;grid-template-columns:56% 44%;height:auto;background:url('/textures/parchment-v2.jpg') center/700px;border-top:2px solid #926032}
+ .legend-ranking,.legend-control{display:block;background:none;padding:20px 14px;min-width:0}
+ .legend-control{border-left:1px solid #a77c49}
+ .legend-ranking .legend-copy h2,.legend-control h2{font-size:19px;clear:both}
+ .legend-ranking .legend-copy h3,.legend-control h3{font-size:12px}
+ .legend-ranking .legend-copy p,.legend-control p{font-size:14px;line-height:1.5}
+ .legend-ranking .legend-action,.legend-control .legend-action{font-size:11px;padding:12px 10px;gap:5px}
+ .legend-board{width:100%;box-sizing:border-box;padding:20px 12px;margin:18px 0 0}
+ .legend-board strong{font-size:15px}.legend-board small{font-size:11px}
+ .legend-control img{display:block;width:90px;height:90px;margin:24px auto 0}
+ .legend-footer{padding:26px 16% 36px;background:url('/scene/how-mobile-reference.png') center bottom/100% 790% no-repeat}
+ .legend-footer h2{font-size:22px}.legend-footer p{font-size:14px}
+ .legend-footer .legend-action{font-size:12px;padding:12px}
+ .legend-footer-sign{margin-top:16px;font-size:11px}
+}
+@media(max-width:900px){
+ .legend-title-paper{padding:30px 10px 0}
+ .legend-row::after{height:auto;aspect-ratio:450/260;background-size:201% 668%;mask-image:linear-gradient(to bottom,transparent,#000 15%);}
+ .legend-row--reverse::after{mask-image:linear-gradient(to bottom,transparent,#000 15%)}
+ .legend-row::after{background-position:100% 26.7%}
+ .legend-row--reverse::after{background-position:0 41.5%}
+ .legend-row:nth-of-type(4)::after{background-position:100% 56.5%}
+ .legend-row:nth-of-type(5)::after{background-position:100% 70%}
+ .legend-footer{background-size:100% 790%;position:relative;isolation:isolate}
+ .legend-footer::before{content:"";position:absolute;inset:14px 10% 20px;background:url('/textures/title-banner.png') center/100% 100%;opacity:.95;z-index:-1}
+}
