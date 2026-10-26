@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import "./MobileNavigation.css";
 import { Link } from "../router";
+import { PirateSkullIcon } from "./ReferenceIcons";
 import { useWallet } from "../wallet";
 import { HomeCompass, HomeWheel, HomeEmblem } from "./HomeIcons";
 import { WalletButton } from "./WalletButton";
@@ -70,7 +71,7 @@ export function SiteHeader({ active }: { active: Page }) {
           } }}>
           <div className="mobile-navigation__surface">
           <div className="mobile-navigation__heading">
-            <div className="mobile-navigation__brand"><HomeEmblem cherries /><strong>BERI BOUNTY</strong><small>$BERI · COMMUNITY · LEGENDARY</small></div>
+            <div className="mobile-navigation__brand"><HomeEmblem cherries /></div>
             <button type="button" autoFocus aria-label="Close navigation" onClick={() => setMenuOpen(false)}>×</button>
           </div>
           <nav aria-label="Mobile main">
@@ -80,6 +81,7 @@ export function SiteHeader({ active }: { active: Page }) {
                 <span className="mobile-navigation__icon"><MenuIcon page={page} /></span>
                 <span className="mobile-navigation__label">{label}</span><span aria-hidden="true">→</span></Link>)}
           </nav>
+          <div className="mobile-navigation__divider" aria-hidden="true"><span/><PirateSkullIcon/><span/></div>
           <div className="mobile-navigation__wallet"><WalletButton /></div>
           <div className="mobile-navigation__scenery" aria-hidden="true" />
           </div>
