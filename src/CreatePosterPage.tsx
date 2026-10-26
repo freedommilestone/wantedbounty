@@ -2,6 +2,7 @@ import { toPng } from "html-to-image";
 import { useEffect, useRef, useState, type ChangeEvent, type DragEvent, type ReactNode } from "react";
 import { SiteHeader } from "./components/SiteHeader";
 import { POSTER_FEE, type PaymentToken, type SolQuote } from "./payment";
+import { PirateSkullIcon } from "./components/ReferenceIcons";
 import { CreatorGuideIcon } from "./components/CreatorGuideIcon";
 import { CreatorPoster } from "./components/CreatorPoster";
 import {
@@ -21,6 +22,8 @@ import { useWallet } from "./wallet";
 import "./CreatePosterPage.css";
 import "./CreateReference.css";
 import "./CreateMobile.css";
+import "./CreateDesktop.css";
+import { PaymentChoiceIcon, WantedConditionIcon, DesktopGuideIcon } from "./components/CreatorDesktopIcons";
 
 const FEE = POSTER_FEE;
 const MAX_UPLOAD_BYTES = 10 * 1024 * 1024;
@@ -42,10 +45,10 @@ const PREVIEW_EDGE = tornPaper(23, 170, 0.8);
 const NOTE_EDGE = tornPaper(9, 70, 1.5);
 
 const steps = [
-  { title: "1. Upload", text: "Add your photo and choose your details." },
-  { title: "2. Customize", text: "Set your name, bounty, title and art style." },
+  { title: "1. Upload", text: "Upload a clear photo of yourself." },
+  { title: "2. Set Details", text: "Enter your pirate name and choose your wanted condition." },
   { title: "3. Pay $5", text: `Pay $5 in USDC, USDT or SOL on Solana with your wallet.` },
-  { title: "4. Get your poster", text: "Receive your One Piece–style wanted poster and share it with the community." },
+  { title: "4. Get your poster", text: "Download your personalized wanted poster and share it with the community." },
 ];
 
 export function CreatePosterPage() {
@@ -56,6 +59,9 @@ export function CreatePosterPage() {
   const [uploadError, setUploadError] = useState<string | null>(null);
   const [dragging, setDragging] = useState(false);
   const [name, setName] = useState("");
+  const [condition, setCondition] = useState("DEAD OR ALIVE");
+  const [conditionHelp, setConditionHelp] = useState(false);
+  const nameRef = useRef<HTMLInputElement>(null);
   const [customBounty, setCustomBounty] = useState("");
   const uploadSequence = useRef(0);
   const [title, setTitle] = useState<string>(TITLES[0]);
@@ -185,7 +191,7 @@ export function CreatePosterPage() {
     }
   };
 
-  let payLabel = paymentToken === "SOL" ? "Pay with SOL & Generate" : `Pay ${FEE} ${paymentToken} & Generate`;
+  let payLabel = "Pay $5 & Generate My Poster";
   if (!address) payLabel = "Connect Wallet to Pay";
   else if (phase === "paid") payLabel = "Download Your Poster";
   else if (phase === "signing") payLabel = "Approve in your wallet…";
@@ -208,9 +214,9 @@ export function CreatePosterPage() {
                     <span>Wanted Poster</span>
                   </h1>
                   <p className="create__lede">
-                    <strong>Turn your story into a legendary bounty.</strong>
+                    <strong>Turn your photo into a legendary bounty.</strong>
                     <br />
-                    Upload your photo, customize your details, and get your very own One Piece–style wanted poster.
+                    Upload your image and create your own wanted poster. Your connected wallet supplies the default bounty amount.
                   </p>
                 </div>
               </div>
@@ -232,10 +238,10 @@ export function CreatePosterPage() {
             <div className="create__grid">
               <div className="create__panel-shadow">
                 <form className="create__panel create__form" style={{ clipPath: FORM_EDGE }} onSubmit={(event) => event.preventDefault()}>
-                  <Step number={1} title="Upload Your Photo" hint="Use a clear photo of yourself. Choose a vintage finish for your wanted poster.">
+                  <Step number={1} title="Upload Your Image" hint="Use a clear photo of yourself. Choose a vintage finish for your wanted poster.">
                     <div className="upload">
                       <div className="upload__thumb">
-                        {photo ? <img src={photo.url} alt="Your uploaded photo" /> : <span>Your photo</span>}
+                        {photo ? <><img src={photo.url} alt="Your uploaded photo" /><button className="upload__remove" type="button" aria-label="Remove photo" onClick={() => { ++uploadSequence.current; setPhoto(null); }}>×</button></> : <span>Your photo</span>}
                       </div>
                       <div className="upload__drop-wrap">
                         <button
@@ -259,22 +265,27 @@ export function CreatePosterPage() {
                     </div>
                   </Step>
 
-                  <Step number={2} title="Customize Your Poster">
+                  <Step number={2} title="Set Your Details">
                     <div className="fields">
-                      <label className="field">
-                        <span className="field__label">
-                          Pirate <u>Name</u>
-                        </span>
-                        <input
+                      <fieldset className="condition-field desktop-only">
+                        <legend>Wanted Condition <button className="condition-help-toggle" type="button" aria-label="About wanted conditions" aria-expanded={conditionHelp} aria-controls="condition-help" onClick={() => setConditionHelp(!conditionHelp)}>?</button></legend>
+                        {conditionHelp && <p id="condition-help" className="condition-help">Choose the wording displayed above your name on the poster. This is decorative and does not affect the price or bounty.</p>}
+                        <div className="condition-options">{["DEAD OR ALIVE", "DEAD", "ALIVE"].map(option => <button key={option} type="button" aria-pressed={condition === option} className={condition === option ? "is-selected" : ""} onClick={() => setCondition(option)}><WantedConditionIcon alive={option === "ALIVE"}/><span>{option}</span></button>)}</div>
+                      </fieldset>
+                      <div className="field pirate-name-field">
+                        <label htmlFor="pirate-name" className="field__label">Pirate Name</label>
+                        <div className="name-input-wrap"><input
+                          ref={nameRef}
+                          id="pirate-name"
                           className="field__control"
                           value={name}
                           maxLength={24}
                           placeholder="Your Name"
                           onChange={(event) => setName(event.target.value)}
-                        />
-                      </label>
+                        />{name && <button className="name-clear desktop-only" type="button" aria-label="Clear pirate name" onClick={() => { setName(""); nameRef.current?.focus(); }}>×</button>}</div>
+                      </div>
 
-                      <label className="field">
+                      <label className="field desktop-legacy">
                         <span className="field__label">Wanted Title</span>
                         <span className="field__select">
                           <select className="field__control" value={title} onChange={(event) => setTitle(event.target.value)}>
@@ -286,7 +297,7 @@ export function CreatePosterPage() {
                         </span>
                       </label>
 
-                      <div className="field">
+                      <div className="field desktop-legacy">
                         <span className="field__label">Bounty Amount</span>
                         <div className="field__control bounty-input">
                           <BeriCoin className="bounty-input__coin" />
@@ -302,7 +313,7 @@ export function CreatePosterPage() {
                         </div>
                       </div>
 
-                      <div className="field">
+                      <div className="field desktop-legacy">
                         <span className="field__label">Art Style</span>
                         <div className="styles" role="radiogroup" aria-label="Art style">
                           {ART_STYLES.map((style) => (
@@ -323,7 +334,9 @@ export function CreatePosterPage() {
                     </div>
                   </Step>
 
-                  <Step number={3} title="Pay $5 & Generate">
+                  <Step number={3} title="Pay $5 to Create">
+                    <p className="desktop-only pay__description">A one-time fee of $5 to create your wanted poster.<br/>Includes a photo filter and download; supports the BERI community.</p>
+                    <div className="desktop-only payment-choices" role="group" aria-label="Payment currency">{(["USDC", "USDT", "SOL"] as PaymentToken[]).map(token => <button key={token} type="button" disabled={phase !== "idle"} aria-pressed={paymentToken === token} className={paymentToken === token ? "is-selected" : ""} onClick={() => { setPaymentToken(token); setPayNote(null); }}><PaymentChoiceIcon token={token}/><span>{token === "SOL" ? "$5 worth of SOL" : `5 ${token}`}</span></button>)}</div>
                     <div className="pay">
                       <div className="pay__wallet">
                         <span className="pay__wallet-icon">
@@ -347,7 +360,7 @@ export function CreatePosterPage() {
                           disabled={payDisabled}
                           onClick={onPay}
                         >
-                          {payLabel}
+                          <LockIcon />{payLabel}
                           <ArrowRight />
                         </button>
                         <p>
@@ -372,6 +385,7 @@ export function CreatePosterPage() {
                         {payNote}
                       </p>
                     )}
+                    <div className="desktop-only payment-trust"><span><ShieldIcon/>Secure Payment</span><span><BeriCoin/>One-time fee only</span><span><CompassIcon/>Supports BERI</span></div>
                     <p className="pay__secure">
                       <ShieldIcon />
                       <span>
@@ -391,6 +405,7 @@ export function CreatePosterPage() {
                   </p>
                   <CreatorPoster
                     name={posterName}
+                    condition={condition}
                     bounty={bounty}
                     portrait={photo?.url ?? DEFAULT_PORTRAIT}
                     photoClassName={`art--${artStyle}`}
@@ -421,11 +436,12 @@ export function CreatePosterPage() {
         <section className="steps" id="how-it-works">
           <div className="container">
             <h2 className="steps__ribbon">How It Works</h2>
+            <div className="desktop-only creator-guide-divider" aria-hidden="true"><span/><PirateSkullIcon/><span/></div>
             <div className="steps__row">
               <ol className="steps__list">
                 {steps.map(({ title: stepTitle, text }, index) => (
                   <li key={stepTitle}>
-                    <CreatorGuideIcon step={index} />
+                    <span className="mobile-guide-icon"><CreatorGuideIcon step={index} /></span><DesktopGuideIcon step={index}/>
                     <h3>{stepTitle}</h3>
                     <p>{text}</p>
                   </li>

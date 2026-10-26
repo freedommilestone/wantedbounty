@@ -1,0 +1,191 @@
+/* Desktop reference composition: 1536px artboard, bounded at its native size. */
+.desktop-only{display:none}
+.upload__thumb{position:relative}
+.upload__remove{position:absolute;right:6px;top:6px;border:0;border-radius:50%;background:#352419;color:#fff;width:22px;height:22px;cursor:pointer}
+@media(min-width:1101px){
+ .creator-page{max-width:1536px;width:100%;margin-inline:auto;font-size:min(.6510416667vw,10px);background:#c7a576 url('/scene/create-harbor-desktop-v3.png') center top/100% 100% no-repeat;min-height:0}
+ .creator-page .desktop-only{display:block}
+ .creator-page .desktop-legacy,.creator-page .steps__note-shadow,.creator-page .create__assurances,.creator-page .mobile-guide-icon{display:none}
+ .creator-page .site-header__inner{width:84%;height:7.5em;min-height:0;gap:3em}
+ .creator-page .brand__logo{width:7em;height:7em}
+ .creator-page .nav{gap:4em;margin-inline:auto}
+ .creator-page .nav a{font-size:1.6em}
+ .creator-page .wallet-btn{font-size:1.5em;padding:.7em 1.5em}
+ .creator-page .create .container{width:103.5em;max-width:calc(100% - 4em)}
+ .creator-page .create__intro{height:18.5em}
+ .creator-page .create__banner-shadow{left:3.5em;top:1.6em;width:57em}
+ .creator-page .create__banner{padding:.9em 3em 1em;background:none}
+ .creator-page .create__title{margin:0;line-height:1;font-family:'Roboto Serif',Georgia,serif;font-stretch:condensed}
+ .creator-page .create__title span:first-child{font-size:2.8em;line-height:1}
+ .creator-page .create__title span:last-child{font-size:5.8em;line-height:1.05;letter-spacing:-.055em;white-space:nowrap}
+ .creator-page .create__lede{font:1.35em/1.3 Georgia,serif;margin:.5em 0 0;max-width:36em;text-align:center}
+ .creator-page .create__lede strong{font-size:1.3em}
+ .creator-page .create__motto{right:-8em;top:3em}
+ .creator-page .create__motto p{font-size:3em}
+ .creator-page .create__compass{display:none}
+ .creator-page .create__grid{grid-template-columns:60em 43.5em;height:auto;min-height:55em;gap:0;align-items:stretch}
+ .creator-page .create__form{padding:2em 3em 2em 3.3em;height:auto;min-height:55em}
+ .creator-page .step{grid-template-columns:4.6em minmax(0,1fr);gap:1.7em}
+ .creator-page .step__number{width:1.5em;height:1.5em;font:3em/1 Georgia,serif;display:grid;place-items:center}
+ .creator-page .step__title{font:bold 2.2em/1.1 Georgia,serif;padding:0;margin:0}
+ .creator-page .step__hint{font:1.25em/1.3 Georgia,serif;margin:.3em 0 0}
+ .creator-page .step+.step{margin-top:1.3em;padding-top:1.1em}
+ .creator-page .upload{margin-top:1em;gap:1.2em;grid-template-columns:13em minmax(0,1fr)}
+ .creator-page .upload__thumb{width:13em;height:10.9em;padding:.6em}
+ .creator-page .upload__drop{height:9.7em;padding:.8em}
+ .creator-page .upload__drop svg{width:4em;height:4em}
+ .creator-page .upload__drop strong{font-size:1.6em}
+ .creator-page .upload__drop span,.creator-page .upload__hint{font-size:1.2em}
+ .creator-page .fields{grid-template-columns:18.2em minmax(0,1fr);gap:1.2em;margin-top:.8em}
+ .creator-page .fields>.field:first-of-type{grid-column:1;grid-row:1}
+ .creator-page .field__label,.creator-page .condition-field legend{font:bold 1.3em/1.2 Georgia,serif;margin:0 0 .5em}
+ .creator-page .field__control{font:1.4em Georgia,serif;height:3em;padding:.6em .8em}
+ .creator-page .condition-field{grid-column:2;grid-row:1;border:0;padding:0;margin:0;min-width:0}
+ .creator-page .condition-options{display:flex;gap:.6em}
+ .creator-page .condition-options button{flex:1;min-width:0;display:flex;align-items:center;justify-content:center;gap:.4em;height:3.5em;font:bold 1.2em/1.1 Georgia,serif;background:#fff2d126;border:1px solid #b59a70;border-radius:4px;color:#28180c;padding:.3em;cursor:pointer}
+ .creator-page .condition-options svg{width:2em;height:2em;flex:none}
+ .creator-page .condition-options button.is-selected,.creator-page .payment-choices button.is-selected{border-color:#6f3a10;box-shadow:inset 0 0 0 1px #6f3a10;background:#e7bd7855}
+ .creator-page .pay__description{font:1.3em/1.3 Georgia,serif;margin:.5em 0 .8em}
+ .creator-page .payment-choices{display:flex;gap:.7em}
+ .creator-page .payment-choices button{flex:1;min-width:0;display:flex;align-items:center;justify-content:center;gap:1em;font:bold 1.4em Georgia,serif;height:3.2em;background:#fff2d126;border:1px solid #b59a70;border-radius:4px;color:#28180c;cursor:pointer;padding:.4em}
+ .creator-page .payment-choices svg{width:2em;height:2em;flex:none}
+ .creator-page .pay{display:block;margin:1em 0 0}
+ .creator-page .pay__wallet{display:none}
+ .creator-page .pay__button{width:100%;height:3.2em;padding:.5em 1em;font:bold 1.5em Georgia,serif;background:linear-gradient(100deg,#671b12,#4d0d09);border:3px double #c9a578;border-radius:4px;gap:1em;justify-content:center}
+ .creator-page .pay__button svg{width:1.3em;height:1.3em}
+ .creator-page .pay__action>p{font:1.05em/1.3 Georgia,serif;margin:.5em 0}
+ .creator-page .pay__secure{border:0;background:none;padding:0;margin:.7em 0 0;font:1.05em/1.3 Georgia,serif;gap:1em;min-height:0}
+ .creator-page .pay__secure svg{width:1.8em;height:1.8em}
+ .creator-page .pay__note{font-size:1.3em}
+ .creator-page .create__preview{padding:1.5em 4.5em 3em;min-height:55em;display:flex;flex-direction:column;align-items:center;justify-content:flex-start}
+ .creator-page .create__preview::before{display:none}
+ .creator-page .create__ribbon{font-size:1.5em;line-height:1.2;margin:0 0 1em;padding:.25em 2em;min-width:0}
+ .creator-page .creator-poster{width:100%;max-width:none;margin:0;transform:rotate(-1.5deg)}
+ .creator-page .creator-poster__sheet{aspect-ratio:350/465;background:url('/textures/creator-poster-frame.png') center/100% 100%;color:#291609}
+ .creator-page .creator-poster__paper{display:none}
+ .creator-page .creator-poster__wanted{top:4%;left:6%;width:88%;height:16%}
+ .creator-page .creator-poster__portrait{top:21%;left:9%;width:82%;height:40%}
+ .creator-page .creator-poster__alive{top:62%;left:12%;width:76%;height:5.5%}
+ .creator-page .creator-poster__name{top:68%;left:12%;width:76%;height:10%}
+ .creator-page .creator-poster__bounty{top:79%;left:12%;width:76%;height:7%}
+ .creator-page .creator-poster__fine{top:88%;left:12%;width:50%;max-height:7%;font-size:1.35cqw}
+ .creator-page .creator-poster__marine{top:88%;right:6%;height:7%}
+ .creator-page .creator-poster__scroll{top:62%;height:31%}
+ .creator-page .steps{height:auto;min-height:21.4em;padding:1.1em 0 2em;background:none}
+ .creator-page .steps .container{width:103.5em;background:none}
+ .creator-page .steps__ribbon{font:bold 3em/1.1 Georgia,serif;background:none;border:0;padding:0;margin:0 auto;min-width:0;width:auto;box-shadow:none}
+ .creator-page .steps__ribbon::before,.creator-page .steps__ribbon::after{display:none}
+ .creator-page .steps__row{display:block;margin:1em 0 0}
+ .creator-page .steps__list{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:0}
+ .creator-page .steps__list li{padding:0 2em;text-align:center}
+ .creator-page .steps__list li+li{border-left:1px solid #b99a65}
+ .creator-page .desktop-guide-icon{width:5.7em;height:5.7em;margin:0 auto .5em}
+ .creator-page .steps__list h3{font:bold 1.8em/1.2 Georgia,serif;margin:0;text-transform:uppercase}
+ .creator-page .steps__list p{font:1.4em/1.25 Georgia,serif;margin:.3em auto 0;max-width:17em}
+}
+@media(min-width:1101px){
+ .creator-page .create__title span:last-child{font-size:6.5em;letter-spacing:-.065em}
+ .creator-page .create__lede{max-width:34em;font-size:1.3em}
+ .creator-page .upload__thumb{height:10em}
+ .creator-page .step+.step{margin-top:1em;padding-top:.9em}
+ .creator-page .condition-options button{font-size:1.1em;height:3.8em;gap:.3em}
+ .creator-page .condition-options button:first-child{flex:1.15}
+ .creator-page .condition-options button span{max-width:5.4em}
+ .creator-page .payment-choices button{font-size:1.3em;gap:.6em;white-space:nowrap}
+ .creator-page .pay__button{min-height:0;height:3.2em;text-transform:none}
+ .creator-page .pay__secure{font-size:1em;margin-top:.4em}
+ .creator-page .pay__description{font-size:1.25em}
+ .creator-page .steps{color:#2d190c;padding-bottom:1em}
+ .creator-page .desktop-guide-icon{color:#2d190c;height:5em;width:5em}
+ .creator-page .steps__list p{font-size:1.3em}
+}
+@media(min-width:1101px){
+ .creator-page .pay__secure{display:none}
+ .creator-page .payment-trust{display:flex;justify-content:space-between;margin-top:1.1em;gap:.6em;font:1.05em Georgia,serif}
+ .creator-page .payment-trust span{display:flex;align-items:center;gap:.7em}
+ .creator-page .payment-trust span+span{border-left:1px solid #b99a65;padding-left:1em}
+ .creator-page .payment-trust svg{width:1.8em;height:1.8em;flex:none}
+}
+@media(min-width:1101px){
+ .creator-page .creator-guide-divider{display:flex;align-items:center;justify-content:center;gap:1em;height:2em;margin:0 auto}
+ .creator-page .creator-guide-divider span{height:1px;width:10em;background:#59371e}
+ .creator-page .creator-guide-divider svg{width:2.5em;height:2.5em}
+ .creator-page .steps__row{margin-top:0}
+ .creator-page .steps__list li{border:0}
+ .creator-page .steps__list li+li{border-left:1px solid #b99a65}
+ .creator-page .create__form{padding-bottom:1.5em}
+ .creator-page .step+.step{margin-top:.7em;padding-top:.7em}
+ .creator-page .upload__drop{height:9.2em}
+ .creator-page .upload__thumb{height:9.7em}
+ .creator-page .create__lede{margin-top:.3em}
+}
+/* Revised open-harbor composition. All controls remain HTML above the scenery. */
+.name-input-wrap{position:relative}
+.name-input-wrap input{width:100%}
+@media(min-width:1101px){
+ .creator-page{background-image:url('/scene/create-harbor-desktop-v4.png')}
+ .creator-page .create .container{width:101.6em}
+ .creator-page .create__intro{height:21em}
+ .creator-page .create__banner-shadow{left:6em;top:2.5em;width:51em}
+ .creator-page .create__banner{padding:0;background:none}
+ .creator-page .create__title span:first-child{font-size:4em}
+ .creator-page .create__title span:last-child{font-size:6.4em}
+ .creator-page .create__lede{max-width:30em;font-size:1.4em;margin:.25em auto 0}
+ .creator-page .create__lede strong{font-size:1.3em}
+ .creator-page .create__motto{right:-7em;top:3.5em}
+ .creator-page .create__grid{grid-template-columns:56em 39em;gap:7em;min-height:56.5em}
+ .creator-page .create__form{min-height:56.5em;padding:1.5em 3.5em 1.6em 3em}
+ .creator-page .step{grid-template-columns:4.6em minmax(0,1fr);gap:1.5em}
+ .creator-page .step__title{font-size:2.1em}
+ .creator-page .step__hint{font-size:1.2em}
+ .creator-page .upload{grid-template-columns:12em minmax(0,1fr);gap:.8em;margin-top:.8em}
+ .creator-page .upload__thumb{width:12em;height:9.8em}
+ .creator-page .upload__drop{height:8.8em}
+ .creator-page .upload__drop svg{width:3.5em;height:3.5em}
+ .creator-page .step+.step{border:0;margin-top:.9em;padding-top:0}
+ .creator-page .fields{display:flex;flex-direction:column;gap:.8em;margin-top:.7em}
+ .creator-page .pirate-name-field{order:-1}
+ .creator-page .field__control{height:2.5em;padding-right:2em}
+ .creator-page .name-clear{position:absolute;right:.4em;top:50%;transform:translateY(-50%);border:0;background:none;color:#563c26;font-size:2em;cursor:pointer;line-height:1;padding:0 .2em}
+ .creator-page .condition-options{gap:1em}
+ .creator-page .condition-options button{font-size:1.2em;min-height:4.2em;gap:1em}
+ .creator-page .condition-options button span{max-width:6em}
+ .creator-page .condition-help-toggle{border:0;border-radius:50%;background:#493a2c;color:#fff2d9;font:1em Georgia,serif;margin-left:1em;width:1.3em;height:1.3em;cursor:pointer}
+ .creator-page .condition-help{font:1.25em/1.4 Georgia,serif;margin:0 0 .8em;padding:.7em;background:#fff3d4;border:1px solid #bda077;border-radius:3px}
+ .creator-page .payment-choices button{height:3.5em;font-size:1.3em;gap:1em}
+ .creator-page .payment-choices button:last-child{white-space:normal}
+ .creator-page .payment-trust{margin-top:.9em;font-size:.95em}
+ .creator-page .payment-trust span+span{padding-left:.7em}
+ .creator-page .pay__description{font-size:1.2em;margin:.4em 0 .8em}
+ .creator-page .pay__action>p{font-size:1em}
+ .creator-page .pay{margin-top:.7em}
+ .creator-page .create__preview{padding:0;min-height:0;position:relative;overflow:visible;clip-path:none!important;background:none}
+ .creator-page .create__ribbon{position:absolute;top:-4em;left:50%;transform:translateX(-50%);white-space:nowrap;margin:0}
+ .creator-page .creator-poster{width:36em;margin:-1.6em auto 0;transform:rotate(-2deg);filter:drop-shadow(0 5px 5px #32201070)}
+ .creator-page .creator-poster__sheet{aspect-ratio:360/500}
+ .creator-page .steps{min-height:17.5em;padding:.8em 0 1em}
+ .creator-page .steps .container{width:95em}
+ .creator-page .steps__ribbon{font-size:2.7em}
+ .creator-page .desktop-guide-icon{width:4em;height:4em;margin-top:-.5em}
+ .creator-page .steps__list h3{font-size:1.7em}
+ .creator-page .steps__list p{font-size:1.3em;max-width:14em}
+ .creator-page button:not(:disabled){transition:background-color .15s,box-shadow .15s}
+ .creator-page .condition-options button:hover,.creator-page .payment-choices button:hover{background:#dcaa6555}
+ .creator-page button:focus-visible,.creator-page input:focus-visible{outline:2px solid #793a19;outline-offset:3px}
+ .creator-page button:disabled{cursor:wait;opacity:.6}
+}
+@media(prefers-reduced-motion:reduce){.creator-page button{transition:none!important}}
+.creator-poster__desktop-unit{display:none}
+@media(min-width:1101px){
+ .creator-page .creator-poster__desktop-unit{display:inline}
+ .creator-page .creator-poster__standard-unit{display:none}
+ .creator-page .create__banner{background:radial-gradient(ellipse at center,#f3dcb6ee 0%,#f3dcb6bb 55%,#f3dcb600 75%)}
+ .creator-page .create__form{padding-bottom:1em}
+ .creator-page .upload__thumb{height:9em}
+ .creator-page .upload__drop{height:8.2em}
+ .creator-page .step+.step{margin-top:.5em}
+ .creator-page .payment-trust{margin-top:.5em}
+ .creator-page .steps__list p{font-size:1.25em;max-width:15em}
+ .creator-page .desktop-guide-icon{height:3.5em;width:3.5em}
+ .creator-page .steps{padding-bottom:.4em}
+}
