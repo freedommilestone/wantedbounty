@@ -139,7 +139,7 @@
 
 /* Scale the desktop composition and its text together at every viewport width. */
 @media(min-width:801px){
- .explore-page{font-size:.8230452675vw}
+ .explore-page{width:100%;max-width:1440px;margin-inline:auto;font-size:min(.8230452675vw,11.85185185px)}
  .explore-banner{container-type:inline-size;padding-inline:1.8em}
  .explore-banner h1{font-size:12.8cqw;white-space:nowrap;max-width:100%}
  .explore-banner p{font-size:2.05cqw;letter-spacing:.06em;max-width:100%;white-space:normal;line-height:1.4}
