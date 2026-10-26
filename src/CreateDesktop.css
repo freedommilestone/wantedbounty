@@ -189,3 +189,33 @@
  .creator-page .desktop-guide-icon{height:3.5em;width:3.5em}
  .creator-page .steps{padding-bottom:.4em}
 }
+/* Border-free poster stock and reference lettering; the portrait keeps its own fine ink edge. */
+@media(min-width:1101px){
+ .creator-page .creator-poster__sheet{background-image:url('/textures/creator-poster-borderless-v2.png');color:#351809;border:0;box-shadow:none}
+ .creator-page .creator-poster{filter:drop-shadow(1px 3px 3px #32201055)}
+ .creator-page .creator-poster__wanted{top:3%;left:5%;width:90%;height:17.5%;font-family:Georgia,serif;font-weight:800}
+ .creator-page .creator-poster__portrait{top:21%;left:9%;width:82%;height:39%;border:1px solid #49301c}
+ .creator-page .creator-poster__alive{top:61%;left:12%;width:76%;height:5.8%;font-family:Georgia,serif;font-weight:700}
+ .creator-page .creator-poster__name{top:67%;left:12%;width:76%;height:11%;font-family:Georgia,serif;font-weight:700}
+ .creator-page .creator-poster__bounty{top:78.5%;left:12%;width:76%;height:8%;font-family:Georgia,serif;font-weight:700}
+ .creator-page .creator-poster__scroll{top:60.5%;height:29%;color:#351809}
+ .creator-page .creator-poster__fine{top:89%;left:11%;width:49%;max-height:6%;color:#351809;font-size:1.35cqw}
+ .creator-page .creator-poster__marine{top:88%;right:6%;width:30%;height:7%;font-family:Georgia,serif;font-weight:700}
+ .creator-page .creator-poster__bounty text{font-size:48px}
+ .creator-page .creator-poster__desktop-unit{font-size:36px}
+}
+@media(min-width:1101px){
+ .creator-page .creator-poster__bounty{transform:scaleY(1.25);transform-origin:center}
+ .creator-page .creator-poster__name{transform:scaleY(1.12);transform-origin:center}
+}
+/* Transient help and pricing feedback must not resize the illustrated page. */
+@media(min-width:1101px){
+ .creator-page .condition-field{position:relative}
+ .creator-page .condition-help{position:absolute;z-index:20;left:7em;bottom:calc(100% + .8em);width:24em;max-width:calc(100% - 7em);margin:0;padding:1em 2.3em 1em 1em;border:1px solid #987248;border-radius:8px;background:#fff0d1;box-shadow:0 4px 14px #35200f40;font:1.3em/1.4 Georgia,serif}
+ .creator-page .condition-help::after{content:"";position:absolute;bottom:-6px;left:2em;width:10px;height:10px;background:#fff0d1;border-right:1px solid #987248;border-bottom:1px solid #987248;transform:rotate(45deg)}
+ .creator-page .condition-help p{margin:0}
+ .creator-page .condition-help-close{position:absolute;right:.3em;top:.15em;border:0;background:none;color:#35200f;font-size:1.6em;line-height:1;padding:.2em;cursor:pointer}
+ .creator-page .pay__action>p{height:4em;overflow:auto;box-sizing:border-box}
+ .creator-page .payment-feedback{height:3.2em;overflow:auto}
+ .creator-page .payment-feedback .pay__note{margin:0;font-size:1.1em;line-height:1.35}
+}

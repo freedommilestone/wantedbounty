@@ -61,6 +61,21 @@ export function CreatePosterPage() {
   const [name, setName] = useState("");
   const [condition, setCondition] = useState("DEAD OR ALIVE");
   const [conditionHelp, setConditionHelp] = useState(false);
+  const conditionRef = useRef<HTMLFieldSetElement>(null);
+  const conditionToggleRef = useRef<HTMLButtonElement>(null);
+  useEffect(() => {
+    if (!conditionHelp) return;
+    const outside = (event: PointerEvent) => {
+      const target = event.target as Node;
+      if (!conditionRef.current?.querySelector(".condition-help")?.contains(target) && !conditionToggleRef.current?.contains(target)) setConditionHelp(false);
+    };
+    const escape = (event: KeyboardEvent) => {
+      if (event.key === "Escape") { setConditionHelp(false); conditionToggleRef.current?.focus(); }
+    };
+    document.addEventListener("pointerdown", outside);
+    document.addEventListener("keydown", escape);
+    return () => { document.removeEventListener("pointerdown", outside); document.removeEventListener("keydown", escape); };
+  }, [conditionHelp]);
   const nameRef = useRef<HTMLInputElement>(null);
   const [customBounty, setCustomBounty] = useState("");
   const uploadSequence = useRef(0);
@@ -267,9 +282,9 @@ export function CreatePosterPage() {
 
                   <Step number={2} title="Set Your Details">
                     <div className="fields">
-                      <fieldset className="condition-field desktop-only">
-                        <legend>Wanted Condition <button className="condition-help-toggle" type="button" aria-label="About wanted conditions" aria-expanded={conditionHelp} aria-controls="condition-help" onClick={() => setConditionHelp(!conditionHelp)}>?</button></legend>
-                        {conditionHelp && <p id="condition-help" className="condition-help">Choose the wording displayed above your name on the poster. This is decorative and does not affect the price or bounty.</p>}
+                      <fieldset ref={conditionRef} className="condition-field desktop-only">
+                        <legend>Wanted Condition <button ref={conditionToggleRef} className="condition-help-toggle" type="button" aria-label="About wanted conditions" aria-expanded={conditionHelp} aria-controls="condition-help" onClick={() => setConditionHelp(!conditionHelp)}>?</button></legend>
+                        {conditionHelp && <div id="condition-help" className="condition-help" role="dialog" aria-label="Wanted condition help"><button type="button" className="condition-help-close" aria-label="Close condition help" onClick={() => { setConditionHelp(false); conditionToggleRef.current?.focus(); }}>×</button><p>Choose the wording displayed above your name on the poster. This is decorative and does not affect the price or bounty.</p></div>}
                         <div className="condition-options">{["DEAD OR ALIVE", "DEAD", "ALIVE"].map(option => <button key={option} type="button" aria-pressed={condition === option} className={condition === option ? "is-selected" : ""} onClick={() => setCondition(option)}><WantedConditionIcon alive={option === "ALIVE"}/><span>{option}</span></button>)}</div>
                       </fieldset>
                       <div className="field pirate-name-field">
@@ -336,7 +351,7 @@ export function CreatePosterPage() {
 
                   <Step number={3} title="Pay $5 to Create">
                     <p className="desktop-only pay__description">A one-time fee of $5 to create your wanted poster.<br/>Includes a photo filter and download; supports the BERI community.</p>
-                    <div className="desktop-only payment-choices" role="group" aria-label="Payment currency">{(["USDC", "USDT", "SOL"] as PaymentToken[]).map(token => <button key={token} type="button" disabled={phase !== "idle"} aria-pressed={paymentToken === token} className={paymentToken === token ? "is-selected" : ""} onClick={() => { setPaymentToken(token); setPayNote(null); }}><PaymentChoiceIcon token={token}/><span>{token === "SOL" ? "$5 worth of SOL" : `5 ${token}`}</span></button>)}</div>
+                    <div className="desktop-only payment-choices" role="group" aria-label="Payment currency">{(["USDC", "USDT", "SOL"] as PaymentToken[]).map(token => <button key={token} type="button" disabled={phase !== "idle"} aria-pressed={paymentToken === token} className={paymentToken === token ? "is-selected" : ""} onClick={() => { setPaymentToken(token); setPayNote(null); }}><PaymentChoiceIcon token={token}/><span>{token}</span></button>)}</div>
                     <div className="pay">
                       <div className="pay__wallet">
                         <span className="pay__wallet-icon">
@@ -347,9 +362,9 @@ export function CreatePosterPage() {
                           <select id="payment-token" className="pay__currency" value={paymentToken}
                             disabled={phase !== "idle"}
                             onChange={(event) => { setPaymentToken(event.target.value as PaymentToken); setPayNote(null); }}>
-                            <option value="USDC">5 USDC</option>
-                            <option value="USDT">5 USDT</option>
-                            <option value="SOL">$5 in SOL</option>
+                            <option value="USDC">USDC</option>
+                            <option value="USDT">USDT</option>
+                            <option value="SOL">SOL</option>
                           </select>
                         </div>
                       </div>
@@ -372,6 +387,7 @@ export function CreatePosterPage() {
                         </p>
                       </div>
                     </div>
+                    <div className="payment-feedback" aria-live="polite">
                     {phase === "paid" && receipt && (
                       <p className="pay__note" role="status">
                         Payment confirmed, your poster is ready.{" "}
@@ -385,6 +401,7 @@ export function CreatePosterPage() {
                         {payNote}
                       </p>
                     )}
+                    </div>
                     <div className="desktop-only payment-trust"><span><ShieldIcon/>Secure Payment</span><span><BeriCoin/>One-time fee only</span><span><CompassIcon/>Supports BERI</span></div>
                     <p className="pay__secure">
                       <ShieldIcon />
