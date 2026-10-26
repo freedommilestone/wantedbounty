@@ -85,3 +85,19 @@
   .home-page--expanded .fleet { background:#ecd3aa url('/textures/parchment-v2.jpg') center / cover; }
   .home-page--expanded .site-footer { background:#ecd3aa url('/scene/home-mobile-plate.jpg') center bottom / 100% auto no-repeat; }
 }
+
+/* Match the creator's mobile header: logo, visible wallet action, then menu. */
+@media(max-width:900px){
+ .home-page .site-header__inner{width:92%;height:10em;min-height:64px;gap:12px}
+ .home-page .brand__logo{width:clamp(44px,7.5vw,68px);height:clamp(50px,8vw,72px)}
+ .home-page .site-menu-toggle{order:3;margin-left:0;width:44px;height:44px;padding:6px;font-size:28px;flex:none;color:#2d190c}
+ .home-page .site-header__inner>.wallet-btn{display:inline-flex;margin-left:auto}
+ .home-page .site-header__inner>.wallet-account{margin-left:auto}
+ .home-page .site-header__inner>.wallet-btn,
+ .home-page .site-header__inner>.wallet-account>.wallet-btn{
+  min-height:44px;font-size:clamp(12px,1.65vw,16px);padding:10px 18px;
+  background:url('/textures/button-parchment.png') center/100% 145%;
+  border:0;color:#28180d;box-shadow:none;
+ }
+ .home-page .mobile-nav-wallet{display:none}
+}
