@@ -83,9 +83,7 @@ export function WalletButton() {
         aria-expanded={menuOpen}
         onClick={() => setMenuOpen((open) => !open)}
       >
-        <span className="wallet-btn__icon">
-          <WalletIcon />
-        </span>
+        <WalletIcon />
         <span className="wallet-btn__text">
           <small>
             <VerifiedBadge /> Wallet Connected

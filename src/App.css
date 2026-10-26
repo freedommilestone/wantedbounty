@@ -124,14 +124,14 @@
   font-variant-numeric: tabular-nums;
 }
 
-.wallet-btn__icon {
-  display: grid;
-  place-items: center;
-  width: 36px;
-  height: 36px;
-  border: 1px solid rgba(42, 26, 14, 0.35);
-  border-radius: 8px;
-  background: rgba(255, 248, 230, 0.5);
+.wallet-btn > .header-wallet-icon {
+  width: 32px;
+  height: 30px;
+  flex: none;
+}
+
+@media (max-width: 520px) {
+  .wallet-btn > .header-wallet-icon { width: 26px; height: 25px; }
 }
 
 .wallet-btn__text {
