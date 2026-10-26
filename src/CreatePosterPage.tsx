@@ -394,7 +394,7 @@ export function CreatePosterPage() {
                     bounty={bounty}
                     portrait={photo?.url ?? DEFAULT_PORTRAIT}
                     photoClassName={`art--${artStyle}`}
-                    fine={`By order of the Beri Fleet, ${title} ${posterName} is wanted on every sea. Any crew member who brings word of their whereabouts shall be rewarded in full.`}
+                    fine="KONO SAKUHIN WA FICTION DESUNODE JITSUZAISURU JINBUTSU DANTAI SONOTA NO SOSHIKI TO DOITSU NO MEISHOU GA GEKICHU NI TOUJYOU SHITATOSHITEMO JITSUZAI NA MONOTOWA ISSAI MUKANKEIDESU"
                   />
                   <div className="create__assurances">
                     <div>
