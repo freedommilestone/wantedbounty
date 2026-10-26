@@ -24,6 +24,7 @@ import "./App.css";
 import "./HomePage.css";
 import "./HomeReferenceLayout.css";
 import "./HomeMobile.css";
+import "./HowMobileElements.css";
 
 const FEATURES_EDGE = organicEdges(11, { top: 22, bottom: 12 });
 const FLEET_EDGE = organicEdges(29, { top: 17, bottom: 20 });
