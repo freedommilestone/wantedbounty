@@ -2,12 +2,16 @@ import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import "./MobileNavigation.css";
 import { Link } from "../router";
+import { useWallet } from "../wallet";
+import { HomeCompass, HomeWheel } from "./HomeIcons";
 import { WalletButton } from "./WalletButton";
 
 type Page = "home" | "create" | "how" | "explore";
 
 export function SiteHeader({ active }: { active: Page }) {
   const [menuOpen, setMenuOpen] = useState(false);
+  const { modalOpen } = useWallet();
+  useEffect(() => { if (modalOpen) setMenuOpen(false); }, [modalOpen]);
   const drawerRef = useRef<HTMLDialogElement>(null);
   useEffect(() => {
     if (!menuOpen) return;
@@ -71,9 +75,21 @@ export function SiteHeader({ active }: { active: Page }) {
           <nav aria-label="Mobile main">
             {links.map(({ label, href, page }) => <Link key={href} href={href}
               aria-current={page === active ? "page" : undefined}
-              onClick={() => setMenuOpen(false)}>{label}<span aria-hidden="true">→</span></Link>)}
+              onClick={() => setMenuOpen(false)}>
+                <span className="mobile-navigation__icon"><MenuIcon page={page} /></span>
+                <span className="mobile-navigation__label">{label}</span><span aria-hidden="true">→</span></Link>)}
           </nav>
+          <div className="mobile-navigation__wallet"><WalletButton /></div>
+          <div className="mobile-navigation__scenery" aria-hidden="true" />
         </dialog>, document.body)}
     </header>
   );
+}
+
+function MenuIcon({ page }: { page?: Page }) {
+  if (page === "home") return <HomeCompass />;
+  if (page === "how") return <HomeWheel />;
+  return <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" strokeWidth="2.3" strokeLinejoin="round" aria-hidden="true">
+    {page === "explore" ? <><path d="m4 10 13-5 14 6 13-5v32l-13 5-14-6-13 5Z M17 5v32m14-26v32"/><path d="m11 29 8-9 8 8 10-12m-3 0 6 5m0-5-6 5" strokeDasharray="3 2"/></> : <><path d="m10 6 26-3 4 39-27 3Z"/><path d="m16 12 15-2m-12 27 14-1"/><circle cx="25" cy="23" r="6" fill="currentColor"/><path d="m18 32 15-15m-16 2 16 12"/><circle cx="23" cy="22" r="1" stroke="#e9cd9d"/><circle cx="27" cy="22" r="1" stroke="#e9cd9d"/></>}
+  </svg>;
 }
