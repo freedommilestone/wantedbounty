@@ -26,3 +26,43 @@
 .mobile-navigation a:focus-visible, .mobile-navigation button:focus-visible { outline: 2px solid #7e2419; outline-offset: 3px; }
 @keyframes navigation-enter { from { transform: translateX(100%); } to { transform: translateX(0); } }
 @media(prefers-reduced-motion:reduce) { .mobile-navigation[open] { animation: none; } }
+
+/* Shared compact mobile header across every route. */
+@media(max-width:900px){
+body .site-header.site-header .site-header__inner { display:flex; width:92%; height:64px; min-height:64px; gap:8px; }
+body .site-header.site-header .brand { order:0; flex:none; margin:0; }
+body .site-header.site-header .brand__logo { width:44px; height:50px; }
+body .site-header.site-header .nav { display:none; }
+body .site-header.site-header .site-menu-toggle { display:block; order:3; margin:0; width:44px; height:44px; padding:6px; font-size:28px; line-height:1; flex:none; color:#2d190c; }
+body .site-header.site-header .site-header__inner > .wallet-btn,
+body .site-header.site-header .site-header__inner > .wallet-account { order:2; margin-left:auto; }
+body .site-header.site-header .site-header__inner > .wallet-btn,
+body .site-header.site-header .site-header__inner > .wallet-account > .wallet-btn {
+ display:inline-flex; min-height:40px; padding:6px 12px; gap:6px; font-size:11px;
+ background:url('/textures/button-parchment.png') center / 100% 145%;
+ border:0; box-shadow:none; color:#28180d;
+}
+body .site-header.site-header .wallet-btn > .header-wallet-icon { width:22px; height:21px; flex:none; }
+body .site-header.site-header .wallet-btn__text small { font-size:9px; }
+body .site-header.site-header .wallet-btn__text strong { font-size:11px; }
+body .site-header.site-header .wallet-btn--connected > svg:last-child { width:12px; height:12px; }
+}
+@media(min-width:901px) and (max-width:1100px){
+body .creator-page .site-header.site-header .site-header__inner { display:flex; width:92%; height:64px; min-height:64px; gap:8px; }
+body .creator-page .site-header.site-header .brand { order:0; flex:none; margin:0; }
+body .creator-page .site-header.site-header .brand__logo { width:44px; height:50px; }
+body .creator-page .site-header.site-header .nav { display:none; }
+body .creator-page .site-header.site-header .site-menu-toggle { display:block; order:3; margin:0; width:44px; height:44px; padding:6px; font-size:28px; line-height:1; flex:none; color:#2d190c; }
+body .creator-page .site-header.site-header .site-header__inner > .wallet-btn,
+body .creator-page .site-header.site-header .site-header__inner > .wallet-account { order:2; margin-left:auto; }
+body .creator-page .site-header.site-header .site-header__inner > .wallet-btn,
+body .creator-page .site-header.site-header .site-header__inner > .wallet-account > .wallet-btn {
+ display:inline-flex; min-height:40px; padding:6px 12px; gap:6px; font-size:11px;
+ background:url('/textures/button-parchment.png') center / 100% 145%;
+ border:0; box-shadow:none; color:#28180d;
+}
+body .creator-page .site-header.site-header .wallet-btn > .header-wallet-icon { width:22px; height:21px; flex:none; }
+body .creator-page .site-header.site-header .wallet-btn__text small { font-size:9px; }
+body .creator-page .site-header.site-header .wallet-btn__text strong { font-size:11px; }
+body .creator-page .site-header.site-header .wallet-btn--connected > svg:last-child { width:12px; height:12px; }
+}
