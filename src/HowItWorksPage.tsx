@@ -24,7 +24,7 @@ export function HowItWorksPage() {
         <h2 className="legend-journey">The journey to legendary status</h2>
       </section>
       <section className="legend-row">
-        <div className="legend-copy"><span className="legend-number">1</span><h2>Become a BERI holder</h2><h3>Hold $BERI in your wallet.</h3><p>Connect a compatible Solana wallet to see your BERI balance. Your holdings can become the bounty on your poster. You can also choose your own bounty.</p><button className="legend-action" onClick={openModal}>Connect wallet <ArrowRight/></button></div>
+        <div className="legend-copy"><span className="legend-number">1</span><h2>Become a BERI holder</h2><h3>Hold $BERI in your wallet.</h3><p>Connect your Solana wallet to view your BERI balance and use it as your poster bounty. You can also choose a custom bounty.</p><button className="legend-action" onClick={openModal}>Connect wallet <ArrowRight/></button></div>
         <div className="legend-sprite legend-sprite--beri" aria-hidden="true"/><img className="legend-treasure" src="/scene/legend-treasure.png" alt="Pirate chest overflowing with BERI coins beneath a black flag"/>
       </section>
       <section className="legend-row legend-row--reverse">
@@ -32,11 +32,11 @@ export function HowItWorksPage() {
         <div className="legend-copy"><span className="legend-number">2</span><h2>Explore Zcash rewards</h2><h3>Learn about stonk.fun.</h3><p>Check stonk.fun for its current eligibility and distribution rules. Rewards are determined by that service and are not guaranteed by Wanted Bounty.</p><a className="legend-action" href="https://stonk.fun" target="_blank" rel="noreferrer">Learn more <ArrowRight/></a></div>
       </section>
       <section className="legend-row">
-        <div className="legend-copy"><span className="legend-number">3</span><h2>Create your wanted poster</h2><h3>Turn yourself into a legend.</h3><p>Upload your photo, choose your pirate name, title and bounty, then pick a vintage finish. Watch your poster take shape in the live preview. Photo finishes use filters, not AI generation.</p><Action>Create your poster</Action></div>
+        <div className="legend-copy"><span className="legend-number">3</span><h2>Create your wanted poster</h2><h3>Turn yourself into a legend.</h3><p>Upload your photo and choose a name, title, bounty and vintage finish. Preview your poster as you edit. Finishes use filters, not AI generation.</p><Action>Create your poster</Action></div>
         <div className="legend-poster-fan" aria-label="Example wanted posters">{["Nami","Luffy","Zoro"].map((name)=><CreatorPoster key={name} name={name} bounty="1,250,000" portrait={`/portraits/home-${name.toLowerCase()}.jpg`} photoClassName="" fine="By order of the BERI fleet"/>)}</div>
       </section>
       <section className="legend-row">
-        <div className="legend-copy"><span className="legend-number">4</span><h2>One-time $5 fee</h2><h3>Pay with USDC, USDT or SOL.</h3><p>Pay 5 USDC, 5 USDT, or $5 in SOL on Solana to unlock your poster download. SOL uses a live quote. Review and approve the payment in your wallet; network fees are additional.</p><Action>Pay &amp; create</Action></div>
+        <div className="legend-copy"><span className="legend-number">4</span><h2>One-time $5 fee</h2><h3>Pay with USDC, USDT or SOL.</h3><p>Unlock your download for 5 USDC, 5 USDT or $5 in SOL on Solana. SOL uses a live quote. Approve payment in your wallet; network fees are additional.</p><Action>Pay &amp; create</Action></div>
         <div className="legend-sprite legend-sprite--payment" aria-hidden="true"/><div className="legend-payment-art" aria-label="USDC, USDT and SOL payment options"><span className="legend-coin legend-coin--usdc">$</span><span className="legend-coin legend-coin--usdt">₮</span><span className="legend-sol">SOL</span></div>
       </section>
       <div className="legend-bottom">

@@ -1,82 +1,55 @@
-/* Independent, content-sized mobile elements. The desktop composition is untouched. */
+/* Mobile composition follows the 905 × 1738 reference artwork. */
 @media(max-width:900px){
- .legend-page{font-size:16px;background:#efd8ae url('/textures/parchment-v2.jpg') center/700px;min-height:100svh}
- .legend-page main{margin:0;overflow:hidden}
- .legend-hero{height:auto;min-height:0;max-height:none;padding:24px 0 18px;background:url('/scene/hero-sea.jpg') center/cover}
- .legend-title-paper{position:relative;inset:auto;width:76%;min-height:0;margin:auto;padding:24px 18px 28px;background:url('/textures/creator-poster-frame.png') center/100% 100%}
- .legend-title-paper h1{font-size:clamp(26px,6.5vw,60px);line-height:1.05;margin:0 0 10px;white-space:nowrap}
- .legend-title-paper h2{font-size:clamp(13px,2.7vw,24px);line-height:1.2;margin:0 0 8px}
- .legend-title-paper p{font-size:clamp(12px,2vw,17px);line-height:1.4;margin:auto;max-width:440px}
- .legend-motto,.legend-compass{display:none}
- .legend-journey{position:relative;inset:auto;width:fit-content;max-width:85%;margin:22px auto 0!important;padding:12px 18px;font-size:clamp(11px,2vw,18px)!important;line-height:1.2}
- .legend-row{display:grid;grid-template-columns:38px minmax(0,1fr) 39%;grid-template-rows:auto auto 1fr auto;column-gap:10px;row-gap:8px;padding:22px 4% 18px;min-height:0;height:auto;background:url('/textures/parchment-v2.jpg') center/700px;border:0;border-top:1px solid #97653c;isolation:auto}
- .legend-row::before{display:block;top:-5px;height:10px;background:url('/textures/header-paper-edge.svg') center/100% 100%}
- .legend-row::after{display:none}
- .legend-row .legend-copy,.legend-row--reverse .legend-copy{display:contents}
- .legend-row .legend-number{grid-column:1;grid-row:1 / 3;position:static;float:none;width:36px;height:42px;font-size:27px;margin:0;align-self:start}
- .legend-page .legend-row h2{grid-column:2 / 4;grid-row:1;font-size:clamp(18px,3.1vw,30px);padding:0;min-height:0;margin:0;line-height:1.12;white-space:normal}
- .legend-page .legend-row h3{grid-column:2 / 4;grid-row:2;font-size:clamp(10px,1.8vw,16px);width:auto;max-width:none;margin:0;line-height:1.25;clear:none}
- .legend-page .legend-row p{grid-column:2;grid-row:3;width:auto;margin:4px 0 0;font-size:clamp(13px,1.8vw,17px);line-height:1.45;align-self:start}
- .legend-row .legend-action{grid-column:2;grid-row:4;font-size:clamp(10px,1.5vw,14px);width:fit-content;max-width:100%;padding:10px 12px;margin:2px 0 0;gap:5px;min-height:40px;line-height:1.2}
- .legend-row .legend-action svg{width:14px;height:14px;flex:none}
- .legend-treasure,.legend-reward-art,.legend-poster-fan,.legend-payment-art{grid-column:3;grid-row:3 / 5;display:block;position:relative;width:100%;height:auto;max-height:none;align-self:end;min-width:0;margin:0;padding:0}
- .legend-treasure{object-fit:contain}
- .legend-reward-art img{width:100%;height:auto}
- .legend-reward-art .legend-coin{position:absolute;left:28%;top:26%;width:43%;height:auto;aspect-ratio:1;font-size:clamp(30px,7vw,65px);border-width:4px}
- .legend-row--reverse{grid-template-columns:39% 38px minmax(0,1fr)}
- .legend-row--reverse .legend-number{grid-column:2}
- .legend-page .legend-row--reverse h2,.legend-page .legend-row--reverse h3{grid-column:3}
- .legend-page .legend-row--reverse p,.legend-row--reverse .legend-action{grid-column:3;margin-left:0;width:auto;max-width:100%}
- .legend-row--reverse .legend-reward-art{grid-column:1;grid-row:1 / 5}
- .legend-poster-fan{display:flex;overflow:visible;justify-content:center;align-items:center;aspect-ratio:.85}
- .legend-poster-fan .creator-poster{width:74%;margin:0 -25%;flex:none}
- .legend-poster-fan .creator-poster:nth-child(1){transform:rotate(-15deg) translateY(8px)}
- .legend-poster-fan .creator-poster:nth-child(2){transform:rotate(-5deg)}
- .legend-poster-fan .creator-poster:nth-child(3){transform:rotate(15deg) translateY(10px)}
- .legend-payment-art{display:flex;flex-wrap:nowrap;justify-content:center;gap:4px;padding:16px 4px 28px;background:url('/scene/deck-strip.jpg') center/cover}
- .legend-payment-art .legend-coin{width:48%;height:auto;aspect-ratio:1;font-size:clamp(26px,6vw,58px);border-width:3px;box-shadow:2px 3px 0 #322416}
- .legend-sol{font-size:10px;bottom:5px;padding:2px 8px}
- .legend-bottom{display:grid;grid-template-columns:60% 40%;height:auto;background:url('/textures/parchment-v2.jpg') center/700px;border-top:1px solid #97653c}
- .legend-ranking,.legend-control{position:relative;display:block;padding:20px 12px;background:none;min-width:0;height:auto;border:0}
- .legend-control{border-left:1px solid #ac8758}
- .legend-ranking .legend-copy{position:static;display:block;width:auto;padding:0}
- .legend-ranking .legend-number,.legend-control .legend-number{position:static;float:none;width:36px;height:42px;font-size:27px;margin:0 0 10px}
- .legend-ranking .legend-copy h2,.legend-control h2{font-size:clamp(17px,2.6vw,24px);line-height:1.15;padding:0;white-space:normal;margin:0 0 6px}
- .legend-ranking .legend-copy h3,.legend-control h3{font-size:11px;line-height:1.3;padding:0;margin:0 0 12px}
- .legend-ranking .legend-copy p,.legend-control p{font-size:clamp(13px,1.8vw,16px);line-height:1.45;width:auto;margin:0 0 14px}
- .legend-ranking .legend-action,.legend-control .legend-action{width:100%;font-size:10px;line-height:1.2;padding:10px 8px;gap:4px;margin:0}
- .legend-board{position:static;width:100%;padding:24px 12px;box-sizing:border-box;margin:16px 0 0;background:url('/textures/creator-poster-frame.png') center/100% 100%}
- .legend-board h3{font-size:14px}.legend-board img{width:44px;height:44px;margin:10px auto}.legend-board strong{font-size:15px;overflow-wrap:anywhere}.legend-board small{font-size:11px;line-height:1.4}.legend-board div{font-size:12px}
- .legend-control img{display:block;width:85%;height:auto;aspect-ratio:1;object-fit:cover;margin:18px auto 0;border-radius:50%}
- .legend-footer{height:auto;min-height:0;padding:28px 12% 24px;background:url('/scene/home-footer.jpg') center bottom/cover}
- .legend-footer::before{inset:12px 5%;background:url('/textures/title-banner.png') center/100% 100%}
- .legend-footer h2{font-size:clamp(20px,3vw,28px);white-space:normal;line-height:1.15}
- .legend-footer p{font-size:14px;line-height:1.4;margin:10px 0 14px}
- .legend-footer .legend-action{font-size:12px;padding:12px}
- .legend-footer-sign{font-size:11px;line-height:1.4;margin-top:16px}
-}
-@media(max-width:900px){
- .legend-page .legend-row p{grid-column:1 / 3}
- .legend-row .legend-action{grid-column:1 / 3}
- .legend-page .legend-row--reverse p,.legend-row--reverse .legend-action{grid-column:2 / 4;justify-self:start}
- .legend-poster-fan{overflow:hidden;align-self:center}
- .legend-poster-fan .creator-poster{width:65%;margin:0 -22%}
- .legend-hero{background:url('/scene/how-mobile-reference.png') center 4.8% / 100% 530% no-repeat;padding:26px 0 20px}
- .legend-title-paper{width:66%;background:none;padding:8px 0 20px}
- .legend-title-paper h1{font-size:clamp(25px,6vw,54px)}
- .legend-journey{margin-top:28px!important}
- .legend-sprite{display:none}
- .legend-row .legend-sprite{display:block;grid-column:3;grid-row:3 / 5;align-self:center;aspect-ratio:1;width:100%;background-image:url('/scene/how-mobile-elements.png');background-size:200% 200%;background-repeat:no-repeat}
- .legend-row--reverse .legend-sprite{grid-column:1;grid-row:1 / 5;background-position:100% 0}
- .legend-sprite--payment{background-position:0 100%}
- .legend-row .legend-treasure,.legend-row .legend-reward-art,.legend-row .legend-payment-art{display:none}
- .legend-control .legend-sprite{display:block;width:100%;aspect-ratio:1;background:url('/scene/how-mobile-elements.png') 100% 100%/200% 200% no-repeat;margin-top:12px}
+ .legend-page{font-size:calc(100vw / 90.5);background:#efd8ae;min-height:100svh}
+ .legend-page main{margin:0;max-width:none;overflow:hidden;background:url('/scene/how-mobile-reference.png') center -7em/100% auto no-repeat}
+ .legend-hero{position:relative;height:32.8em;min-height:0;max-height:none;padding:0;background:none}
+ .legend-title-paper{position:absolute;left:20%;top:4em;width:61%;min-height:0;margin:0;padding:0;background:none;box-sizing:border-box}
+ .legend-title-paper h1{font-size:7.4em;line-height:1;white-space:nowrap;margin:0 0 .08em;letter-spacing:-.06em}
+ .legend-title-paper h2{font-size:2.6em;line-height:1.15;margin:0 0 .25em}
+ .legend-title-paper p{font-size:1.75em;line-height:1.25;margin:0;max-width:none}
+ .legend-motto{display:block;position:absolute;left:3%;top:5em;width:16%;font-size:2.2em;line-height:1.15;transform:rotate(-13deg)}
+ .legend-compass{display:block;position:absolute;right:1%;top:4em;width:12%}
+ .legend-compass svg{visibility:hidden;height:7em}.legend-compass p{font-size:2em;line-height:1.1}
+ .legend-journey{position:absolute;left:19%;bottom:1.3em;width:32em;max-width:none;margin:0!important;padding:0;background:none;font-size:1.65em!important;line-height:1.2;text-align:center}
+ .legend-row{display:block;position:relative;height:22em;min-height:0;padding:0;margin:0;background:none;border:0;box-shadow:none;isolation:auto}
+ .legend-row::before,.legend-row::after{display:none}
+ .legend-row .legend-copy,.legend-row--reverse .legend-copy{display:block;position:absolute;left:14.5%;top:1.8em;width:34%;padding:0;margin:0}
+ .legend-row--reverse .legend-copy{left:49.7%;width:39%}
+ .legend-row .legend-number{position:absolute;left:-8em;top:-.3em;float:none;width:6.5em;height:6.5em;font-size:1em;margin:0;border-width:.3em;color:transparent}
+ .legend-number::after{display:grid;position:absolute;inset:0;place-items:center;font:700 4.8em/1 Georgia,serif;color:#f7dfae}
+ .legend-row .legend-number::after{content:'1'}.legend-row--reverse .legend-number::after{content:'2'}
+ .legend-row:nth-of-type(4){height:21.5em}.legend-row:nth-of-type(4) .legend-number::after{content:'3'}
+ .legend-row:nth-of-type(5){height:20em}.legend-row:nth-of-type(5) .legend-number::after{content:'4'}
+ .legend-page .legend-row h2{font-size:2.7em;line-height:1.1;white-space:nowrap;padding:0;min-height:0;margin:0 0 .2em;letter-spacing:-.05em}
+ .legend-page .legend-row h3{font-size:1.4em;line-height:1.2;width:auto;max-width:none;clear:none;margin:0 0 .7em;padding:0}
+ .legend-page .legend-row p{font-size:1.65em;line-height:1.28;width:100%;margin:0 0 .7em}
+ .legend-row .legend-action{font-size:1.35em;line-height:1.2;min-height:0;max-width:100%;width:fit-content;padding:.8em 1.5em;margin:0;gap:1em}
+ .legend-row--reverse .legend-copy h3,.legend-row--reverse .legend-copy p,.legend-row--reverse .legend-action{margin-left:0}
+ .legend-action svg{width:1.2em;height:1.2em;flex:none}
+ .legend-treasure,.legend-reward-art,.legend-poster-fan,.legend-payment-art,.legend-sprite{display:none!important}
+ .legend-bottom{height:26.5em;display:grid;grid-template-columns:64% 36%;background:none;border:0}
+ .legend-ranking{display:block;position:relative;padding:0;background:none;border:0;height:auto}
+ .legend-ranking .legend-copy{display:block;position:absolute;left:7.5%;top:2em;width:43%;padding:0}
+ .legend-ranking .legend-number,.legend-control .legend-number{position:absolute;left:0;top:0;width:5.5em;height:5.5em;font-size:1em;float:none;margin:0;color:transparent;border-width:.3em}
+ .legend-ranking .legend-number::after{content:'5'}.legend-control .legend-number::after{content:'6'}
+ .legend-ranking .legend-copy h2{font-size:2em;line-height:1.15;padding:0 0 0 3.2em;margin:0;white-space:nowrap}
+ .legend-ranking .legend-copy h3{font-size:1.2em;padding-left:5.5em;margin:.4em 0 2em}
+ .legend-ranking .legend-copy p{font-size:1.5em;line-height:1.3;width:auto;margin:2.4em 0 1.5em}
+ .legend-ranking .legend-action{font-size:1.25em;padding:.8em 1em;min-height:0;gap:.5em;width:auto;margin:0}
+ .legend-board{position:absolute;left:55%;top:5.2em;width:39%;padding:1em;margin:0;background:none;box-sizing:border-box}
+ .legend-board h3{font-size:1.4em}.legend-board img{width:4em;height:4em;margin:.7em auto}.legend-board strong{font-size:1.6em;margin:.5em 0}.legend-board small{font-size:1.1em;line-height:1.3;margin:.5em 0}.legend-board div{font-size:1.2em;padding:.6em 0}
+ .legend-control{position:relative;padding:2em;background:none;border:0}
+ .legend-control .legend-number{left:1em;top:1.5em}
+ .legend-control h2{font-size:1.6em;padding-left:3.2em;white-space:nowrap;margin:0 0 .3em;line-height:1.15}
+ .legend-control h3{font-size:1.1em;padding-left:5em;margin:0 0 2em}
+ .legend-control p{font-size:1.4em;line-height:1.3;width:75%;margin:2em 0 1em}
+ .legend-control .legend-action{font-size:1.1em;line-height:1.2;width:75%;padding:.9em;min-height:0;gap:.5em;margin:0}
  .legend-control img{display:none}
+ .legend-footer{height:22em;min-height:0;padding:2em 22% 0;margin:0;background:none;box-sizing:border-box}
+ .legend-footer::before{display:none}
+ .legend-footer h2{font-size:2.4em;white-space:nowrap;line-height:1.15}
+ .legend-footer p{font-size:1.4em;line-height:1.25;margin:.5em 0 1em}
+ .legend-footer .legend-action{font-size:1.4em;padding:.7em 1.5em;min-height:0}
+ .legend-footer-sign{font-size:1.2em;letter-spacing:.2em;line-height:1.4;margin-top:2em}
 }
 @media(min-width:901px){.legend-sprite{display:none}}
-@media(max-width:900px){
- .legend-row .legend-sprite{aspect-ratio:1.65;background-size:200% 180%;align-self:end}
- .legend-row .legend-sprite--payment,.legend-control .legend-sprite{aspect-ratio:2.1;background-size:200% 235%;background-position-y:100%}
- .legend-title-paper{padding-inline:8px;box-sizing:border-box}
- .legend-title-paper p{font-size:clamp(11px,2vw,17px)}
-}
