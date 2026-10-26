@@ -101,3 +101,7 @@
  }
  .home-page .mobile-nav-wallet{display:none}
 }
+
+/* Keep the artwork flush with the page when the mobile header grows for touch targets. */
+.home-page{min-height:100svh;background-size:100% 100%}
+.home-page .site-footer{margin-bottom:0}

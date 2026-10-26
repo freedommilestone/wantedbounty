@@ -128,3 +128,11 @@
 .explore-page .wallet-btn>.header-wallet-icon,.explore-page .wallet-btn__icon>.header-wallet-icon{width:32px;height:30px;flex:none}
 .explore-page .wallet-btn__icon{border:0;background:none;border-radius:0;width:36px}
 @media(max-width:520px){.explore-featured h2{gap:6px}.explore-featured h2>svg{width:28px;height:26px}.explore-page .wallet-btn>.header-wallet-icon{width:26px;height:25px}}
+
+/* Background art follows the actual content height, including filtered gallery states. */
+.explore-page{min-height:100svh}
+.explore-footer{padding-bottom:6px;margin-bottom:0}
+@media(min-width:801px){
+ .explore-page{background-size:100% 100%}
+ .explore-page .explore-footer{padding-bottom:6px}
+}

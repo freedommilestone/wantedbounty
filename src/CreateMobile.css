@@ -189,3 +189,15 @@
   .creator-page .creator-poster__name { top:68%; }
   .creator-page .creator-poster__bounty { top:80%; }
 }
+
+/* Avoid a body-colored strip below short creator pages. */
+.creator-page{min-height:100svh}
+@media(max-width:1100px){
+ .creator-page{display:flex;flex-direction:column}
+ .creator-page>.create{flex:1}
+ .creator-page .create__preview{padding-bottom:0}
+}
+@media(min-width:1101px){
+ .creator-page{background-size:100% 100%}
+ .creator-page .steps{padding-bottom:0}
+}
