@@ -25,6 +25,7 @@ import "./CreatePosterPage.css";
 import "./CreateReference.css";
 import "./CreateMobile.css";
 import "./CreateDesktop.css";
+import "./CreateMobileReference.css";
 import { PaymentChoiceIcon, WantedConditionIcon, DesktopGuideIcon } from "./components/CreatorDesktopIcons";
 
 const FEE = POSTER_FEE;
@@ -490,7 +491,6 @@ export function CreatePosterPage() {
                     <EyeIcon /> Live Preview
                   </p>
                   <CreatorPoster
-                    placeholder={!photo && !generated}
                     name={posterName}
                     condition={condition}
                     bounty={bounty}
