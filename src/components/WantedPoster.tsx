@@ -1,3 +1,5 @@
+import { BeriSymbol } from "./BeriSymbol";
+import { wholeBounty } from "../bountyFormat";
 import type { CSSProperties } from "react";
 import { tornPaper } from "../torn";
 import { PosterScroll } from "./icons";
@@ -29,7 +31,7 @@ export function WantedPoster({
   fine = DEFAULT_FINE,
 }: WantedPosterProps) {
   const nameSize = Math.min(13, 70 / (Math.max(name.length, 4) * 0.72));
-  const bountyText = `${bounty}${bountySuffix}`;
+  const bountyText = `${wholeBounty(bounty)}${bountySuffix}`;
   const bountySize = Math.min(7.8, 60 / (Math.max(bountyText.length, 8) * 0.62));
 
   return (
@@ -50,7 +52,7 @@ export function WantedPoster({
               {name}
             </p>
             <p className="poster__bounty" style={{ "--bounty-size": `${bountySize}cqw` } as CSSProperties}>
-              <span className="poster__beri">฿</span>
+              <BeriSymbol className="poster__beri" style={{ width: ".8em", height: "1.25em", verticalAlign: "middle", flexShrink: 0 }} />
               {bountyText}
             </p>
           </div>

@@ -1,3 +1,4 @@
+import { wholeBounty } from "./bountyFormat";
 import { toPng } from "html-to-image";
 import { useEffect, useRef, useState, type ChangeEvent, type DragEvent, type ReactNode } from "react";
 import { SiteHeader } from "./components/SiteHeader";
@@ -111,7 +112,7 @@ export function CreatePosterPage() {
   const applyResult = (data: OrderResult) => {
     if (data.details) {
       setName(data.details.name); setCondition(data.details.condition);
-      setCustomBounty(data.details.bounty.replace(/[^0-9]/g, ""));
+      setCustomBounty(wholeBounty(data.details.bounty).replace(/[^0-9]/g, ""));
     }
     if (data.signature) setReceipt(data.signature);
     if (data.status === "ready" && data.image) { setGenerated(data.image); setPhase("paid"); setPayNote(null); }
@@ -141,7 +142,7 @@ export function CreatePosterPage() {
   useEffect(() => {
     document.title = "Create Your Wanted Poster | Wanted Bounty";
   }, []);
-  const posterName = name.trim() || "Your Name";
+  const posterName = name.trim() || "Your Name Here";
 
   const takeFile = (file: File | undefined) => {
     if (!file) return;
@@ -489,6 +490,7 @@ export function CreatePosterPage() {
                     <EyeIcon /> Live Preview
                   </p>
                   <CreatorPoster
+                    placeholder={!photo && !generated}
                     name={posterName}
                     condition={condition}
                     bounty={bounty}

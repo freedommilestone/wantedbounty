@@ -1,25 +1,27 @@
-import { PosterScroll } from "./icons";
+import { BeriSymbol } from "./BeriSymbol";
+import { wholeBounty } from "../bountyFormat";
 import "./CreatorPoster.css";
 
-type Props = { name: string; condition?: string; bounty: string; portrait: string; photoClassName: string; fine: string };
+type Props = { name: string; condition?: string; bounty: string; portrait: string; photoClassName: string; fine: string; className?: string; placeholder?: boolean };
 
 /** Separate paper, portrait and live lettering, shared by preview and PNG export. */
-export function CreatorPoster({ name, condition = "DEAD OR ALIVE", bounty, portrait, photoClassName, fine }: Props) {
-  return <div className="poster-frame creator-poster">
+export function CreatorPoster({ name, condition = "DEAD OR ALIVE", bounty, portrait, photoClassName, fine, className = "", placeholder = false }: Props) {
+  const amount = wholeBounty(bounty);
+  return <div className={`poster-frame creator-poster poster-reference ${className}`}>
     <article className="creator-poster__sheet" aria-label={`Wanted poster for ${name}`}>
-      <svg className="creator-poster__paper" viewBox="0 0 560 820" preserveAspectRatio="none" aria-hidden="true">
-        <path d="M3 3 Q65 5 110 2 L224 4 335 2 450 4 557 3 Q559 130 556 240 L558 400 556 590 558 817 Q480 815 410 818 L270 816 135 818 2 816 Q5 700 2 580 L4 360 2 190Z" fill="#dbccb7" stroke="#49372f" strokeWidth="2" />
-        <path d="M95 3v7m5-7 1 10m5-10v5m342-3 1 12m5-12v17M3 258l10-1m-10 5h7m-7 7 13-2M3 483h12m-12 5h8m-8 12h14M74 817v-6m6 6-1-9m170 9v-8m5 8v-5m243 3v-9m5 9v-6" fill="none" stroke="#49372f" strokeWidth="1" />
-      </svg>
-      <svg className="creator-poster__wanted" viewBox="0 0 520 140" role="img" aria-label="WANTED"><text x="260" y="119" textAnchor="middle" textLength="515" lengthAdjust="spacingAndGlyphs">WANTED</text></svg>
-      <div className={`creator-poster__portrait ${photoClassName}`}><img src={portrait} alt={`Portrait of ${name}`} /></div>
-      <svg className="creator-poster__alive" viewBox="0 0 460 50" role="img" aria-label={condition}><text x="230" y="42" textAnchor="middle" textLength={condition === "DEAD OR ALIVE" ? 450 : undefined} lengthAdjust={condition === "DEAD OR ALIVE" ? "spacingAndGlyphs" : undefined}>{condition}</text></svg>
-      <svg className="creator-poster__name" viewBox="0 0 460 90" role="img" aria-label={name}><text x="230" y="77" textAnchor="middle" textLength="450" lengthAdjust="spacingAndGlyphs">{name.toUpperCase()}</text></svg>
-      <svg className="creator-poster__bounty" viewBox="0 0 450 55" role="img" aria-label={`${bounty} BERI`}><text x="225" y="43" textAnchor="middle" textLength="430" lengthAdjust="spacingAndGlyphs">฿ {bounty}<tspan className="creator-poster__desktop-unit" fontSize="30"> BERI</tspan><tspan className="creator-poster__standard-unit">−</tspan></text></svg>
-      <PosterScroll className="creator-poster__scroll creator-poster__scroll--left" />
-      <PosterScroll className="creator-poster__scroll creator-poster__scroll--right" />
+      <svg className="creator-poster__wanted" viewBox="0 15 520 110" preserveAspectRatio="none" role="img" aria-label="WANTED"><text x="260" y="119" textAnchor="middle" textLength="515" lengthAdjust="spacingAndGlyphs">WANTED</text></svg>
+      <div className={`creator-poster__portrait ${photoClassName} ${placeholder ? "is-placeholder" : ""}`}><img src={portrait} alt={placeholder ? "" : `Portrait of ${name}`} />{placeholder && <span className="creator-poster__placeholder">Your<br/>Photo<br/>Here</span>}</div>
+      <svg className="creator-poster__alive" viewBox="0 8 460 38" preserveAspectRatio="none" role="img" aria-label={condition}><text x="230" y="42" textAnchor="middle" textLength={condition === "DEAD OR ALIVE" ? 450 : undefined} lengthAdjust={condition === "DEAD OR ALIVE" ? "spacingAndGlyphs" : undefined}>{condition}</text></svg>
+      <svg className="creator-poster__name" viewBox="0 12 460 68" preserveAspectRatio="none" role="img" aria-label={name}><text x="230" y="77" textAnchor="middle" textLength="450" lengthAdjust="spacingAndGlyphs">{name.toUpperCase()}</text></svg>
+      <svg className="creator-poster__bounty" viewBox="0 0 450 65" role="img" aria-label={`${amount} BERI`}><BeriSymbol x="0" y="0" width="45" height="65"/><text x="252" y="49" textAnchor="middle" textLength="385" lengthAdjust="spacingAndGlyphs">{amount}−</text></svg>
+      <PosterFlourish className="creator-poster__scroll creator-poster__scroll--left" />
+      <PosterFlourish className="creator-poster__scroll creator-poster__scroll--right" />
       <p className="creator-poster__fine" aria-hidden="true">{fine}</p>
-      <svg className="creator-poster__marine" viewBox="0 0 180 60" role="img" aria-label="Marine"><text x="90" y="51" textAnchor="middle" textLength="176" lengthAdjust="spacingAndGlyphs">MARINE</text></svg>
+      <svg className="creator-poster__marine" viewBox="0 8 180 46" preserveAspectRatio="none" role="img" aria-label="Marine"><text x="90" y="51" textAnchor="middle" textLength="176" lengthAdjust="spacingAndGlyphs">MARINE</text></svg>
     </article>
   </div>;
+}
+
+function PosterFlourish({className}:{className:string}) {
+  return <svg className={className} viewBox="0 0 20 180" preserveAspectRatio="none" aria-hidden="true"><path d="M13 16C22 6 10-6 5 9C-2 28 17 44 14 58C12 71 1 73 3 61C4 54 11 56 9 62M8 84C-1 76 1 68 7 72C22 84 3 113 4 136C4 156 17 162 16 173C15 184 4 178 7 168" fill="none" stroke="currentColor" strokeWidth="3.2" strokeLinecap="round"/></svg>;
 }

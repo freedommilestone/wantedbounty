@@ -14,3 +14,20 @@
 .creator-poster__fine { top:91%; left:10%; width:52%; max-height:5%; overflow:hidden; font-size:1.45cqw; font-weight:800; line-height:1.15; text-transform:uppercase; }
 .creator-poster__marine { top:90%; right:6%; width:30%; height:6.5%; font-size:57px; font-weight:650; }
 @media(max-width:1100px) { .creator-poster { max-width:440px; } }
+
+/* Reference poster: common print coordinates for every viewport and PNG export. */
+.creator-poster.poster-reference .creator-poster__sheet { aspect-ratio:1058 / 1487; color:#391b09; border:0; box-shadow:none; background:none; isolation:isolate; }
+.creator-poster.poster-reference .creator-poster__sheet::before { content:""; position:absolute; inset:0; z-index:-1; background:url('/textures/wanted-reference-paper-v3.png') center/100% 100% no-repeat; filter:none; }
+.creator-poster.poster-reference .creator-poster__wanted { top:3.7%; left:3%; width:94%; height:14.6%; font:700 140px Georgia,serif; transform:none; }
+.creator-poster.poster-reference .creator-poster__portrait { top:20%; left:8.8%; width:82.4%; height:41.7%; border:1px solid #351a0b; outline:1px solid #351a0b; outline-offset:2px; box-sizing:border-box; }
+.creator-poster.poster-reference .creator-poster__alive { top:63.4%; left:10.5%; width:79%; height:5%; font:700 47px Georgia,serif; transform:none; }
+.creator-poster.poster-reference .creator-poster__name { top:70.1%; left:12%; width:76%; height:9.8%; font:700 88px Georgia,serif; transform:none; }
+.creator-poster.poster-reference .creator-poster__bounty { top:81.2%; left:10.5%; width:77%; height:7%; font:400 43px Georgia,serif; transform:none; }
+.creator-poster.poster-reference .creator-poster__bounty text { font-size:43px; font-weight:400; }
+.creator-poster.poster-reference .creator-poster__scroll { top:63.5%; height:30.5%; width:4.6%; color:#391b09; }
+.creator-poster.poster-reference .creator-poster__scroll--left { left:3.3%; }
+.creator-poster.poster-reference .creator-poster__scroll--right { right:3.3%; }
+.creator-poster.poster-reference .creator-poster__fine { top:90%; left:9.5%; width:53%; max-height:5.2%; font:600 1.38cqw/1.35 Georgia,serif; color:#391b09; }
+.creator-poster.poster-reference .creator-poster__marine { top:89%; right:4%; width:30%; height:5.7%; font:700 57px Georgia,serif; transform:none; }
+.creator-poster.poster-reference .creator-poster__portrait.is-placeholder img { filter:sepia(.35) brightness(.42); }
+.creator-poster__placeholder { position:absolute; inset:0; display:grid; place-content:center; color:#f6e6bc; font:700 19cqw/1.02 Georgia,serif; text-transform:uppercase; text-align:center; letter-spacing:-.04em; }

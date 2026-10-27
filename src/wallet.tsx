@@ -1,3 +1,4 @@
+import { wholeRawBalance } from "./bountyFormat";
 import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import { associatedTokenAddress, encodeBase58 } from "./ata";
 import { buildPosterPayment, type PaymentToken, type SolQuote } from "./payment";
@@ -267,15 +268,6 @@ async function connectMetaMask(metamask: SolanaStandardWallet | null) {
   return address;
 }
 
-function formatRaw(raw: bigint, decimals: number) {
-  const scale = 10n ** BigInt(decimals);
-  const whole = raw / scale;
-  const fraction = raw % scale;
-  const wholeText = whole.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-  if (fraction === 0n) return wholeText;
-  const fractionText = fraction.toString().padStart(decimals, "0").replace(/0+$/, "");
-  return `${wholeText}.${fractionText}`;
-}
 
 interface TokenInfo {
   mint?: string;
@@ -363,7 +355,7 @@ async function fetchBeriHoldings(owner: string): Promise<BeriHoldings> {
   return {
     state: "ready",
     amount: raw > 0n && ui === 0 ? Number.MIN_VALUE : ui,
-    display: formatRaw(raw, decimals),
+    display: wholeRawBalance(raw, decimals),
   };
 }
 
