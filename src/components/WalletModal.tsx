@@ -7,7 +7,11 @@ import {
   phantomBrowseUrl,
   useWallet,
 } from "../wallet";
-import { CloseIcon, HelmLogo, MetaMaskIcon, PhantomIcon } from "./icons";
+import { CloseIcon, ArrowRight, LockIcon, ShieldIcon } from "./icons";
+
+import { PirateSkullIcon } from "./ReferenceIcons";
+import { FleetWalletIcon } from "./FleetWalletIcon";
+import "./WalletModal.css";
 
 export function WalletModal() {
   const {
@@ -25,7 +29,15 @@ export function WalletModal() {
 
   useEffect(() => {
     if (!modalOpen) return;
+    const previousFocus = document.activeElement as HTMLElement | null;
+    const previousOverflow = document.body.style.overflow;
     const onKey = (event: KeyboardEvent) => {
+      if (event.key === "Tab") {
+        const items = Array.from(panelRef.current?.querySelectorAll<HTMLElement>('button:not(:disabled), a[href]') ?? []);
+        const first = items[0], last = items[items.length - 1];
+        if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last?.focus(); }
+        else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first?.focus(); }
+      }
       if (event.key === "Escape") closeModal();
     };
     document.addEventListener("keydown", onKey);
@@ -33,7 +45,8 @@ export function WalletModal() {
     panelRef.current?.querySelector<HTMLElement>(".wallet-option")?.focus();
     return () => {
       document.removeEventListener("keydown", onKey);
-      document.body.style.overflow = "";
+      document.body.style.overflow = previousOverflow;
+      previousFocus?.focus();
     };
   }, [modalOpen, closeModal]);
 
@@ -44,21 +57,23 @@ export function WalletModal() {
 
   return (
     <div
-      className="modal-backdrop"
+      className="modal-backdrop fleet-backdrop"
       onMouseDown={(event) => {
         if (event.target === event.currentTarget) closeModal();
       }}
     >
-      <div className="modal" role="dialog" aria-modal="true" aria-labelledby="wallet-modal-title" ref={panelRef}>
+      <div className="modal fleet-modal" role="dialog" aria-modal="true" aria-labelledby="wallet-modal-title" ref={panelRef}>
         <button className="modal__close" type="button" aria-label="Close" onClick={closeModal}>
           <CloseIcon />
         </button>
-        <HelmLogo className="modal__logo" />
+        <div className="fleet-modal__content">
+        <img className="modal__logo" src="/brand/beri-monogram.png" alt="BERI" />
         <h2 id="wallet-modal-title">Join the Fleet</h2>
         <p className="modal__lede">
-          Connect Phantom or MetaMask on Solana. Your $BERI holdings set the bounty on your poster.
+          Connect your wallet to view your $BERI holdings and set your bounty on your wanted poster.
         </p>
 
+        <div className="fleet-modal__divider" aria-hidden="true"><span/><PirateSkullIcon/><span/></div>
         {error && (
           <p className="modal__error" role="alert">
             {error}
@@ -67,7 +82,7 @@ export function WalletModal() {
 
         <WalletChoice
           name="Phantom"
-          icon={<PhantomIcon className="wallet-option__icon" />}
+          icon={<FleetWalletIcon wallet="phantom" />}
           installed={phantomInstalled}
           busy={connecting && connectingWallet === "phantom"}
           disabled={connecting}
@@ -77,7 +92,7 @@ export function WalletModal() {
         />
         <WalletChoice
           name="MetaMask"
-          icon={<MetaMaskIcon className="wallet-option__icon" />}
+          icon={<FleetWalletIcon wallet="metamask" />}
           installed={metamaskInstalled || metamaskExtension}
           statusLabel={metamaskInstalled ? undefined : metamaskExtension ? "Enable Solana" : undefined}
           busy={connecting && connectingWallet === "metamask"}
@@ -87,9 +102,12 @@ export function WalletModal() {
           onConnect={() => void connect("metamask")}
         />
 
-        <p className="modal__note">
-          We only read your public address and $BERI balance. Connecting never sends a transaction.
-        </p>
+        <div className="fleet-modal__trust">
+          <div><LockIcon/><p>We only read your public address and $BERI balance.</p></div>
+          <div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true"><path d="m3 21 18-18M10 6l3-3a4 4 0 0 1 6 6l-3 3M14 18l-3 3a4 4 0 0 1-6-6l3-3M8 16l8-8"/></svg><p>Connecting never sends a transaction.</p></div>
+          <div><ShieldIcon/><p>You stay in control of your wallet and funds.</p></div>
+        </div>
+        </div>
       </div>
     </div>
   );
@@ -119,26 +137,26 @@ function WalletChoice({
   if (installed) {
     return (
       <button className="wallet-option" type="button" disabled={disabled} onClick={onConnect}>
-        {icon}
+        <span className="wallet-option__badge">{icon}</span>
         <span className="wallet-option__name">
           {name}
           <small>Solana</small>
+          <span className="wallet-option__hint">{busy ? `Check ${name}…` : statusLabel}</span>
         </span>
-        <span className={`wallet-option__status${statusLabel && !busy ? " wallet-option__status--install" : ""}`}>
-          {busy ? `Check ${name}…` : (statusLabel ?? "Detected")}
-        </span>
+        <ArrowRight className="wallet-option__arrow" />
       </button>
     );
   }
 
   return (
     <a className="wallet-option" href={installHref} {...(mobile ? {} : { target: "_blank", rel: "noreferrer" })}>
-      {icon}
+      <span className="wallet-option__badge">{icon}</span>
       <span className="wallet-option__name">
         {name}
         <small>Solana</small>
+        <span className="wallet-option__hint">{mobile ? "Open in app" : "Install wallet"}</span>
       </span>
-      <span className="wallet-option__status wallet-option__status--install">{mobile ? "Open in app" : "Install"}</span>
+      <ArrowRight className="wallet-option__arrow" />
     </a>
   );
 }
