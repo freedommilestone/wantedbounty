@@ -11,3 +11,11 @@
 @media(prefers-reduced-motion:reduce) { .home-preloader__fall, .home-preloader__flutter, .home-preloader__scrap { animation:none; }.home-preloader { transition:none; } }
 
 .home-preloader__art { width:100%; aspect-ratio:2 / 3; background-image:url("/scene/flying-poster-sprites.png"); background-repeat:no-repeat; background-size:500% 100%; }
+
+.home-preloader__entrance { position:absolute; z-index:5; inset:auto 20px max(8vh,env(safe-area-inset-bottom)) 20px; display:flex; justify-content:center; }
+.home-preloader__enter { display:flex; align-items:center; justify-content:center; gap:18px; width:min(440px,100%); min-height:100px; padding:22px 28px; border:0; background:url('/textures/button-parchment.png') center/100% 140% no-repeat; color:#451909; font:800 clamp(18px,2.2vw,28px)/1.25 'Roboto Serif',Georgia,serif; text-align:center; cursor:pointer; filter:drop-shadow(0 5px 15px #30130770); transition:transform .2s,filter .2s; }
+.home-preloader__enter span { font-size:1.3em; }
+.home-preloader__enter:hover { transform:translateY(-3px); filter:drop-shadow(0 8px 18px #30130780) brightness(1.05); }
+.home-preloader__enter:focus-visible { outline:3px solid #7e2814; outline-offset:5px; border-radius:8px; }
+.home-preloader__enter:disabled { cursor:default; }
+@media(prefers-reduced-motion:reduce) { .home-preloader__enter { transition:none; } .home-preloader__enter:hover { transform:none; } }
