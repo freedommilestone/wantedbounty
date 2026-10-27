@@ -1,7 +1,8 @@
 import { toPng } from "html-to-image";
 import { useEffect, useRef, useState, type ChangeEvent, type DragEvent, type ReactNode } from "react";
 import { SiteHeader } from "./components/SiteHeader";
-import { POSTER_FEE, type PaymentToken, type SolQuote } from "./payment";
+import { orderRequest, readOrder, saveOrder, type SavedOrder, type OrderResult } from "./posterOrder";
+import { TREASURY_ADDRESS, POSTER_FEE, type PaymentToken, type SolQuote } from "./payment";
 import { PirateSkullIcon } from "./components/ReferenceIcons";
 import { CreatorGuideIcon } from "./components/CreatorGuideIcon";
 import { CreatorPoster } from "./components/CreatorPoster";
@@ -81,8 +82,9 @@ export function CreatePosterPage() {
   const uploadSequence = useRef(0);
   const [title, setTitle] = useState<string>(TITLES[0]);
   const [artStyle, setArtStyle] = useState<ArtStyle>("classic");
+  const [feedbackOpen, setFeedbackOpen] = useState(true);
   const [payNote, setPayNote] = useState<string | null>(null);
-  const [phase, setPhase] = useState<"idle" | "signing" | "confirming" | "paid">("idle");
+  const [phase, setPhase] = useState<"idle" | "signing" | "confirming" | "generating" | "retry" | "review" | "paid">("idle");
   const [paymentToken, setPaymentToken] = useState<PaymentToken>("USDC");
   const [solQuote, setSolQuote] = useState<SolQuote | null>(null);
   const [quoteLoading, setQuoteLoading] = useState(false);
@@ -104,6 +106,34 @@ export function CreatePosterPage() {
     return () => window.clearInterval(timer);
   }, [paymentToken]);
   const quoteValid = solQuote !== null && solQuote.expiresAt > now;
+  const [order, setOrder] = useState<SavedOrder | null>(readOrder);
+  const [generated, setGenerated] = useState<string | null>(null);
+  const applyResult = (data: OrderResult) => {
+    if (data.details) {
+      setName(data.details.name); setCondition(data.details.condition);
+      setCustomBounty(data.details.bounty.replace(/[^0-9]/g, ""));
+    }
+    if (data.signature) setReceipt(data.signature);
+    if (data.status === "ready" && data.image) { setGenerated(data.image); setPhase("paid"); setPayNote(null); }
+    else if (data.status === "review") { setPhase("review"); setPayNote(data.message || "Please keep your receipt and contact support. Do not pay again."); }
+    else if (data.status === "generating") setPhase("generating");
+    else setPhase("retry");
+  };
+  useEffect(() => {
+    const saved = readOrder();
+    if (!saved) return;
+    setPhase("confirming");
+    orderRequest<OrderResult>({ action: "status", id: saved.id, token: saved.token }).then(applyResult)
+      .catch(() => { setPhase("retry"); setPayNote("Your previous order was saved. Check its status before paying again."); });
+  }, []);
+  useEffect(() => {
+    if (phase !== "generating" || !order) return;
+    const timer = window.setInterval(() => {
+      orderRequest<OrderResult>({action:"status",id:order.id,token:order.token}).then(applyResult)
+        .catch(() => setPayNote("Still checking your saved order. You can refresh safely; do not pay again."));
+    }, 5000);
+    return () => window.clearInterval(timer);
+  }, [phase, order]);
   const [receipt, setReceipt] = useState<string | null>(null);
 
   const bounty = customBounty ? Number(customBounty).toLocaleString("en-US") : isHolder && holdings.state === "ready" ? holdings.display : PLACEHOLDER_BOUNTY;
@@ -131,7 +161,16 @@ export function CreatePosterPage() {
       const url = String(reader.result);
       const image = new Image();
       image.onload = () => {
-        if (sequence === uploadSequence.current) setPhoto({ url, name: file.name });
+        if (sequence === uploadSequence.current) {
+          const canvas = document.createElement("canvas");
+          const scale = Math.min(1, 1024 / Math.max(image.width, image.height));
+          canvas.width = Math.max(1, Math.round(image.width * scale)); canvas.height = Math.max(1, Math.round(image.height * scale));
+          const context = canvas.getContext("2d");
+          if (!context) { setUploadError("Cannot prepare this photo."); return; }
+          context.fillStyle = "#fff"; context.fillRect(0, 0, canvas.width, canvas.height);
+          context.drawImage(image, 0, 0, canvas.width, canvas.height);
+          setPhoto({ url: canvas.toDataURL("image/jpeg", 0.85), name: file.name });
+        }
       };
       image.onerror = () => {
         if (sequence === uploadSequence.current) setUploadError("This image could not be opened. Try another JPG or PNG.");
@@ -177,42 +216,59 @@ export function CreatePosterPage() {
   };
 
   const onPay = async () => {
-    if (!address) {
-      openModal();
-      return;
-    }
+    setFeedbackOpen(true);
     if (phase === "paid") {
       await downloadPoster();
       return;
     }
+    if (phase === "retry" && order) {
+      setPayNote(null); setPhase("confirming");
+      try {
+        if (!order.signature) {
+          const data = await orderRequest<OrderResult>({action:"status",id:order.id,token:order.token});
+          if (data.status === "pending") {
+            setPhase("retry"); setPayNote("No receipt was saved. If you approved a payment, paste its transaction signature below to recover it. If you cancelled, clear this unpaid order.");
+          } else applyResult(data);
+        } else {
+          applyResult(await orderRequest<OrderResult>({action:"generate",id:order.id,token:order.token,signature:order.signature}));
+        }
+      } catch (error) { setPhase("retry"); setPayNote(error instanceof Error ? error.message : "Retry this saved order without paying again."); }
+      return;
+    }
     if (phase !== "idle") return;
-    if (!photo) {
-      setPayNote("Upload your photo first so we can build your poster.");
-      return;
-    }
-    if (!name.trim()) {
-      setPayNote("Add your pirate name before generating.");
-      return;
-    }
-    setPayNote(null);
-    setPhase("signing");
+    if (!address) { openModal(); return; }
+    if (!photo || !name.trim()) { setPayNote("Upload your photo and add your pirate name first."); return; }
+    setPayNote(null); setPhase("confirming");
+    let saved: SavedOrder | null = null;
     try {
-      const signature = await payForPoster(paymentToken, () => setPhase("confirming"), solQuote ?? undefined);
-      setReceipt(signature);
-      setPhase("paid");
+      saved = await orderRequest<SavedOrder>({action:"prepare",owner:address,currency:paymentToken,photo:photo.url,name:name.trim(),condition,bounty});
+      if (saved.treasury !== TREASURY_ADDRESS) throw new Error("Payment configuration mismatch. No payment was requested.");
+      saveOrder(saved); setOrder(saved);
+      if (saved.quote) { setSolQuote(saved.quote); setNow(Date.now()); }
+      setPhase("signing");
+      const prepared = saved;
+      const signature = await payForPoster(paymentToken, (signature) => {
+        prepared.signature = signature; saveOrder(prepared); setOrder({...prepared});
+        setReceipt(signature); setPhase("confirming");
+      }, saved.quote, saved.id);
+      setPhase("generating");
+      applyResult(await orderRequest<OrderResult>({action:"generate",id:saved.id,token:saved.token,signature}));
     } catch (error) {
-      setPhase("idle");
-      setPayNote(error instanceof Error ? error.message : "The payment couldn't be sent.");
+      setPhase(saved && readOrder()?.id === saved.id ? "retry" : "idle");
+      setPayNote(error instanceof Error ? error.message : "Unable to finish. Your saved order can be retried without paying again.");
     }
   };
 
   let payLabel = "Pay $5 & Generate My Poster";
-  if (!address) payLabel = "Connect Wallet to Pay";
-  else if (phase === "paid") payLabel = "Download Your Poster";
+  if (phase === "paid") payLabel = "Download Your Poster";
+  else if (phase === "retry") payLabel = "Recover My Order";
+  else if (phase === "review") payLabel = "Order Needs Assistance";
+  else if (phase === "generating") payLabel = "Creating your anime portrait…";
   else if (phase === "signing") payLabel = "Approve in your wallet…";
-  else if (phase === "confirming") payLabel = "Confirming payment…";
+  else if (phase === "confirming") payLabel = "Checking your order…";
+  else if (!address) payLabel = "Connect Wallet to Pay";
 
-  const payDisabled = phase === "signing" || phase === "confirming" || (phase !== "paid" && paymentToken === "SOL" && (!quoteValid || quoteLoading));
+  const payDisabled = phase === "signing" || phase === "confirming" || phase === "generating" || phase === "review" || (phase === "idle" && paymentToken === "SOL" && (!quoteValid || quoteLoading));
 
   return (
     <div className="creator-page">
@@ -231,7 +287,7 @@ export function CreatePosterPage() {
                   <p className="create__lede">
                     <strong>Turn your photo into a legendary bounty.</strong>
                     <br />
-                    Upload your image and create your own wanted poster. Your connected wallet supplies the default bounty amount.
+                    Turn your uploaded photo into a pirate-anime wanted poster. Your connected wallet supplies the default bounty amount.
                   </p>
                 </div>
               </div>
@@ -253,8 +309,8 @@ export function CreatePosterPage() {
             <div className="create__grid">
               <div className="create__panel-shadow">
                 <form className="create__panel create__form" style={{ clipPath: FORM_EDGE }} onSubmit={(event) => event.preventDefault()}>
-                  <Step number={1} title="Upload Your Image" hint="Use a clear photo of yourself. Choose a vintage finish for your wanted poster.">
-                    <div className="upload">
+                  <Step number={1} title="Upload Your Image" hint="Upload your photo. After payment, AI creates your pirate-anime portrait.">
+                    <fieldset className="upload" disabled={phase !== "idle"} style={{border:0,padding:0,margin:0,minWidth:0}}>
                       <div className="upload__thumb">
                         {photo ? <><img src={photo.url} alt="Your uploaded photo" /><button className="upload__remove" type="button" aria-label="Remove photo" onClick={() => { ++uploadSequence.current; setPhoto(null); }}>×</button></> : <span>Your photo</span>}
                       </div>
@@ -277,7 +333,7 @@ export function CreatePosterPage() {
                         <p role="status" className={`upload__hint ${uploadError ? "is-error" : ""}`}>{uploadError ?? "JPG, PNG (max 10MB)"}</p>
                       </div>
                       <input ref={fileRef} type="file" accept="image/png,image/jpeg" hidden onChange={onFileChange} />
-                    </div>
+                    </fieldset>
                   </Step>
 
                   <Step number={2} title="Set Your Details">
@@ -350,7 +406,7 @@ export function CreatePosterPage() {
                   </Step>
 
                   <Step number={3} title="Pay $5 to Create">
-                    <p className="desktop-only pay__description">A one-time fee of <Price/> to create your wanted poster.<br/>Includes a photo filter and download; supports the BERI community.</p>
+                    <p className="desktop-only pay__description">A one-time fee of <Price/> to create your wanted poster.<br/>Includes AI artwork and a download; supports the BERI community.</p>
                     <div className="desktop-only payment-choices" role="group" aria-label="Payment currency">{(["USDC", "USDT", "SOL"] as PaymentToken[]).map(token => <button key={token} type="button" disabled={phase !== "idle"} aria-pressed={paymentToken === token} className={paymentToken === token ? "is-selected" : ""} onClick={() => { setPaymentToken(token); setPayNote(null); }}><PaymentChoiceIcon token={token}/><span>{token}</span></button>)}</div>
                     <div className="pay">
                       <div className="pay__wallet">
@@ -387,7 +443,8 @@ export function CreatePosterPage() {
                         </p>
                       </div>
                     </div>
-                    <div className="payment-feedback" aria-live="polite">
+                    <div className="payment-feedback" aria-live="polite" hidden={!feedbackOpen}>
+                    {(payNote || (phase === "paid" && receipt) || (phase === "retry" && order && !order.signature)) && <button className="payment-feedback-close" type="button" aria-label="Close payment message" onClick={() => setFeedbackOpen(false)}>×</button>}
                     {phase === "paid" && receipt && (
                       <p className="pay__note" role="status">
                         Payment confirmed, your poster is ready.{" "}
@@ -396,6 +453,17 @@ export function CreatePosterPage() {
                         </a>
                       </p>
                     )}
+                    {phase === "retry" && order && !order.signature && <div className="order-recovery">
+                      <input aria-label="Payment transaction signature" placeholder="Paste transaction signature if paid" onChange={(event) => {
+                        const signature = event.target.value.trim();
+                        if (/^[1-9A-HJ-NP-Za-km-z]{64,90}$/.test(signature)) { const recovered = {...order,signature}; saveOrder(recovered); setOrder(recovered); }
+                      }}/>
+                      <button type="button" onClick={() => {
+                        if (window.confirm("Only clear this order if you did NOT approve a payment. If you paid, keep this order and recover using your transaction signature.")) {
+                          localStorage.removeItem("wanted-poster-order-v1"); setOrder(null); setPhase("idle"); setPayNote(null);
+                        }
+                      }}>Clear unpaid order</button>
+                    </div>}
                     {payNote && (
                       <p className="pay__note pay__note--alert" role="status">
                         {payNote}
@@ -408,7 +476,7 @@ export function CreatePosterPage() {
                       <span>
                         The <Price/> fee is paid in USDC, USDT or SOL with your wallet approval.
                         <br />
-                        Photo finishes are filters, not AI-generated artwork.
+                        Your photo is sent to OpenAI to create your anime portrait after payment.
                       </span>
                     </p>
                   </Step>
@@ -424,7 +492,7 @@ export function CreatePosterPage() {
                     name={posterName}
                     condition={condition}
                     bounty={bounty}
-                    portrait={photo?.url ?? DEFAULT_PORTRAIT}
+                    portrait={generated ?? photo?.url ?? DEFAULT_PORTRAIT}
                     photoClassName={`art--${artStyle}`}
                     fine="KONO SAKUHIN WA FICTION DESUNODE JITSUZAISURU JINBUTSU DANTAI SONOTA NO SOSHIKI TO DOITSU NO MEISHOU GA GEKICHU NI TOUJYOU SHITATOSHITEMO JITSUZAI NA MONOTOWA ISSAI MUKANKEIDESU"
                   />
@@ -439,8 +507,8 @@ export function CreatePosterPage() {
                     <div>
                       <LockIcon />
                       <p>
-                        <strong>Photo stays local</strong>
-                        Your upload stays in this browser.
+                        <strong>Private upload</strong>
+                        Stored privately; sent to OpenAI after payment.
                       </p>
                     </div>
                   </div>

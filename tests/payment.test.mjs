@@ -58,3 +58,15 @@ for(const quote of [undefined,{lamports:1,usdPrice:200,expiresAt:Date.now()+6000
   await assert.rejects(buildPosterPayment(async()=>{throw Error('must not call RPC');},{owner:TREASURY_ADDRESS,token:'SOL',quote}),/quote expired or invalid/);
  });
 }
+
+test('checkout transaction includes an order memo signed by the buyer',async()=>{
+ const id='11111111-1111-4111-8111-111111111111';
+ const {transaction}=await buildPosterPayment(async()=>({value:{blockhash:TREASURY_ADDRESS}}),{
+   owner:PAYMENT_TOKENS.USDC,token:'SOL',orderId:id,
+   quote:{lamports:25000000,usdPrice:200,expiresAt:Date.now()+60000},
+ });
+ const memo=new TextEncoder().encode(`wanted:${id}`);
+ assert.deepEqual(transaction.slice(-memo.length),memo);
+ // Last instruction has one account, index 0: the signed fee payer.
+ assert.deepEqual([...transaction.slice(-memo.length-3,-memo.length)],[1,0,memo.length]);
+});

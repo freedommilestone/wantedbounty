@@ -137,9 +137,15 @@ function transferCheckedData(raw: bigint, decimals: number): Uint8Array {
 /** Builds a fixed-price payment using only the supported mainnet stablecoins. */
 export async function buildPosterPayment(
   rpc: RpcCall,
-  options: { owner: string; token: PaymentToken; quote?: SolQuote },
+  options: { owner: string; token: PaymentToken; quote?: SolQuote; orderId?: string },
 ): Promise<PosterTransfer> {
   const { owner, token } = options;
+  if (options.orderId && !/^[a-f0-9-]{36}$/.test(options.orderId)) throw new Error("Invalid poster order.");
+  const memo: Instruction[] = options.orderId ? [{
+    programId: "MemoSq4gqABAXKb96qnH8TysNcWxMyWCqXgDLGmfcHr",
+    keys: [{ key: owner, signer: true, writable: false }],
+    data: new TextEncoder().encode(`wanted:${options.orderId}`),
+  }] : [];
   if (token === "SOL") {
     const quote = options.quote;
     if (!quote || !Number.isSafeInteger(quote.lamports) || quote.lamports <= 0 ||
@@ -160,7 +166,7 @@ export async function buildPosterPayment(
         programId: SYSTEM_PROGRAM,
         keys: [{ key: owner, signer: true, writable: true }, { key: TREASURY_ADDRESS, signer: false, writable: true }],
         data,
-      }], blockhash.value.blockhash),
+      }, ...memo], blockhash.value.blockhash),
       createsTreasuryAccount: false,
     };
   }
@@ -231,7 +237,7 @@ export async function buildPosterPayment(
   });
 
   return {
-    transaction: compileTransaction(owner, instructions, blockhash.value.blockhash),
+    transaction: compileTransaction(owner, [...instructions, ...memo], blockhash.value.blockhash),
     createsTreasuryAccount,
   };
 }

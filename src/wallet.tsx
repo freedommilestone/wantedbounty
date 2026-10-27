@@ -107,7 +107,7 @@ interface WalletContextValue {
   isHolder: boolean;
   refreshHoldings: () => void;
   /** Pays the fixed stablecoin poster fee and resolves after confirmation. */
-  payForPoster: (token: PaymentToken, onSent?: (signature: string) => void, quote?: SolQuote) => Promise<string>;
+  payForPoster: (token: PaymentToken, onSent?: (signature: string) => void, quote?: SolQuote, orderId?: string) => Promise<string>;
 }
 
 const WalletContext = createContext<WalletContextValue | null>(null);
@@ -571,7 +571,7 @@ export function WalletProvider({ children }: { children: ReactNode }) {
   }, [metamask, reset]);
 
   const payForPoster = useCallback(
-    async (token: PaymentToken, onSent?: (signature: string) => void, quote?: SolQuote) => {
+    async (token: PaymentToken, onSent?: (signature: string) => void, quote?: SolQuote, orderId?: string) => {
       const kind = walletRef.current;
       const owner = address;
       if (!kind || !owner) throw new Error("Connect your wallet first.");
@@ -583,7 +583,7 @@ export function WalletProvider({ children }: { children: ReactNode }) {
       }
 
       try {
-        const { transaction } = await buildPosterPayment(rpc, { owner, token, quote });
+        const { transaction } = await buildPosterPayment(rpc, { owner, token, quote, orderId });
 
         let account = standard.accounts.find((item) => item.address === owner);
         if (!account) {
