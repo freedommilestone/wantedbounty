@@ -297,3 +297,9 @@
  .creator-page .upload__drop svg { width:clamp(26px,4vw,36px); height:clamp(26px,4vw,36px); }
  .creator-page .upload__drop span { line-height:1.1; }
 }
+@media(max-width:1100px) {
+ .creator-page .create__stage::before,
+ .creator-page .create__stage::after,
+ .creator-page .create__preview::before { content:none; display:none; }
+ .creator-page .create__panel-shadow { background:none; box-shadow:none; }
+}

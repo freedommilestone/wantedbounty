@@ -304,11 +304,6 @@ export function CreatePosterPage() {
               </div>
             </div>
 
-            <section className="create-mobile-guide" aria-labelledby="mobile-guide-title">
-              <h2 id="mobile-guide-title">How It Works</h2>
-              <ol>{steps.map(({title: label, text}, index) => <li key={label}><CreatorGuideIcon step={index} /><h3>{priceText(label)}</h3><p>{priceText(text)}</p></li>)}</ol>
-            </section>
-
             <div className="create__grid">
               <div className="create__panel-shadow">
                 <form className="create__panel create__form" style={{ clipPath: FORM_EDGE }} onSubmit={(event) => event.preventDefault()}>

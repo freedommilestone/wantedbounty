@@ -1,107 +1,10 @@
+/* Legacy desktop adjustments and shared payment controls only.
+   Mobile layout lives in CreateMobileReference.css. */
 .create-mobile-guide { display:none; }
-@media(max-width:1100px) {
-  .creator-page { font-size:1.1273957159vw; background:#d5b98e url('/scene/create-mobile-harbor.jpg') center top / 100% auto no-repeat; }
-  .creator-page .create { font-size:inherit; background:none; }
-  .creator-page .site-header--create { background:#efd9b2 url('/textures/parchment-v2.jpg') center / cover; }
-  .creator-page .site-header__inner { width:82%; height:8.2em; min-height:0; gap:2em; }
-  .creator-page .brand__logo { width:7.5em; height:7.5em; }
-  .creator-page .site-menu-toggle { display:block; order:3; font-size:3.8em; margin-left:0; color:#2d190c; }
-  .creator-page .site-header__inner > .wallet-btn { margin-left:auto; min-height:4em; padding:.7em 1.4em; font-size:1.65em; }
-  .creator-page .nav { display:none; }
-  .creator-page .nav--open { display:flex; font-size:16px; }
-  .creator-page .nav--open a { font-size:16px; }
-  .creator-page .create__stage { padding:0; }
-  .creator-page .create .container { width:94%; }
-  .creator-page .create__intro { position:relative; display:block; height:27em; margin:0; }
-  .creator-page .create__banner-shadow { position:absolute; left:8em; top:1em; width:52em; }
-  .creator-page .create__banner { padding:2.2em 4em 2.6em; min-height:0; background:url('/textures/title-banner.png') center / 100% 110% no-repeat; }
-  .creator-page .create__title { margin:0 0 .9em; transform:none; }
-  .creator-page .create__title span:first-child { font-size:3.5em; }
-  .creator-page .create__title span:last-child { font-size:6em; line-height:.98; letter-spacing:-.06em; }
-  .creator-page .create__lede { margin:0; max-width:26em; font-size:1.6em; line-height:1.2; }
-  .creator-page .create__lede strong { font-size:1.15em; }
-  .creator-page .create__motto { display:block; position:absolute; right:4em; top:2em; margin:0; padding:0; }
-  .creator-page .create__motto p { font-size:2.5em; }
-  .creator-page .create__compass { width:7em; margin:2.5em auto 0; }
-  .create-mobile-guide { display:block; position:relative; padding:5em 2em 2em; background:url('/textures/home-poster-paper.jpg') center / 100% 100%; color:#2d190c; clip-path:polygon(1% 0,98% 1%,100% 97%,99% 100%,1% 99%,0 3%); }
-  .create-mobile-guide > h2 { position:absolute; top:-.5em; left:50%; transform:translateX(-50%); width:12em; padding:.4em 1em; text-align:center; background:url('/textures/button-parchment.png') center / 100% 150%; font:800 2.6em/1 'Roboto Serif',Georgia,serif; font-stretch:50%; text-transform:uppercase; white-space:nowrap; }
-  .create-mobile-guide ol { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); list-style:none; margin:0; padding:0; }
-  .create-mobile-guide li { text-align:center; padding:0 1em; }
-  .create-mobile-guide li + li { border-left:1px solid #86603b44; }
-  .creator-page .create-mobile-guide .creator-guide-icon { width:6.5em; height:6.5em; margin:0 auto .8em; }
-  .create-mobile-guide h3 { font:800 1.9em/1.1 'Roboto Serif',Georgia,serif; font-stretch:50%; text-transform:uppercase; margin:0 0 .5em; white-space:nowrap; }
-  .create-mobile-guide p { font:1.6em/1.25 Georgia,serif; margin:0; }
-  .creator-page .create__grid { display:block; margin:0; }
-  .creator-page .create__form { padding:1.2em 4.4em 2.5em; background:#eed6ad url('/textures/home-poster-paper.jpg') center / 100% 100%; }
-  .creator-page .step { grid-template-columns:6.5em minmax(0,1fr); gap:2em; }
-  .creator-page .step__number { font-size:4em; width:1.4em; height:1.4em; }
-  .creator-page .step__title { font-size:2.8em; padding-top:.1em; }
-  .creator-page .step__hint { font-size:1.6em; line-height:1.2; }
-  .creator-page .step + .step { margin-top:1.2em; padding-top:1.2em; }
-  .creator-page .upload { flex-direction:row; margin-top:1em; gap:1.2em; }
-  .creator-page .upload__thumb { width:14em; height:12em; }
-  .creator-page .upload__drop-wrap { flex:1; width:auto; }
-  .creator-page .upload__drop { height:10.5em; }
-  .creator-page .upload__drop strong { font-size:1.7em; }
-  .creator-page .upload__drop span { font-size:1.5em; }
-  .creator-page .upload__hint { font-size:1.3em; }
-  .creator-page .fields { grid-template-columns:repeat(2,minmax(0,1fr)); gap:1em 2.3em; margin-top:1em; }
-  .creator-page .field__label { font-size:1.6em; }
-  .creator-page .field__control { font-size:1.7em; height:2.5em; padding-inline:.6em; }
-  .creator-page .styles { gap:1em; }
-  .creator-page .style-option { font-size:1.3em; }
-  .creator-page .style-option img { aspect-ratio:1.25; }
-  .creator-page .bounty-input { gap:.4em; }
-  .creator-page .bounty-input__unit { padding-left:.5em; }
-  .creator-page .pay { grid-template-columns:1fr 1.05fr; gap:1.4em; margin:1.2em 0 0; }
-  .creator-page .pay__wallet { padding:1em; gap:1em; }
-  .creator-page .pay__wallet-icon { width:5.5em; height:5.5em; }
-  .creator-page .pay__wallet-label { font-size:1.3em; }
-  .creator-page .pay__balance { font-size:1.7em; }
-  .creator-page .pay__button { font-size:1.5em; min-height:3.7em; white-space:normal; }
-  .creator-page .pay__action p { font-size:1.4em; margin-top:.5em; }
-  .creator-page .pay__secure { margin:1em 0 0; font-size:1.2em; padding:.5em .8em; }
-  .creator-page .pay__note { font-size:1.5em; }
-  .creator-page .create__panel-shadow--preview { margin:0; }
-  .creator-page .create__preview { position:relative; padding:0 0 2em; background:none; clip-path:none!important; }
-  .creator-page .create__preview::before { display:none; }
-  .creator-page .create__ribbon { z-index:2; margin:-.25em auto -.2em; font-size:2.7em; padding:.25em 1.2em; }
-  .creator-page .creator-poster { width:54em; max-width:none; margin:0 auto; }
-  .creator-page .create__assurances { width:54em; margin:0 auto; padding:1em; background:#f2ddb8e8; grid-template-columns:1fr 1fr; font-size:.9em; }
-  .creator-page .create__assurances > div + div { border-left:1px solid #73512e66; }
-  .creator-page .steps { display:none; }
-}
-@media(max-width:1100px) {
-  .creator-page { background-size:100% 100%; }
-  .creator-page .site-header--create .site-menu-toggle { color:#2d190c; }
-  .creator-page .creator-poster { width:48em; }
-  .creator-page .create__assurances { width:48em; }
-  .creator-page .create-mobile-guide { background-image:url('/textures/creator-poster-frame.png'); background-color:transparent; clip-path:none; }
-  .creator-page .create__form { padding-top:1em; padding-bottom:1.5em; }
-}
+
+
 /* Keep text within the usable paper area, independent of decorative torn edges. */
-@media(max-width:1100px) {
-  .creator-page .site-header__inner { width:92%; min-height:64px; height:8.2em; gap:12px; }
-  .creator-page .brand__logo { width:clamp(44px,7.5vw,68px); height:clamp(50px,8vw,72px); }
-  .creator-page .site-menu-toggle { width:44px; height:44px; padding:6px; font-size:28px; line-height:1; flex:none; }
-  .creator-page .site-header__inner > .wallet-btn { min-height:44px; font-size:clamp(12px,1.65vw,16px); padding:10px 18px; }
-  .creator-page .create__intro { height:auto; min-height:29em; padding:1.5em 0 2em; }
-  .creator-page .create__banner-shadow { position:relative; left:auto; top:auto; margin-left:6%; width:68%; }
-  .creator-page .create__banner { background:url('/textures/creator-poster-frame.png') center / 100% 100% no-repeat; padding:3.5em 4em 4em; }
-  .creator-page .create__title { margin:0 0 1em; }
-  .creator-page .create__title span:first-child { font-size:3.2em; line-height:1.05; }
-  .creator-page .create__title span:last-child { font-size:5.1em; line-height:1.08; letter-spacing:-.055em; white-space:nowrap; }
-  .creator-page .create__lede { width:100%; max-width:none; font-size:1.55em; line-height:1.3; }
-  .creator-page .create__lede strong { font-size:1.1em; }
-  .creator-page .create__motto { right:1em; top:3em; }
-  .creator-page .create__motto p { font-size:2.2em; }
-  .creator-page .create__compass { width:6em; }
-  .creator-page .create-mobile-guide { padding:2.5em 3.5em 3.5em; margin-bottom:1em; background:#efdbb6 url('/textures/home-poster-paper.jpg') center / 100% 100%; }
-  .creator-page .create-mobile-guide > h2 { position:relative; top:auto; left:auto; transform:none; margin:0 auto 1em; padding:.5em 1em; width:13em; max-width:90%; background-size:100% 145%; }
-  .creator-page .create-mobile-guide li { padding:0 .85em; min-width:0; }
-  .creator-page .create-mobile-guide h3 { font-size:1.7em; white-space:normal; min-height:2.2em; }
-  .creator-page .create-mobile-guide p { font-size:1.5em; line-height:1.3; overflow-wrap:break-word; }
-}
+
 
 /* Compact payment choice occupies the former wallet-balance card. */
 .creator-page .pay__currency {
@@ -116,87 +19,15 @@
 
 /* The scene includes an 82px header in its 1774px artwork.
    Render that band once in the header, and only the harbor below it. */
-@media (max-width:1100px) {
-  .creator-page { background:#d5b98e; }
-  .creator-page .site-header--create {
-    background:#efd9b2 url('/scene/create-mobile-harbor.jpg') center top / 100% 2163.414634% no-repeat;
-    border:0;
-    box-shadow:none;
-  }
-  .creator-page .create {
-    background:url('/scene/create-mobile-harbor.jpg') center bottom / 100% 104.846336% no-repeat;
-  }
-}
+
 
 /* Mobile reference composition: banner, guide, editor, then a standalone poster. */
-@media (max-width:1100px) {
-  .creator-page .create__intro { min-height:27em; padding:1em 0 2em; }
-  .creator-page .create__banner-shadow { margin-left:10%; width:62%; }
-  .creator-page .create__banner {
-    background: url('/textures/title-banner.png') center / 100% 100% no-repeat;
-    padding:3.5em 4em 3.8em;
-  }
-  .creator-page .create__title { margin-bottom:.7em; }
-  .creator-page .create__title span:first-child { font-size:3.8em; }
-  .creator-page .create__title span:last-child { font-size:5.8em; letter-spacing:-.065em; }
-  .creator-page .create__lede { font-size:1.7em; line-height:1.25; }
-  .creator-page .create__lede strong { font-size:1.12em; }
-  .creator-page .create__motto { right:2em; top:2em; }
-  .creator-page .create__compass { width:7em; margin-top:3em; }
-  .creator-page .create-mobile-guide {
-    position:relative; margin:0 0 -.3em;
-    padding:5em 2.5em 2.5em;
-    background:transparent url('/textures/creator-poster-frame.png') center / 100% 100%;
-  }
-  .creator-page .create-mobile-guide > h2 {
-    position:absolute; top:-.5em; left:50%; transform:translateX(-50%);
-    width:11em; margin:0; font-size:2.8em; padding:.5em .8em;
-  }
-  .creator-page .create-mobile-guide .creator-guide-icon { width:6.5em; height:6.5em; margin-bottom:1em; }
-  .creator-page .create-mobile-guide h3 { font-size:1.85em; min-height:1.2em; }
-  .creator-page .create-mobile-guide p { font-size:1.65em; line-height:1.25; }
-  .creator-page .create__form {
-    background:transparent url('/textures/creator-poster-frame.png') center / 100% 100%;
-    clip-path:none!important; padding:2em 4.5em 3.5em;
-  }
-  .creator-page .step { grid-template-columns:6.5em minmax(0,1fr); gap:2.5em; }
-  .creator-page .step + .step { margin-top:1.6em; padding-top:1.6em; }
-  .creator-page .step__title { font-size:2.8em; }
-  .creator-page .upload__thumb { width:14.5em; height:12em; }
-  .creator-page .upload__drop-wrap { max-width:39em; }
-  .creator-page .fields { gap:1.2em 2.4em; }
-  .creator-page .field__control { height:2.7em; }
-  .creator-page .style-option img { aspect-ratio:1.45; }
-  .creator-page .pay__secure { font-size:1.15em; margin-top:.6em; }
-  .creator-page .create__preview { padding:0 0 1.5em; overflow:visible; }
-  .creator-page .create__ribbon { width:max-content; max-width:90%; font-size:2.8em; margin:-.3em auto -1.1em; position:relative; }
-  .creator-page .creator-poster { width:54em; max-width:none; margin:0 auto; }
-  .creator-page .create__assurances { display:none; }
-}
-@media (max-width:1100px) {
-  .creator-page .create__banner { padding:3.5em 4em 4.8em; }
-  .creator-page .create__lede { max-width:24em; font-size:1.6em; }
-  .creator-page .create-mobile-guide { padding-top:4.5em; padding-bottom:2em; }
-  .creator-page .create-mobile-guide p { font-size:1.5em; }
-  .creator-page .create-mobile-guide .creator-guide-icon { width:6em; height:6em; margin-bottom:.6em; }
-  .creator-page .create__form { padding:3.8em 5.5em 3.8em 4.5em; }
-  .creator-page .step + .step { margin-top:.7em; padding-top:.7em; }
-  .creator-page .step__title { margin-bottom:.2em; }
-  .creator-page .creator-poster { width:50em; }
-  .creator-page .creator-poster__sheet { aspect-ratio:480 / 560; }
-  .creator-page .creator-poster__portrait { top:23%; height:37%; }
-  .creator-page .creator-poster__alive { top:61%; }
-  .creator-page .creator-poster__name { top:68%; }
-  .creator-page .creator-poster__bounty { top:80%; }
-}
+
+
 
 /* Avoid a body-colored strip below short creator pages. */
 .creator-page{min-height:100svh}
-@media(max-width:1100px){
- .creator-page{display:flex;flex-direction:column}
- .creator-page>.create{flex:1}
- .creator-page .create__preview{padding-bottom:0}
-}
+
 @media(min-width:1101px){
  .creator-page{background-size:100% 100%}
  .creator-page .steps{padding-bottom:0}
