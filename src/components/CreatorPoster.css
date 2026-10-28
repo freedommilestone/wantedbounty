@@ -26,6 +26,7 @@
 .creator-poster.poster-reference .creator-poster__bounty text { font-family:"Roboto Serif",Georgia,serif; font-size:43px; font-weight:350; font-variant-numeric:lining-nums proportional-nums; font-feature-settings:"lnum" 1,"pnum" 1; }
 .creator-poster.poster-reference .creator-poster__scroll { top:63.5%; height:30.5%; width:4.6%; color:#391b09; }
 .creator-poster.poster-reference .creator-poster__scroll--left { left:3.3%; }
-.creator-poster.poster-reference .creator-poster__scroll--right { right:3.3%; }
+/* The reference’s right flourish ends above MARINE; the left continues beside the fine print. */
+.creator-poster.poster-reference .creator-poster__scroll--right { right:3.3%; height:24.5%; }
 .creator-poster.poster-reference .creator-poster__fine { top:90%; left:9.5%; width:53%; max-height:5.2%; font:600 1.38cqw/1.35 Georgia,serif; color:#391b09; }
 .creator-poster.poster-reference .creator-poster__marine { top:89%; right:4%; width:30%; height:5.7%; font:700 57px Georgia,serif; transform:none; }
