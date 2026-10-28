@@ -5,6 +5,8 @@ import { ExplorePoster } from "./components/ExplorePoster";
 import { CompassRose, ArrowRight } from "./components/icons";
 import { Link } from "./router";
 import "./ExplorePage.css";
+import "./ExploreMobileReference.css";
+import { CreatorPoster } from "./components/CreatorPoster";
 
 const posters = [
   {name:"Luffy",image:"home-luffy",portraitIndex:0,amount:1800000000,rank:"Captain",style:"Classic Ink"},
@@ -25,7 +27,7 @@ const posters = [
 ];
 type Poster = typeof posters[number];
 function PosterArt({poster}:{poster:Poster}) {
-  return <ExplorePoster name={poster.name} bounty={poster.amount} portrait="/portraits/explore-crew.png" portraitIndex={poster.portraitIndex} />;
+  return <><div className="explore-desktop-poster"><ExplorePoster name={poster.name} bounty={poster.amount} portrait="/portraits/explore-crew.png" portraitIndex={poster.portraitIndex} /></div><div className="explore-mobile-poster"><CreatorPoster name={poster.name} bounty={String(poster.amount)} portrait="/portraits/explore-crew.png" portraitIndex={poster.portraitIndex} photoClassName="" fine="KONO SAKUHIN WA FICTION DESUNODE JITSUZAISURU JINBUTSU DANTAI SONOTA NO SOSHIKI TO DOITSU NO MEISHOU GA GEKICHU NI TOUJYOU SHITATOSHITEMO JITSUZAI NA MONOTOWA ISSAI MUKANKEIDESU" /></div></>;
 }
 export function ExplorePage() {
   const [sort,setSort]=useState("Trending");

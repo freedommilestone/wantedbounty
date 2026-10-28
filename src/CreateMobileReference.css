@@ -4,7 +4,7 @@
  .creator-page .create { background:none; }
  .creator-page .create__stage { padding:0; background:#f3d9ad url('/scene/create-mobile-parchment-v2.png') center top/100% 100% no-repeat; }
  .creator-page .create .container { width:100%; max-width:none; margin:0; padding:0; }
- body .creator-page .site-header.site-header { background:#f2dbb4 url('/textures/parchment-v2.jpg') center/cover; padding:0; border-bottom:1px solid #7b512d; }
+ body .creator-page .site-header.site-header { background:#f2dbb4 url('/textures/parchment-v2.jpg') center/cover; padding:0; border-bottom:0; }
  body .creator-page .site-header.site-header::after { display:none; }
  body .creator-page .site-header.site-header .site-header__inner { width:96%; height:auto; min-height:64px; display:grid; grid-template-columns:36px minmax(0,1fr) auto; gap:8px; padding:5px 0; }
  body .creator-page .site-header.site-header .site-menu-toggle { display:block; grid-column:1; grid-row:1; order:0; margin:0; width:36px; height:44px; padding:0; font-size:27px; }
@@ -130,4 +130,43 @@
 }
 @media(max-width:1100px) {
  .creator-page .create__stage { background-image:linear-gradient(to bottom,transparent 0,transparent 65vw,#f3d9ad 120vw),url('/scene/create-mobile-parchment-v2.png'); background-size:100% 125vw,100% auto; background-repeat:no-repeat; }
+}
+/* End the Create page at the guide content, without a reserved footer gap. */
+.creator-page .steps { height:auto; min-height:0; padding-bottom:8px; margin-bottom:0; }
+.creator-page .steps .container,
+.creator-page .steps__row,
+.creator-page .steps__list { padding-bottom:0; margin-bottom:0; min-height:0; }
+/* Mobile reference composition: open parchment, three steps, then the harbor. */
+@media(max-width:1100px) {
+ .creator-page .create__intro { position:relative; padding:24px 14% 30px; }
+ .creator-page .create__title span:first-child { font-size:clamp(24px,5.4vw,48px); }
+ .creator-page .create__title span:last-child { font-size:clamp(26px,6.8vw,62px); letter-spacing:-.055em; }
+ .creator-page .create__lede { font-size:clamp(13px,2.2vw,19px); }
+ .creator-page .create__lede strong { font-size:clamp(15px,2.8vw,24px); }
+ .creator-page .create__form { padding:0 11% 16px 9%; }
+ .creator-page .step { grid-template-columns:clamp(32px,7.5vw,62px) minmax(0,1fr); gap:clamp(10px,2.5vw,22px); }
+ .creator-page .step__number { width:clamp(32px,7.5vw,62px); height:clamp(32px,7.5vw,62px); font-size:clamp(26px,5.7vw,48px); }
+ .creator-page .step+.step { margin-top:24px; }
+ .creator-page .step__hint { font-size:clamp(12px,2vw,17px); }
+ .creator-page .upload { gap:clamp(8px,1.6vw,14px); margin-top:10px!important; }
+ .creator-page .upload__thumb { width:30%; aspect-ratio:1.25; display:grid; place-items:center; }
+ .creator-page .upload__drop { height:clamp(88px,15vw,130px); outline:1px dashed #a88859!important; outline-offset:-2px; }
+ .creator-page .upload__thumb>span { text-align:center; font-size:12px; }
+ .creator-page .condition-options button { min-height:clamp(48px,8.5vw,70px); background:#f0c98c50; }
+ .creator-page .condition-options button.is-selected,.creator-page .payment-choices button.is-selected { background:#c7863d55; }
+ .creator-page .condition-options button:first-child { font-size:clamp(10px,1.8vw,16px); }
+ .creator-page .payment-choices button { background:#f0c98c50; min-height:clamp(44px,8.5vw,70px); }
+ .creator-page .pay__description { font-size:clamp(12px,2vw,17px); }
+ .creator-page .pay__button { text-transform:none; font-size:clamp(12px,2.2vw,18px); }
+ .creator-page .create__preview { padding-top:12px; padding-bottom:22px; }
+ .creator-page .create__ribbon { font-size:clamp(16px,2.8vw,24px); padding:7px 20px; }
+ .creator-page .creator-poster { width:42%; max-width:360px; }
+ .creator-page .steps { padding:14px 6% 8px; }
+ .creator-page .steps__ribbon { font-size:clamp(22px,3.7vw,32px); }
+ .creator-page .steps__list { grid-template-columns:repeat(4,minmax(0,1fr)); gap:0; }
+ .creator-page .steps__list li { padding:0 6px; }
+ .creator-page .steps__list li+li { border-left:1px solid #bba078; }
+ .creator-page .steps__list h3 { font-size:clamp(10px,1.9vw,17px); }
+ .creator-page .steps__list p { font-size:clamp(10px,1.8vw,16px); line-height:1.25; }
+ .creator-page .desktop-guide-icon { width:clamp(28px,6vw,50px); height:clamp(28px,6vw,50px); }
 }
