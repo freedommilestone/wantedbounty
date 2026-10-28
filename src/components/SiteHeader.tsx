@@ -8,7 +8,7 @@ import { useWallet } from "../wallet";
 import { HomeCompass, HomeWheel } from "./HomeIcons";
 import { WalletButton } from "./WalletButton";
 
-type Page = "home" | "create" | "how" | "explore";
+type Page = "home" | "create" | "how" | "explore" | "profile";
 
 export function SiteHeader({ active }: { active: Page }) {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -35,6 +35,7 @@ export function SiteHeader({ active }: { active: Page }) {
     { label: "Create Poster", href: "/create", page: "create" },
     { label: "Explore", href: "/explore", page: "explore" },
     { label: "How It Works", href: "/how-it-works", page: "how" },
+
   ];
 
   return (
@@ -84,6 +85,7 @@ export function SiteHeader({ active }: { active: Page }) {
                 <span className="mobile-navigation__label">{label}</span><span aria-hidden="true">→</span></Link>)}
           </nav>
           <div className="mobile-navigation__divider" aria-hidden="true"><span/><PirateSkullIcon/><span/></div>
+          <Link className="mobile-profile-link" href="/profile" onClick={() => setMenuOpen(false)}>My Profile →</Link>
           <div className="mobile-navigation__wallet"><WalletButton /></div>
           <div className="mobile-navigation__scenery" aria-hidden="true" />
           </div>

@@ -1,0 +1,68 @@
+.profile-page{max-width:1536px;margin:auto;color:#301709;font-family:Georgia,serif;background:#302014 url('/scene/create-harbor-desktop-v3.png') center top/cover;min-height:100vh}
+.profile-page .site-header{background:#efd7ad url('/textures/parchment-v2.jpg') center/cover}
+.profile-harbor{height:175px;background:url('/scene/hero-sea.jpg') center 48%/cover;border-bottom:3px solid #775122}
+.profile-layout{display:grid;grid-template-columns:190px minmax(0,2fr) minmax(290px,1fr);grid-template-areas:'side summary ranking' 'side content achievements';gap:12px;padding:0 2%;margin-top:-4px;position:relative}
+.profile-paper{background:#f0d6a9 url('/textures/creator-poster-frame.png') center/100% 100%;padding:22px;filter:drop-shadow(0 3px 2px #23140865)}
+.profile-sidebar{grid-area:side;align-self:start;min-height:365px;padding:18px 12px}
+.profile-sidebar h1,.profile-sidebar button{display:flex;align-items:center;gap:14px;font:16px Georgia;padding:12px;width:100%;text-align:left;background:none;color:inherit}
+.profile-sidebar h1,.profile-sidebar button.active{background:#711d13;color:#fff0d3;border-radius:4px}
+.profile-page svg{width:26px;height:26px;flex:none}
+.profile-summary{grid-area:summary;padding:24px 18px 14px}
+.profile-identity{display:flex;gap:20px;align-items:center;margin-bottom:20px}
+.profile-avatar{position:relative;flex:0 0 25%;aspect-ratio:1;max-width:200px}
+.profile-avatar>img{width:100%;height:100%;border-radius:50%;object-fit:cover;padding:5px;background:#e9c18a;outline:1px solid #624019}
+.profile-avatar button{position:absolute;bottom:0;right:0;border-radius:50%;background:#381a09;color:#ffedc8;padding:10px;display:grid;place-items:center}
+.profile-bio{flex:1;min-width:0}
+.profile-name{display:flex;align-items:center;gap:10px;background:linear-gradient(95deg,#432211,#6d442c,#74472600);color:#fff0d6;padding:10px 12px}
+.profile-name>svg{width:36px;height:36px}
+.profile-name h2{font-size:clamp(20px,2.3vw,32px);overflow-wrap:anywhere;margin:0;line-height:1.1}
+.profile-name button{margin-left:auto;background:none;color:inherit;font-size:26px}
+.profile-bio p{white-space:pre-line;font-size:16px;line-height:1.4;margin:12px 0}
+.profile-badges{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:12px}
+.profile-badges span{padding:7px 9px;background:#8a2819;color:#fff0d6;border-radius:3px;font-size:12px}
+.profile-badges span:nth-child(2){background:#d8a451;color:#321b09}.profile-badges span:nth-child(3){background:#99a5a2;color:#202c2c}
+.profile-bio small{font-size:13px}
+.profile-stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:5px}
+.profile-stats>div{display:flex;align-items:center;gap:8px;padding:12px 6px;background:#f8e1ba66;outline:1px solid #a67b4744;border-radius:3px;min-width:0}
+.profile-stats svg{width:33px;height:33px;color:#a66c16}
+.profile-stats h3{font-size:10px;text-transform:uppercase;margin:0 0 6px}.profile-stats strong{display:block;font-size:clamp(14px,1.5vw,22px);overflow-wrap:anywhere}.profile-stats small{display:block;font-size:10px;margin-top:5px}
+.profile-content{grid-area:content;min-width:0}.profile-content>header,.profile-ranking>header,.profile-achievements>header,.profile-editor header{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:12px}
+.profile-content-tabs{display:flex;gap:16px}.profile-content-tabs button{background:none;color:inherit;font:16px Georgia;padding:6px 0}.profile-content-tabs .chosen{text-decoration:underline;text-decoration-color:#7a2318;text-underline-offset:8px}
+.profile-page .profile-red{display:inline-flex;align-items:center;justify-content:center;background:#792317;color:#fff0d1;padding:10px 16px;text-decoration:none;border-radius:4px;font:14px Georgia;white-space:nowrap}
+.profile-demo{font-size:10px;line-height:1.4;opacity:.8;margin:5px 0 14px}
+.profile-gallery{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:14px}.profile-gallery article{min-width:0}.profile-gallery .creator-poster{width:100%;margin:0;max-width:none}
+.profile-visibility{font-size:10px;margin:9px 0;display:flex;align-items:center;gap:4px}.profile-visibility i{width:8px;height:8px;background:#6d6251;border-radius:50%;flex:none}.profile-visibility i.main{background:#27813c}.profile-visibility i.hidden{background:#aa6430}.profile-visibility span{font-size:9px}
+.profile-card-actions{display:flex;gap:4px}.profile-card-actions button{flex:1;padding:7px 3px;background:#d3ac703f;color:#301709;font:11px Georgia;border-radius:3px}
+.profile-add{display:flex;flex-direction:column;justify-content:center;align-items:center;gap:10px;text-align:center;color:inherit;text-decoration:none;background:#e0bc7e33;font-size:13px;padding:8px}.profile-add strong{font-size:36px;font-weight:400}.profile-add small{font-size:11px;line-height:1.4}
+.profile-ranking{grid-area:ranking}.profile-ranking h2,.profile-achievements h2{display:flex;align-items:center;gap:8px;font-size:21px;text-transform:uppercase;margin:0}.profile-ranking header button,.profile-achievements header button{font:12px Georgia;background:none;white-space:nowrap;color:inherit}
+.profile-rank-row{display:flex;align-items:center;gap:16px;padding:8px 4px;border-bottom:1px solid #a77c4444}.profile-rank-row>span:first-child{width:30px;text-align:center;font-size:25px;color:#a26d18}.profile-rank-avatar{width:38px;height:38px;flex:none;border-radius:50%;background:url('/portraits/explore-crew.png') 0 0/500% 300%}.profile-rank-row strong{font-size:16px}
+.profile-achievements{grid-area:achievements}.profile-achievement{display:flex;align-items:center;gap:18px;margin:10px 0;padding:12px;background:#e4c18a33;border-radius:4px}.profile-achievement>svg{width:38px;height:38px;color:#7b3c14}.profile-achievement h3{font-size:15px;margin:0 0 4px}.profile-achievement p{font-size:12px;line-height:1.35;margin:0}
+.profile-footer{text-align:center;padding:30px;font-size:12px;letter-spacing:3px;color:#321b0c;background:url('/textures/title-banner.png') center/auto 100% no-repeat;margin-top:12px}.profile-footer strong{font-size:17px}
+.profile-mobile-tabs,.profile-scroll{display:none}.profile-notice{font-size:12px;min-height:18px;margin-top:14px}.profile-detail{min-height:210px;padding:20px 0;line-height:1.6}.profile-detail h2{font-size:22px}.profile-detail ul{padding-left:20px}
+.profile-editor{width:min(450px,90vw);margin:auto;color:#301709;border:0;max-height:90dvh;overflow:auto}.profile-editor::backdrop{background:#231507aa;backdrop-filter:blur(3px)}.profile-editor header button{font-size:28px;background:none}.profile-editor label{display:block;margin:16px 0;font-size:15px}.profile-editor input,.profile-editor textarea{display:block;width:100%;padding:10px;margin-top:6px;background:#fff1d5;border:1px solid #aa8757;font:16px Georgia;color:#301709}.profile-editor .profile-red{width:100%}
+.profile-page button,.profile-page a{transition:transform .18s,filter .18s}.profile-page button:hover,.profile-page .profile-red:hover{transform:translateY(-2px);filter:brightness(1.08)}.profile-page button:active,.profile-page .profile-red:active{transform:scale(.97)}
+@media(max-width:1100px){
+ .profile-harbor{height:clamp(100px,22vw,200px)}
+ .profile-layout{grid-template-columns:1.1fr 1fr;grid-template-areas:'summary summary' 'tabs tabs' 'content content' 'ranking achievements';gap:8px;padding:0 2%}
+ .profile-sidebar{display:none}.profile-summary{padding:22px 4% 15px}.profile-identity{gap:4%;margin-bottom:20px}.profile-avatar{flex-basis:30%;max-width:240px}.profile-bio p{font-size:clamp(12px,2.2vw,20px)}.profile-name h2{font-size:clamp(18px,3.4vw,30px)}.profile-badges{gap:4px}.profile-badges span{font-size:clamp(9px,1.6vw,14px);padding:6px}.profile-bio small{font-size:clamp(10px,1.6vw,14px)}
+ .profile-stats>div{flex-direction:column;align-items:center;text-align:center;padding:10px 3px;gap:5px}.profile-stats h3{font-size:clamp(9px,1.5vw,13px)}.profile-stats strong{font-size:clamp(13px,2.5vw,22px)}.profile-stats svg{width:28px;height:28px}
+ .profile-mobile-tabs{grid-area:tabs;display:flex;padding:10px;overflow-x:auto;gap:4px}.profile-mobile-tabs button{display:flex;align-items:center;justify-content:center;gap:6px;flex:1;min-width:max-content;padding:10px 6px;background:none;font:clamp(10px,1.8vw,16px) Georgia;color:inherit}.profile-mobile-tabs .active{background:#762015;color:#fff0d0;border-radius:3px}.profile-mobile-tabs svg{width:20px;height:20px}
+ .profile-content{padding:18px 5%}.profile-content-tabs button:nth-child(2){display:none}.profile-content-tabs button{font-size:clamp(15px,2.8vw,24px);font-weight:bold;text-transform:uppercase}.profile-content>header{gap:6px}.profile-page .profile-red{font-size:clamp(11px,1.8vw,17px);padding:10px}
+ .profile-gallery-wrap{position:relative}.profile-gallery{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:16px;padding:4px 0 10px}.profile-gallery article{flex:0 0 calc((100% - 48px)/4);scroll-snap-align:start}.profile-add{display:none}.profile-scroll{display:block;position:absolute;top:38%;z-index:2;background:none;font-size:35px;color:#361908}.profile-scroll.prev{left:-22px}.profile-scroll.next{right:-22px}
+ .profile-ranking,.profile-achievements{padding:18px 12px}.profile-ranking h2,.profile-achievements h2{font-size:clamp(13px,2.4vw,22px);gap:5px}.profile-ranking header button{display:none}.profile-achievements header button{font-size:10px}.profile-rank-row{gap:6px}.profile-rank-row strong{font-size:clamp(10px,1.8vw,16px)}.profile-rank-avatar{width:28px;height:28px}.profile-rank-row>span:first-child{width:20px;font-size:19px}.profile-achievement{padding:7px 0;gap:7px}.profile-achievement>svg{width:28px;height:28px}.profile-achievement h3{font-size:clamp(12px,1.8vw,16px)}.profile-achievement p{font-size:clamp(10px,1.5vw,14px)}
+}
+@media(max-width:550px){.profile-gallery article{flex-basis:calc((100% - 16px)/2)}.profile-name>svg{display:none}.profile-badges span{font-size:9px;padding:4px}.profile-identity{align-items:flex-start}.profile-avatar button{padding:7px}.profile-avatar button svg{width:18px;height:18px}.profile-name{padding:8px}.profile-ranking>header svg,.profile-achievements>header svg{width:20px;height:20px}.profile-achievements header button{display:none}.profile-stats small{font-size:9px}.profile-stats strong{font-size:12px}.profile-visibility{font-size:11px}}
+@media(prefers-reduced-motion:reduce){.profile-page button,.profile-page a{transition:none}.profile-gallery{scroll-behavior:auto}.profile-page button:hover,.profile-page button:active,.profile-page .profile-red:hover,.profile-page .profile-red:active{transform:none}}
+/* Independent torn paper panels let content resize without stretching a screenshot. */
+.profile-paper{background:transparent url('/textures/creator-poster-borderless-v2.png') center/100% 100%;}
+.profile-mobile-tabs{background:#efdab2 url('/textures/parchment-v2.jpg') center/cover;border-radius:8px}
+.profile-page .creator-poster{container-type:inline-size}
+.profile-page .profile-stats strong{font-family:Georgia,serif}
+.profile-ranking,.profile-achievements{align-self:stretch}
+.profile-rank-row strong{font-family:Georgia,serif}
+.profile-sidebar h1{background:none;color:#301709;font-weight:bold}
+.profile-page .profile-stats svg{stroke-width:2.5}
+@media(max-width:550px){.profile-ranking,.profile-achievements{padding:18px 9px}.profile-rank-row{gap:4px}.profile-rank-row strong{font-size:10px}.profile-rank-row>span:first-child{width:13px}.profile-rank-avatar{width:22px;height:22px}.profile-content>header{flex-wrap:wrap}.profile-name h2{font-size:17px}}
+.profile-page{background:#704725 url('/scene/profile-harbor-v1.png') center top/100% 100% no-repeat}
+.profile-harbor{background:url('/scene/profile-harbor-v1.png') center 20%/100% auto;border:0}
+@media(max-width:1100px){.profile-page{background-size:auto 100%}.profile-harbor{background-size:cover;background-position:center 18%}}

@@ -170,3 +170,39 @@
  .creator-page .steps__list p { font-size:clamp(10px,1.8vw,16px); line-height:1.25; }
  .creator-page .desktop-guide-icon { width:clamp(28px,6vw,50px); height:clamp(28px,6vw,50px); }
 }
+@media(max-width:1100px) {
+ .creator-page .create__intro { min-height:34vw; padding:24px 15% 36px; }
+ .creator-page .create__title { position:relative; z-index:1; margin-bottom:10px; }
+ .creator-page .create__title span:first-child { font-stretch:60%; font-weight:850; font-size:clamp(27px,5.8vw,49px); }
+ .creator-page .create__title span:last-child { font-stretch:55%; font-weight:900; font-size:clamp(32px,8vw,68px); letter-spacing:-.045em; line-height:1; }
+ .creator-page .create__lede { position:relative; z-index:1; max-width:510px; }
+ .creator-page .create__lede strong { line-height:1.15; margin-bottom:8px; }
+ .creator-page .create__motto { display:block; position:absolute; inset:10px 2% auto auto; width:13%; margin:0; padding:0; pointer-events:none; }
+ .creator-page .create__compass { display:block; width:100%; height:auto; margin:0; opacity:.7; }
+ .creator-page .create__motto p { position:absolute; top:18vw; right:0; width:20vw; margin:0; font:700 clamp(13px,3vw,25px)/1.1 Caveat,cursive; transform:rotate(-12deg); }
+ .creator-page .step__number { transform:none; border-radius:50%; background:#45200e; outline:1px solid #a67b47; outline-offset:-3px; }
+ .creator-page .step+.step { margin-top:clamp(22px,3.7vw,32px); }
+ .creator-page .field__control { height:clamp(44px,5.7vw,50px); background:#f6e0bd70; box-shadow:none; }
+ .creator-page .condition-options { gap:8px; }
+ .creator-page .condition-options button { background:linear-gradient(110deg,#eac28d80,#f9e4c060); }
+ .creator-page .condition-options button.is-selected { background:linear-gradient(110deg,#cc8b4670,#edc28c70); }
+ .creator-page .condition-options button span { max-width:5.8em; }
+ .creator-page .payment-choices button { background:linear-gradient(110deg,#eac28d80,#f9e4c060); }
+ .creator-page .payment-choices button.is-selected { background:#d7a76366; }
+ .creator-page .payment-choices svg { width:clamp(25px,5vw,42px); height:clamp(25px,5vw,42px); }
+ .creator-page .payment-trust { margin-top:8px; }
+ .creator-page .payment-trust>span { font-size:clamp(9px,1.5vw,13px); }
+ .creator-page .create__preview { background:linear-gradient(#f3d9ad,transparent 12%); padding-top:18px; }
+ .creator-page .create__ribbon { margin-bottom:16px; }
+ .creator-page .create__ribbon::before,.creator-page .create__ribbon::after { content:''; position:absolute; top:50%; width:clamp(25px,9vw,90px); height:1px; background:#614021; }
+ .creator-page .create__ribbon::before { right:calc(100% + 8px); }.creator-page .create__ribbon::after { left:calc(100% + 8px); }
+ .creator-page .steps__list h3,.creator-page .steps__ribbon { font-family:'Roboto Serif',Georgia,serif; font-stretch:60%; font-weight:800; }
+}
+@media(max-width:480px){
+ .creator-page .create__intro { padding-inline:12%; padding-bottom:45px; }
+ .creator-page .create__motto { width:12%; }
+ .creator-page .create__motto p { top:39vw; width:20vw; font-size:13px; }
+ .creator-page .create__lede { font-size:12px; }
+ .creator-page .create__lede strong { font-size:14px; }
+ .creator-page .create__title span:last-child { font-size:8vw; }
+}

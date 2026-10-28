@@ -1,3 +1,4 @@
+import { Link } from "../router";
 import { HeaderWalletIcon as WalletIcon } from "./ReferenceIcons";
 import { useEffect, useRef, useState } from "react";
 import { useWallet, type BeriHoldings } from "../wallet";
@@ -95,6 +96,7 @@ export function WalletButton() {
 
       {menuOpen && (
         <div className="wallet-menu" role="menu">
+          <Link href="/profile" role="menuitem" onClick={() => setMenuOpen(false)}>My Profile →</Link>
           <div className="wallet-menu__head">
             {wallet === "metamask" ? <MetaMaskIcon /> : <PhantomIcon />}
             <div>

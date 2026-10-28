@@ -1,5 +1,6 @@
 import { useRef, useState } from "react";
 import { HomePreloader } from "./components/HomePreloader";
+import { ProfilePage } from "./ProfilePage";
 import { ExplorePage } from "./ExplorePage";
 import { HowItWorksPage } from "./HowItWorksPage";
 import { CreatePosterPage } from "./CreatePosterPage";
@@ -49,7 +50,7 @@ const fleet = [
 export default function App() {
   const path = usePath();
   const route = path.replace(/\/+$/, "");
-  const page = route === "/create" ? <CreatePosterPage /> : route === "/how-it-works" ? <HowItWorksPage /> : route === "/explore" ? <ExplorePage /> : <HomePage />;
+  const page = route === "/profile" ? <ProfilePage /> : route === "/create" ? <CreatePosterPage /> : route === "/how-it-works" ? <HowItWorksPage /> : route === "/explore" ? <ExplorePage /> : <HomePage />;
 
   return (
     <WalletProvider>
