@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import "./MobileNavigation.css";
+import "./SiteHeader.css";
 import { Link } from "../router";
 import { PirateSkullIcon } from "./ReferenceIcons";
 import { useWallet } from "../wallet";
@@ -20,7 +21,7 @@ export function SiteHeader({ active }: { active: Page }) {
     drawer?.showModal();
     const previousOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
-    const query = matchMedia(active === "create" ? "(max-width:1100px)" : "(max-width:900px)");
+    const query = matchMedia("(max-width:1100px)");
     const onResize = () => { if (!query.matches) setMenuOpen(false); };
     query.addEventListener("change", onResize);
     return () => {
@@ -40,7 +41,7 @@ export function SiteHeader({ active }: { active: Page }) {
     <header className={`site-header ${active === "create" ? "site-header--create" : "site-header--home"}`}>
       <div className="container site-header__inner">
         <Link className="brand" href="/" aria-label="Wanted Bounty home">
-          {active === "create" && <span className="create-mobile-brand"><HomeEmblem cherries/><span><strong>BERI BOUNTY</strong><small>$BERI · COMMUNITY · LEGENDARY</small></span></span>}
+          {<span className="create-mobile-brand"><HomeEmblem cherries/><span><strong>BERI BOUNTY</strong><small>$BERI · COMMUNITY · LEGENDARY</small></span></span>}
           <img className="brand__logo" src="/brand/beri-monogram.png" alt="" style={{ objectFit: "contain", transform: "scale(0.8)" }} />
         </Link>
         <button className="site-menu-toggle" type="button" aria-label="Toggle navigation" aria-expanded={menuOpen} aria-controls="mobile-navigation" onClick={() => setMenuOpen(!menuOpen)}>☰</button>
@@ -59,9 +60,9 @@ export function SiteHeader({ active }: { active: Page }) {
               </Link>
             );
           })}
-          {active === "home" && <div className="mobile-nav-wallet"><WalletButton showHoldings={active !== "home"} /></div>}
+          {active === "home" && <div className="mobile-nav-wallet"><WalletButton /></div>}
         </nav>
-        <WalletButton showHoldings={active !== "home"} />
+        <WalletButton />
       </div>
       {menuOpen && createPortal(
         <dialog ref={drawerRef} id="mobile-navigation" className="mobile-navigation" aria-label="Navigation"
@@ -83,7 +84,7 @@ export function SiteHeader({ active }: { active: Page }) {
                 <span className="mobile-navigation__label">{label}</span><span aria-hidden="true">→</span></Link>)}
           </nav>
           <div className="mobile-navigation__divider" aria-hidden="true"><span/><PirateSkullIcon/><span/></div>
-          <div className="mobile-navigation__wallet"><WalletButton showHoldings={active !== "home"} /></div>
+          <div className="mobile-navigation__wallet"><WalletButton /></div>
           <div className="mobile-navigation__scenery" aria-hidden="true" />
           </div>
         </dialog>, document.body)}

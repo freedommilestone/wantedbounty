@@ -1,0 +1,47 @@
+/* One header geometry for every route, independent of page typography. */
+body #root :is(.home-page,.creator-page,.explore-page,.legend-page) { width:100%; max-width:1536px; margin-inline:auto; }
+body #root .site-header.site-header { position:relative; width:100%; padding:0; border:0; background:#f2dbb4 url('/textures/parchment-v2.jpg') center/cover; color:#301709; font:10px 'EB Garamond',Georgia,serif; }
+body #root .site-header.site-header::after { display:none; }
+body #root .site-header.site-header .site-header__inner { width:84%; max-width:none; margin:auto; padding:0; min-height:0; height:75px; display:flex; align-items:center; justify-content:space-between; gap:28px; }
+body #root .site-header.site-header .brand { display:flex; margin:0; flex:none; order:0; }
+body #root .site-header.site-header .brand__logo { display:none; }
+body #root .site-header.site-header .create-mobile-brand { display:flex; align-items:center; gap:8px; color:#331507; }
+body #root .site-header.site-header .create-mobile-brand>svg { width:64px; height:64px; flex:none; }
+body #root .site-header.site-header .create-mobile-brand strong { display:block; font:900 28px/1 Georgia,serif; white-space:nowrap; }
+body #root .site-header.site-header .create-mobile-brand small { display:block; font:700 7px/1.6 Georgia,serif; letter-spacing:.12em; white-space:nowrap; }
+body #root .site-header.site-header .nav { display:flex; align-items:center; gap:32px; margin:0; padding:0; position:static; background:none; }
+body #root .site-header.site-header .nav a { font:600 16px 'EB Garamond',serif; color:#301709; white-space:nowrap; }
+body #root .site-header.site-header .nav .is-active::after { background:#853526; bottom:-5px; }
+body #root .site-header.site-header .site-menu-toggle,body #root .site-header .mobile-nav-wallet { display:none; }
+body #root .site-header.site-header .site-header__inner>.wallet-account { display:block; margin:0; order:2; }
+body #root .site-header.site-header .wallet-btn { display:flex; align-items:center; min-height:50px; padding:10px 20px; gap:10px; border:0; border-radius:0; box-shadow:none; color:#301709; background:url('/textures/button-parchment.png') center/100% 145%; font:700 15px 'EB Garamond',serif; }
+body #root .site-header.site-header .wallet-btn>.header-wallet-icon { width:32px; height:30px; flex:none; }
+body #root .site-header.site-header .wallet-btn__text small { font-size:11px; }
+body #root .site-header.site-header .wallet-btn__text strong { font-size:15px; }
+body #root .site-header.site-header .wallet-btn>svg:last-child:not(:first-child) { width:14px; height:14px; }
+@media(max-width:1100px) {
+ body #root .site-header.site-header { background:#f2dbb4 url('/textures/parchment-v2.jpg') center/cover; padding:0; border-bottom:1px solid #7b512d; }
+ body #root .site-header.site-header::after { display:none; }
+ body #root .site-header.site-header .site-header__inner { width:96%; height:auto; min-height:64px; display:grid; grid-template-columns:36px minmax(0,1fr) auto; gap:8px; padding:5px 0; }
+ body #root .site-header.site-header .site-menu-toggle { display:block; grid-column:1; grid-row:1; order:0; margin:0; width:36px; height:44px; padding:0; font-size:27px; }
+ body #root .site-header.site-header .brand { grid-column:2; grid-row:1; min-width:0; margin:0; }
+ body #root .site-header.site-header .brand>.brand__logo { display:none; }
+ body #root .site-header .create-mobile-brand { display:flex; align-items:center; gap:5px; color:#331507; }
+ .create-mobile-brand>svg { width:clamp(32px,7vw,58px); height:clamp(40px,8vw,64px); flex:none; }
+ .create-mobile-brand strong { display:block; font:900 clamp(13px,3.7vw,28px)/1 Georgia,serif; white-space:nowrap; }
+ .create-mobile-brand small { display:block; font:700 clamp(4px,1.05vw,8px)/1.6 Georgia,serif; letter-spacing:.07em; white-space:nowrap; }
+ body #root .site-header.site-header .site-header__inner>.wallet-btn,
+ body #root .site-header.site-header .site-header__inner>.wallet-account { display:block; grid-column:3; grid-row:1; margin:0; }
+ body #root .site-header.site-header .wallet-btn { display:flex; min-height:44px; padding:8px 10px; font-size:clamp(10px,2.4vw,16px); gap:6px; border:0; background:url('/textures/button-parchment.png') center/100% 140%; }
+ body #root .site-header.site-header .wallet-btn>svg { width:22px; height:22px; flex:none; }
+ body #root .site-header.site-header .wallet-btn__text small { font-size:9px; }
+ body #root .site-header.site-header .wallet-btn__text strong { font-size:11px; }
+ body #root .site-header.site-header .wallet-menu { width:min(280px,90vw); right:0; font-size:14px; }
+
+body #root .site-header.site-header .nav { display:none; }
+body #root .site-header.site-header .create-mobile-brand>svg { width:clamp(32px,7vw,58px); height:clamp(40px,8vw,64px); }
+body #root .site-header.site-header .create-mobile-brand strong { font-size:clamp(13px,3.7vw,28px); }
+body #root .site-header.site-header .create-mobile-brand small { font-size:clamp(4px,1.05vw,8px); }
+body #root .site-header.site-header .site-header__inner>.wallet-btn { display:flex; }
+}
+body #root .site-header.site-header .site-menu-toggle { min-width:0; }

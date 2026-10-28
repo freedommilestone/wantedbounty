@@ -1,6 +1,6 @@
 import { HeaderWalletIcon as WalletIcon } from "./ReferenceIcons";
 import { useEffect, useRef, useState } from "react";
-import { shortAddress, useWallet, type BeriHoldings } from "../wallet";
+import { useWallet, type BeriHoldings } from "../wallet";
 import {
   CheckIcon,
   ChevronDown,
@@ -12,10 +12,10 @@ import {
   VerifiedBadge,
 } from "./icons";
 
-function connectedLabel(holdings: BeriHoldings, address: string) {
+function connectedLabel(holdings: BeriHoldings) {
   if (holdings.state === "ready") return `฿ ${holdings.display} BERI`;
   if (holdings.state === "loading") return "Scanning…";
-  return shortAddress(address);
+  return "Balance unavailable";
 }
 
 function holdingsLabel(holdings: BeriHoldings) {
@@ -33,7 +33,7 @@ function holdingsLabel(holdings: BeriHoldings) {
   }
 }
 
-export function WalletButton({ showHoldings = true }: { showHoldings?: boolean }) {
+export function WalletButton() {
   const { address, status, holdings, wallet, openModal, disconnect, refreshHoldings } = useWallet();
   const [menuOpen, setMenuOpen] = useState(false);
   const [copied, setCopied] = useState(false);
@@ -88,7 +88,7 @@ export function WalletButton({ showHoldings = true }: { showHoldings?: boolean }
           <small>
             <VerifiedBadge /> Wallet Connected
           </small>
-          <strong>{showHoldings ? connectedLabel(holdings, address) : shortAddress(address)}</strong>
+          <strong>{connectedLabel(holdings)}</strong>
         </span>
         <ChevronDown />
       </button>
@@ -102,12 +102,11 @@ export function WalletButton({ showHoldings = true }: { showHoldings?: boolean }
               <span>Solana Mainnet</span>
             </div>
           </div>
-          <p className="wallet-menu__address">{address}</p>
-          {showHoldings && <div className="wallet-menu__balance">
+          {<div className="wallet-menu__balance">
             <span>$BERI held</span>
             <strong>{holdingsLabel(holdings)}</strong>
           </div>}
-          {showHoldings && <button type="button" role="menuitem" onClick={refreshHoldings} disabled={holdings.state === "loading"}>
+          {<button type="button" role="menuitem" onClick={refreshHoldings} disabled={holdings.state === "loading"}>
             <RefreshIcon />
             Rescan balance
           </button>}
