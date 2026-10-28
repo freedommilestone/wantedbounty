@@ -280,6 +280,7 @@ export function CreatePosterPage() {
         <section className="create__stage">
           <div className="container">
             <div className="create__intro">
+              <img className="create__exact-mobile-hero" src="/scene/create-mobile-reference-original.png" alt="" aria-hidden="true" width="813" height="1935" />
               <div className="create__banner-shadow">
                 <div className="create__banner">
                   <h1 className="create__title">

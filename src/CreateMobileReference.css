@@ -244,3 +244,26 @@
  .creator-page .create__motto p { top:45vw; font-size:12px; }
  .creator-page .create__intro { padding-bottom:44px; }
 }
+.create__exact-mobile-hero { display:none; }
+@media(max-width:1100px) {
+ /* Reference hero occupies pixels 85–365 of the supplied 813px-wide artwork. */
+ .creator-page .create__intro { position:relative; width:100%; height:auto; min-height:0; aspect-ratio:813/280; padding:0; margin:0; overflow:hidden; }
+ .creator-page .create__exact-mobile-hero { display:block; position:absolute; top:0; left:0; width:100%; max-width:none; height:auto; transform:translateY(-4.392764858%); pointer-events:none; user-select:none; }
+ .creator-page .create__intro .create__banner-shadow { position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip-path:inset(50%); white-space:nowrap; }
+ .creator-page .create__intro .create__motto { display:none; }
+}
+@media(max-width:1100px) {
+ /* The form grows with its content; decorative clouds repeat instead of ending mid-page. */
+ .creator-page .create__stage { background:#f2d8ac; }
+ .creator-page .create__form { position:relative; isolation:isolate; background:#f2d8ac; padding-top:10px; color:#30190c; }
+ .creator-page .create__form::before { content:''; position:absolute; z-index:-1; inset:0; pointer-events:none; background:url('/scene/create-form-clouds.svg') center top/100% auto repeat-y,linear-gradient(#f4dbb1c9,#f4dbb1c9),url('/textures/parchment-v2.jpg') center/cover; }
+ .creator-page .step__number { background:#49210f; background-image:none; border:0; outline:0; box-shadow:none; border-radius:50%; color:#f9e5c3; font-weight:700; }
+ .creator-page .step__title { font-size:clamp(18px,3.5vw,29px); line-height:1.12; }
+ .creator-page .step__hint,.creator-page .pay__description { font:clamp(11px,1.95vw,17px)/1.3 Georgia,serif; }
+ .creator-page .field__label,.creator-page .condition-field legend { font-size:clamp(12px,2vw,17px); }
+ .creator-page .condition-options button,.creator-page .condition-options button:first-child,.creator-page .payment-choices button { font-size:clamp(10px,1.9vw,16px); color:#30190c; }
+ .creator-page .upload__drop strong { font-size:clamp(13px,2.2vw,19px); }
+ .creator-page .upload__drop span { font-size:clamp(11px,1.7vw,15px); }
+ .creator-page .upload__hint { font-size:clamp(10px,1.45vw,12px); }
+ .creator-page .pay__button { font-size:clamp(12px,2.1vw,18px); }
+}
