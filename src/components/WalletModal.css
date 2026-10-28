@@ -1,8 +1,8 @@
-.modal-backdrop.fleet-backdrop { z-index:1000; padding:18px; overflow-y:auto; background:#21180ec4; backdrop-filter:blur(7px); }
-.fleet-modal.modal { container-type:inline-size; width:min(1080px,94vw,calc((100svh - 36px)*1.14)); padding:0; border:0; border-radius:8px; background:#ecd1a0 url('/scene/wallet-fleet-harbor-v1.png') center/100% 100% no-repeat; box-shadow:0 24px 80px #0009; color:#260c03; }
-.fleet-modal__content { width:59%; margin:0 auto; padding:3.6% 0 6%; }
+.modal-backdrop.fleet-backdrop { z-index:1000; padding:18px; overflow-y:auto; align-items:safe center; background:#21180ec4; backdrop-filter:blur(7px); }
+.fleet-modal.modal { container-type:inline-size; width:min(1094px,94vw,calc((100svh - 36px)*1.11)); padding:0; border:0; border-radius:8px; background:#ecd1a0 url('/scene/wallet-fleet-harbor-v1.png') center/100% 100% no-repeat; box-shadow:0 24px 80px #0009; color:#260c03; }
+.fleet-modal__content { width:59%; margin:0 auto; padding:4% 0 6%; }
 .fleet-modal.modal .modal__logo { display:block; width:12cqw; height:12cqw; object-fit:contain; margin:0 auto 1cqw; }
-.fleet-modal.modal h2 { font-family:'Roboto Serif',Georgia,serif; font-weight:900; font-size:5.25cqw; letter-spacing:-.045em; line-height:1.15; text-transform:uppercase; margin:0 0 1.5cqw; white-space:nowrap; }
+.fleet-modal.modal h2 { font-family:'Playfair Display',Georgia,serif; font-weight:900; font-size:5.8cqw; letter-spacing:-.035em; line-height:1.15; text-transform:uppercase; margin:0 0 1.5cqw; white-space:nowrap; }
 .fleet-modal.modal .modal__lede { font:2.55cqw/1.24 Georgia,serif; color:#241307; margin:0 auto; }
 .fleet-modal__divider { display:flex; align-items:center; justify-content:center; gap:1.2cqw; margin:1.4cqw auto 1.2cqw; width:58%; }
 .fleet-modal__divider span { flex:1; height:1px; background:linear-gradient(90deg,transparent,#45200c); }
@@ -10,8 +10,8 @@
 .fleet-modal__divider svg { width:3.5cqw; height:3.5cqw; }
 .fleet-modal.modal .modal__close { width:7.6cqw; height:7.6cqw; min-width:44px; min-height:44px; top:1%; right:1%; border-radius:0; background:url('/textures/button-parchment.png') center/100% 135% no-repeat; color:#260c03; filter:drop-shadow(0 2px 3px #32160880); }
 .fleet-modal.modal .modal__close svg { width:50%; height:50%; }
-.fleet-modal.modal .wallet-option { display:flex; position:relative; align-items:center; gap:2.4cqw; min-height:13cqw; margin:.5cqw 0; padding:1.6cqw 4.3cqw; border:0; border-radius:0; color:#1e0e04; background:url('/textures/wallet-choice-plank-v1.png') center/100% 100% no-repeat; box-shadow:none; font-family:Georgia,serif; transition:filter .15s,transform .15s; }
-.fleet-modal.modal .wallet-option:hover:not(:disabled) { background:url('/textures/wallet-choice-plank-v1.png') center/100% 100% no-repeat; filter:brightness(1.05); transform:translateY(-2px); }
+.fleet-modal.modal .wallet-option { display:flex; position:relative; align-items:center; gap:2.4cqw; min-height:14cqw; margin:.5cqw 0; padding:2.1cqw 5.2cqw; border:0; border-radius:0; color:#1e0e04; background:url('/textures/wallet-choice-plank-v1.png') center/100% 118% no-repeat; box-shadow:none; font-family:Georgia,serif; transition:filter .15s,transform .15s; }
+.fleet-modal.modal .wallet-option:hover:not(:disabled) { background:url('/textures/wallet-choice-plank-v1.png') center/100% 118% no-repeat; filter:brightness(1.05); transform:translateY(-2px); }
 .fleet-modal.modal .wallet-option__badge { display:grid; place-items:center; flex:none; width:8.8cqw; height:8.8cqw; background:#210e0c; clip-path:polygon(4% 6%,24% 2%,42% 5%,62% 1%,96% 5%,94% 32%,98% 52%,94% 74%,98% 96%,67% 94%,45% 98%,25% 94%,3% 98%,5% 67%,1% 46%); }
 .fleet-modal.modal .wallet-option__icon { width:82%; height:82%; border-radius:0; }
 .fleet-modal.modal .wallet-option__name { min-width:0; font-size:3.35cqw; line-height:1.1; font-weight:700; }
@@ -19,7 +19,7 @@
 .fleet-modal.modal .wallet-option__hint { display:block; color:#64442b; font:1.15cqw/1.2 Georgia,serif; }
 .fleet-modal.modal .wallet-option__hint:empty { display:none; }
 .fleet-modal.modal .wallet-option__arrow { width:3.5cqw; height:3.5cqw; flex:none; }
-.fleet-modal__trust { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); margin-top:1.8cqw; padding:3.5cqw 2.8cqw; background:url('/textures/button-parchment.png') center/100% 130% no-repeat; }
+.fleet-modal__trust { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); margin-top:2.4cqw; padding:3.8cqw 2.8cqw; background:url('/textures/button-parchment.png') center/100% 130% no-repeat; }
 .fleet-modal__trust>div { display:flex; gap:1cqw; padding:0 1.1cqw; text-align:left; }
 .fleet-modal__trust>div+div { border-left:1px solid #986c3e99; }
 .fleet-modal__trust svg { width:3cqw; height:3cqw; flex:none; }
@@ -28,16 +28,16 @@
 .fleet-modal.modal :is(button,a):focus-visible { outline:3px solid #8e3b14; outline-offset:2px; }
 @media(max-width:600px) {
  .modal-backdrop.fleet-backdrop { padding:12px; align-items:safe center; }
- .fleet-modal.modal { width:100%; max-width:460px; background-size:100% 100%; }
- .fleet-modal__content { width:84%; padding:25px 0 40px; background:linear-gradient(180deg,#f4dcad00,#f4dcadeb 19%,#f4dcadeb 88%,#f4dcad00); }
+ .fleet-modal.modal { width:100%; max-width:460px; background-size:auto 100%; }
+ .fleet-modal__content { width:82%; padding:30px 0 42px; }
  .fleet-modal.modal .modal__logo { width:86px; height:86px; margin-bottom:12px; }
  .fleet-modal.modal h2 { font-size:clamp(24px,7.2vw,36px); margin-bottom:14px; }
  .fleet-modal.modal .modal__lede { font-size:16px; padding:0 5px; }
  .fleet-modal__divider { margin:14px auto; gap:10px; }
  .fleet-modal__divider svg { width:28px; height:28px; }
- .fleet-modal.modal .wallet-option { min-height:92px; padding:15px 20px; gap:14px; margin:6px 0; }
+ .fleet-modal.modal .wallet-option { min-height:92px; padding:15px 18px; gap:12px; margin:6px 0; }
  .fleet-modal.modal .wallet-option__badge { width:52px; height:52px; }
- .fleet-modal.modal .wallet-option__name { font-size:24px; }
+ .fleet-modal.modal .wallet-option__name { font-size:clamp(19px,6vw,24px); }
  .fleet-modal.modal .wallet-option__name small { font-size:16px; }
  .fleet-modal.modal .wallet-option__hint { font-size:11px; }
  .fleet-modal.modal .wallet-option__arrow { width:24px; height:24px; }
@@ -48,3 +48,17 @@
  .fleet-modal__trust p { font-size:13px; }
 }
 @media(prefers-reduced-motion:reduce) { .fleet-backdrop,.fleet-modal.modal { animation:none; } .fleet-modal.modal .wallet-option { transition:none; } }
+
+.fleet-modal__account { margin:1.4cqw 2cqw 0; padding:1cqw 1.5cqw; color:#33170b; background:url('/textures/button-parchment.png') center/100% 130% no-repeat; font: max(12px,1.5cqw)/1.4 Georgia,serif; text-align:left; }
+.fleet-modal__account summary { cursor:pointer; }
+.fleet-modal__account summary strong { display:block; padding-left:1em; }
+.fleet-modal__actions { display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-top:12px; }
+.fleet-modal__actions :is(button,a) { display:flex; align-items:center; justify-content:center; gap:6px; min-height:40px; padding:6px; border:0; border-radius:3px; background:#49200f; color:#ffe8bc; font:inherit; text-decoration:none; transition:filter .15s; }
+.fleet-modal__actions :is(button,a):hover { filter:brightness(1.2); }
+.fleet-modal__actions svg { width:16px; height:16px; flex:none; }
+.fleet-modal__account p { margin:8px 0 0; }
+.fleet-modal__account summary:focus-visible { outline:2px solid #8e3b14; outline-offset:3px; }
+@media(max-width:600px) {
+ .fleet-modal__account { margin:12px 4px 0; padding:12px; font-size:14px; }
+ .fleet-modal__actions { grid-template-columns:1fr; }
+}

@@ -1,4 +1,4 @@
-import { useEffect, useRef, type ReactNode } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 import {
   isMobileDevice,
   METAMASK_DOWNLOAD_URL,
@@ -7,10 +7,11 @@ import {
   phantomBrowseUrl,
   useWallet,
 } from "../wallet";
-import { CloseIcon, ArrowRight, LockIcon, ShieldIcon } from "./icons";
+import { CloseIcon, ArrowRight, LockIcon, ShieldIcon, CheckIcon, CopyIcon, RefreshIcon, LogoutIcon } from "./icons";
 
 import { PirateSkullIcon } from "./ReferenceIcons";
 import { FleetWalletIcon } from "./FleetWalletIcon";
+import { Link } from "../router";
 import "./WalletModal.css";
 
 export function WalletModal() {
@@ -24,16 +25,23 @@ export function WalletModal() {
     connect,
     status,
     error,
+    address,
+    wallet,
+    holdings,
+    refreshHoldings,
+    disconnect,
   } = useWallet();
+  const [copyStatus, setCopyStatus] = useState("");
   const panelRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (!modalOpen) return;
+    setCopyStatus("");
     const previousFocus = document.activeElement as HTMLElement | null;
     const previousOverflow = document.body.style.overflow;
     const onKey = (event: KeyboardEvent) => {
       if (event.key === "Tab") {
-        const items = Array.from(panelRef.current?.querySelectorAll<HTMLElement>('button:not(:disabled), a[href]') ?? []);
+        const items = Array.from(panelRef.current?.querySelectorAll<HTMLElement>('button:not(:disabled), a[href], summary') ?? []).filter(item => item.getClientRects().length > 0);
         const first = items[0], last = items[items.length - 1];
         if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last?.focus(); }
         else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first?.focus(); }
@@ -55,6 +63,16 @@ export function WalletModal() {
   const connecting = status === "connecting";
   const mobile = isMobileDevice();
 
+  const copyAddress = async () => {
+    if (!address) return;
+    try {
+      await navigator.clipboard.writeText(address);
+      setCopyStatus("Address copied");
+    } catch {
+      setCopyStatus("Unable to copy. Please try again.");
+    }
+  };
+
   return (
     <div
       className="modal-backdrop fleet-backdrop"
@@ -67,7 +85,7 @@ export function WalletModal() {
           <CloseIcon />
         </button>
         <div className="fleet-modal__content">
-        <img className="modal__logo" src="/brand/beri-monogram.png" alt="BERI" />
+        <img className="modal__logo" src="/brand/beri-monogram.png" alt="Wanted Bounty" />
         <h2 id="wallet-modal-title">Join the Fleet</h2>
         <p className="modal__lede">
           Connect your wallet to view your $BERI holdings and set your bounty on your wanted poster.
@@ -83,25 +101,41 @@ export function WalletModal() {
         <WalletChoice
           name="Phantom"
           icon={<FleetWalletIcon wallet="phantom" />}
-          installed={phantomInstalled}
+          installed={phantomInstalled || (Boolean(address) && wallet === "phantom")}
+          statusLabel={address && wallet === "phantom" ? "Connected" : undefined}
           busy={connecting && connectingWallet === "phantom"}
           disabled={connecting}
           installHref={mobile ? phantomBrowseUrl() : PHANTOM_DOWNLOAD_URL}
           mobile={mobile}
-          onConnect={() => void connect("phantom")}
+          onConnect={() => address && wallet === "phantom" ? closeModal() : void connect("phantom")}
         />
         <WalletChoice
           name="MetaMask"
           icon={<FleetWalletIcon wallet="metamask" />}
-          installed={metamaskInstalled || metamaskExtension}
-          statusLabel={metamaskInstalled ? undefined : metamaskExtension ? "Enable Solana" : undefined}
+          installed={metamaskInstalled || metamaskExtension || (Boolean(address) && wallet === "metamask")}
+          statusLabel={address && wallet === "metamask" ? "Connected" : metamaskInstalled ? undefined : metamaskExtension ? "Enable Solana" : undefined}
           busy={connecting && connectingWallet === "metamask"}
           disabled={connecting}
           installHref={mobile ? metamaskBrowseUrl() : METAMASK_DOWNLOAD_URL}
           mobile={mobile}
-          onConnect={() => void connect("metamask")}
+          onConnect={() => address && wallet === "metamask" ? closeModal() : void connect("metamask")}
         />
 
+        {address && (
+          <details className="fleet-modal__account">
+            <summary>
+              <span>Wallet Connected</span>
+              <strong>{holdings.state === "ready" ? `${holdings.display} BERI` : holdings.state === "loading" ? "Scanning…" : "Balance unavailable"}</strong>
+            </summary>
+            <div className="fleet-modal__actions">
+              <Link href="/profile" onClick={closeModal}>My Profile <ArrowRight /></Link>
+              <button type="button" onClick={refreshHoldings} disabled={holdings.state === "loading" || connecting}><RefreshIcon /> Rescan balance</button>
+              <button type="button" onClick={copyAddress}>{copyStatus === "Address copied" ? <CheckIcon /> : <CopyIcon />} Copy address</button>
+              <button type="button" disabled={connecting} onClick={() => void disconnect()}><LogoutIcon /> Disconnect</button>
+            </div>
+            {copyStatus && <p role="status">{copyStatus}</p>}
+          </details>
+        )}
         <div className="fleet-modal__trust">
           <div><LockIcon/><p>We only read your public address and $BERI balance.</p></div>
           <div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true"><path d="m3 21 18-18M10 6l3-3a4 4 0 0 1 6 6l-3 3M14 18l-3 3a4 4 0 0 1-6-6l3-3M8 16l8-8"/></svg><p>Connecting never sends a transaction.</p></div>

@@ -34,7 +34,7 @@ export function SiteHeader({ active }: { active: Page }) {
     { label: "Create Poster", href: "/create", page: "create" },
     { label: "Explore", href: "/explore", page: "explore" },
     { label: "How It Works", href: "/how-it-works", page: "how" },
-
+    { label: "My Profile", href: "/profile", page: "profile" },
   ];
 
   return (
@@ -77,7 +77,7 @@ export function SiteHeader({ active }: { active: Page }) {
             <button type="button" autoFocus aria-label="Close navigation" onClick={() => setMenuOpen(false)}>×</button>
           </div>
           <nav aria-label="Mobile main">
-            {[...links, {label:"My Profile", href:"/profile", page:"profile" as Page}].map(({ label, href, page }) => <Link key={href} href={href}
+            {links.map(({ label, href, page }) => <Link key={href} href={href}
               aria-current={page === active ? "page" : undefined}
               onClick={() => setMenuOpen(false)}>
                 <span className="mobile-navigation__icon"><MenuIcon page={page} /></span>

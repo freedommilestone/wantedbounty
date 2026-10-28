@@ -19,6 +19,11 @@ body #root .site-header.site-header .wallet-btn>.header-wallet-icon { width:32px
 body #root .site-header.site-header .wallet-btn__text small { font-size:11px; }
 body #root .site-header.site-header .wallet-btn__text strong { font-size:15px; }
 body #root .site-header.site-header .wallet-btn>svg:last-child:not(:first-child) { width:14px; height:14px; }
+@media(min-width:1101px) and (max-width:1279px) {
+ body #root .site-header.site-header .site-header__inner { width:92%; gap:16px; }
+ body #root .site-header.site-header .nav { gap:18px; }
+ body #root .site-header.site-header .create-mobile-brand strong { font-size:24px; }
+}
 @media(max-width:1100px) {
  body #root .site-header.site-header { padding:0; border-bottom:0; }
  body #root .site-header.site-header::after { display:none; }
