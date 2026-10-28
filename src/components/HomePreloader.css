@@ -13,9 +13,10 @@
 .home-preloader__art { width:100%; aspect-ratio:2 / 3; background-image:url("/scene/flying-poster-sprites.png"); background-repeat:no-repeat; background-size:500% 100%; }
 
  .home-preloader__entrance { position:absolute; z-index:5; inset:0; display:grid; place-items:center; padding:20px; pointer-events:none; }
-.home-preloader__enter { display:block; width:min(900px,100%,240dvh); padding:0; border:0; background:none; cursor:pointer; pointer-events:auto; filter:drop-shadow(0 5px 15px #30130770); transition:transform .2s,filter .2s; }
+.home-preloader__enter { display:block; width:min(900px,100%,240dvh); padding:0; border:0; border-radius:0; outline:none; background:transparent; box-shadow:none; appearance:none; -webkit-appearance:none; -webkit-tap-highlight-color:transparent; cursor:pointer; pointer-events:auto; filter:drop-shadow(0 5px 15px #30130770); transition:transform .2s,filter .2s; }
 .home-preloader__enter img { display:block; width:100%; height:auto; }
 .home-preloader__enter:hover { transform:translateY(-3px); filter:drop-shadow(0 8px 18px #30130780) brightness(1.05); }
-.home-preloader__enter:focus-visible { outline:3px solid #7e2814; outline-offset:5px; border-radius:8px; }
+.home-preloader__enter:focus, .home-preloader__enter:active { outline:none; border:0; background:transparent; box-shadow:none; }
+.home-preloader__enter:focus-visible { filter:drop-shadow(0 0 8px #8c421c) brightness(1.06); }
 .home-preloader__enter:disabled { cursor:default; }
 @media(prefers-reduced-motion:reduce) { .home-preloader__enter { transition:none; } .home-preloader__enter:hover { transform:none; } }
