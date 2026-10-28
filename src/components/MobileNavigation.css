@@ -1,152 +1,72 @@
+/* Shared mobile harbor drawer. The reference's blank cards are artwork;
+   links, labels, icons, current-page state and wallet actions remain live. */
 .mobile-navigation {
-  position: fixed;
-  inset: 0 0 0 auto;
-  margin: 0;
-  width: min(340px, 85vw);
-  max-width: none;
-  height: 100dvh;
-  max-height: none;
-  box-sizing: border-box;
-  padding: max(24px, env(safe-area-inset-top)) 24px max(24px, env(safe-area-inset-bottom));
-  border: 0;
-  border-left: 2px solid #84603b;
-  color: #301709;
-  background: #edd5ac url('/textures/parchment-v2.jpg') center / cover;
-  box-shadow: -12px 0 35px #24130566, inset 8px 0 20px #9a602933;
-  font-family: 'EB Garamond', Georgia, serif;
+ position:fixed; inset:0 0 0 auto; margin:0; width:min(430px,92vw);
+ max-width:none; height:100dvh; max-height:none; padding:0; border:0;
+ overflow-x:hidden; overflow-y:auto; overscroll-behavior:contain;
+ color:#301709; background:#e9c99b; box-shadow:-12px 0 35px #24130566;
+ font-family:Georgia,serif; container-type:inline-size;
 }
-.mobile-navigation[open] { animation: navigation-enter .25s ease-out; }
-.mobile-navigation::backdrop { background: #1c100ba6; }
-.mobile-navigation__heading { display: flex; align-items: center; justify-content: space-between; padding-bottom: 24px; border-bottom: 1px solid #84603b66; }
-.mobile-navigation__heading img { width: 48px; height: 64px; object-fit: contain; }
-.mobile-navigation__heading button { width: 44px; height: 44px; border: 0; background: transparent; color: inherit; font-size: 36px; cursor: pointer; }
-.mobile-navigation nav { display: flex; flex-direction: column; gap: 8px; padding-top: 24px; }
-.mobile-navigation nav a { display: flex; align-items: center; justify-content: space-between; min-height: 52px; padding: 8px 12px; color: inherit; text-decoration: none; font-size: 23px; font-weight: 700; border-bottom: 1px solid #84603b33; }
-.mobile-navigation nav a[aria-current='page'] { color: #7e2419; background: #9e60201a; }
-.mobile-navigation a:focus-visible, .mobile-navigation button:focus-visible { outline: 2px solid #7e2419; outline-offset: 3px; }
-@keyframes navigation-enter { from { transform: translateX(100%); } to { transform: translateX(0); } }
-@media(prefers-reduced-motion:reduce) { .mobile-navigation[open] { animation: none; } }
-
-/* Shared compact mobile header across every route. */
-@media(max-width:900px){
-body .site-header.site-header .site-header__inner { display:flex; width:92%; height:64px; min-height:64px; gap:8px; }
-body .site-header.site-header .brand { order:0; flex:none; margin:0; }
-body .site-header.site-header .brand__logo { width:44px; height:50px; }
-body .site-header.site-header .nav { display:none; }
-body .site-header.site-header .site-menu-toggle { display:block; order:3; margin:0; width:44px; height:44px; padding:6px; font-size:28px; line-height:1; flex:none; color:#2d190c; }
-body .site-header.site-header .site-header__inner > .wallet-btn,
-body .site-header.site-header .site-header__inner > .wallet-account { order:2; margin-left:auto; }
-body .site-header.site-header .site-header__inner > .wallet-btn,
-body .site-header.site-header .site-header__inner > .wallet-account > .wallet-btn {
- display:inline-flex; min-height:40px; padding:6px 12px; gap:6px; font-size:11px;
- background:url('/textures/button-parchment.png') center / 100% 145%;
- border:0; box-shadow:none; color:#28180d;
+.mobile-navigation[open] { animation:navigation-enter .25s ease-out; }
+.mobile-navigation::backdrop { background:#1c100bb3; }
+.mobile-navigation__surface {
+ height:max(100dvh,216cqw); box-sizing:border-box;
+ display:grid; grid-template-rows:24.7% 45.6% 6.2% 9.8% 13.7%;
+ background:url('/scene/navigation-harbour-v4.png') center/100% 100% no-repeat;
 }
-body .site-header.site-header .wallet-btn > .header-wallet-icon { width:22px; height:21px; flex:none; }
-body .site-header.site-header .wallet-btn__text small { font-size:9px; }
-body .site-header.site-header .wallet-btn__text strong { font-size:11px; }
-body .site-header.site-header .wallet-btn--connected > svg:last-child { width:12px; height:12px; }
-}
-@media(min-width:901px) and (max-width:1100px){
-body .creator-page .site-header.site-header .site-header__inner { display:flex; width:92%; height:64px; min-height:64px; gap:8px; }
-body .creator-page .site-header.site-header .brand { order:0; flex:none; margin:0; }
-body .creator-page .site-header.site-header .brand__logo { width:44px; height:50px; }
-body .creator-page .site-header.site-header .nav { display:none; }
-body .creator-page .site-header.site-header .site-menu-toggle { display:block; order:3; margin:0; width:44px; height:44px; padding:6px; font-size:28px; line-height:1; flex:none; color:#2d190c; }
-body .creator-page .site-header.site-header .site-header__inner > .wallet-btn,
-body .creator-page .site-header.site-header .site-header__inner > .wallet-account { order:2; margin-left:auto; }
-body .creator-page .site-header.site-header .site-header__inner > .wallet-btn,
-body .creator-page .site-header.site-header .site-header__inner > .wallet-account > .wallet-btn {
- display:inline-flex; min-height:40px; padding:6px 12px; gap:6px; font-size:11px;
- background:url('/textures/button-parchment.png') center / 100% 145%;
- border:0; box-shadow:none; color:#28180d;
-}
-body .creator-page .site-header.site-header .wallet-btn > .header-wallet-icon { width:22px; height:21px; flex:none; }
-body .creator-page .site-header.site-header .wallet-btn__text small { font-size:9px; }
-body .creator-page .site-header.site-header .wallet-btn__text strong { font-size:11px; }
-body .creator-page .site-header.site-header .wallet-btn--connected > svg:last-child { width:12px; height:12px; }
-}
-
-/* Illustrated parchment drawer with individual navigation cards. */
-.mobile-navigation {
- width:min(390px,86vw); padding:0; overflow-x:hidden;
- background:#ecd1a3 url('/textures/parchment-v2.jpg') center / cover;
- border-left:2px solid #77502b;
-}
-.mobile-navigation__heading {
- position:relative; min-height:145px; padding:24px 24px 20px; align-items:flex-start;
- background:linear-gradient(90deg,#efd6a9cc,transparent),url('/scene/hero-sea.jpg') center / cover;
- border-bottom:3px solid #9e713e; box-shadow:0 5px 10px #72451e33;
-}
-.mobile-navigation__heading img {width:70px;height:96px;filter:drop-shadow(0 2px 2px #fff5);}
+.mobile-navigation__heading { position:relative; min-height:0; padding:0; border:0; background:none; }
+.mobile-navigation__brand { position:absolute; top:18%; left:23.5%; }
+.mobile-navigation .mobile-navigation__brand>.wanted-brand-logo { width:19cqw; height:26cqw; object-fit:contain; margin:0; filter:drop-shadow(0 1px 1px #7c491b55); }
 .mobile-navigation__heading button {
- width:44px;height:48px;font-size:36px;
- background:url('/textures/button-parchment.png') center / 100% 145%;
- filter:drop-shadow(0 2px 3px #32170866);
+ position:absolute; top:6.5%; right:3.2%; width:12.3cqw; height:23%; min-width:44px; min-height:44px;
+ padding:0; display:grid; place-items:center; background:none; border:0;
+ color:#311406; font:400 10cqw/.8 Georgia,serif; cursor:pointer;
 }
-.mobile-navigation nav {padding:24px 16px 8px;gap:14px;}
+.mobile-navigation nav {
+ min-height:0; display:grid; grid-template-rows:repeat(5,minmax(0,1fr));
+ gap:3.4%; padding:0 3.5% 0 13.7%;
+}
 .mobile-navigation nav a {
- min-height:68px;padding:12px 16px;gap:12px;border:0;
- background:url('/textures/button-parchment.png') center / 100% 130% no-repeat;
- font-size:clamp(18px,5vw,25px);box-shadow:0 3px 4px #60361022;
+ display:flex; align-items:center; gap:3.5cqw; min-height:0; min-width:0;
+ padding:1cqw 4cqw; background:none; border:0; color:#301709;
+ font:700 5.8cqw/1.1 Georgia,serif; text-decoration:none;
+ transition:color .15s,filter .15s;
 }
-.mobile-navigation nav a[aria-current='page'] {background:url('/textures/button-parchment.png') center / 100% 130% no-repeat;color:#85261a;}
-.mobile-navigation__icon {width:37px;flex:none;padding-right:9px;border-right:1px solid #a6794766;}
-.mobile-navigation__icon svg {display:block;width:28px;height:32px;}
-.mobile-navigation__label {flex:1;white-space:nowrap;}
-.mobile-navigation__wallet {position:relative;z-index:1;padding:12px 20px 4px;}
-.mobile-navigation__wallet .wallet-btn {width:100%;justify-content:center;min-height:48px;padding:10px 16px;border:0;border-radius:0;color:#301709;font-size:16px;background:url('/textures/button-parchment.png') center / 100% 140%;box-shadow:none;}
-.mobile-navigation__wallet .wallet-menu {right:0;max-width:100%;}
-.mobile-navigation__scenery {height:240px;margin-top:0;background:linear-gradient(#edd3aa,transparent 25%),url('/scene/home-footer.jpg') center bottom / cover;}
-@media(max-width:360px){.mobile-navigation nav a{gap:8px;padding-inline:12px;font-size:18px}.mobile-navigation nav{padding-inline:12px;gap:12px}}
-
-/* Reference proportions: a single illustrated surface, with live controls above it. */
-.mobile-navigation {width:min(430px,86vw);container-type:inline-size;background:#ecd1a3;padding:0;}
-.mobile-navigation__surface {min-height:max(100dvh,252cqw);background:url('/scene/navigation-reference-v2.png') center top / 100% 100% no-repeat;padding-bottom:env(safe-area-inset-bottom);}
-.mobile-navigation__heading {height:50cqw;min-height:0;padding:11cqw 6cqw 4cqw;background:none;border:0;box-shadow:none;}
-.mobile-navigation__brand {display:flex;flex-direction:column;align-items:flex-start;color:#321607;}
-.mobile-navigation__brand>svg {width:23cqw;height:23cqw;margin-left:8cqw;margin-bottom:0;}
-.mobile-navigation__brand strong {font:900 6.4cqw/.95 Georgia,serif;letter-spacing:-.04em;}
-.mobile-navigation__brand small {font:700 1.8cqw/1.6 Georgia,serif;letter-spacing:.25em;white-space:nowrap;}
-.mobile-navigation__heading button {position:absolute;top:12cqw;right:3.5cqw;width:13cqw;height:13cqw;min-width:44px;min-height:44px;font-size:10cqw;line-height:1;padding:0;}
-.mobile-navigation nav {padding:8cqw 5cqw 0;gap:5cqw;}
-.mobile-navigation nav a,.mobile-navigation nav a[aria-current='page'] {height:18cqw;min-height:54px;box-sizing:border-box;padding:2cqw 5cqw;gap:3cqw;font:700 5.9cqw/1.1 Georgia,serif;background-size:100% 140%;box-shadow:none;}
-.mobile-navigation__icon {width:14cqw;padding-right:3cqw;box-sizing:border-box;}
-.mobile-navigation__icon svg {width:10cqw;height:10cqw;}
-.mobile-navigation__label {white-space:nowrap;letter-spacing:-.035em;}
-.mobile-navigation__wallet {padding:5cqw 5cqw 0;}
-.mobile-navigation__wallet .wallet-btn {min-height:14cqw;font:700 4.6cqw/1.1 Georgia,serif;gap:3cqw;}
-.mobile-navigation__wallet .wallet-btn__text small {font-size:3cqw;}
-.mobile-navigation__wallet .wallet-btn__text strong {font-size:4cqw;}
-.mobile-navigation__scenery {height:0;margin:0;background:none;}
-
-/* Mobile wallet access lives in the drawer, leaving a logo and menu header. */
-@media(max-width:900px){
- body .site-header.site-header .site-header__inner > .wallet-btn,
- body .site-header.site-header .site-header__inner > .wallet-account {display:none;}
- body .site-header.site-header .site-menu-toggle {margin-left:auto;}
+.mobile-navigation__icon { display:flex; align-items:center; justify-content:center; flex:none; width:16cqw; height:11cqw; padding-right:3.5cqw; box-sizing:border-box; border-right:1px solid #a6794788; }
+.mobile-navigation__icon svg { display:block; width:11cqw; height:11cqw; }
+.mobile-navigation__label { flex:1; min-width:0; white-space:nowrap; letter-spacing:-.035em; }
+.mobile-navigation nav a>span:last-child { flex:none; font-size:7cqw; }
+.mobile-navigation nav a[aria-current='page'] .mobile-navigation__label {
+ text-decoration:underline; text-decoration-color:#8b3025; text-decoration-thickness:1px; text-underline-offset:.3em;
 }
-@media(min-width:901px) and (max-width:1100px){
- body .creator-page .site-header.site-header .site-header__inner > .wallet-btn,
- body .creator-page .site-header.site-header .site-header__inner > .wallet-account {display:none;}
- body .creator-page .site-header.site-header .site-menu-toggle {margin-left:auto;}
+.mobile-navigation__divider { display:flex; align-items:center; justify-content:center; gap:3cqw; padding:0 12% 0 20%; margin:0; color:#321608; }
+.mobile-navigation__divider span { height:1px; flex:1; background:#57381c; }
+.mobile-navigation__divider svg { width:11cqw; height:10cqw; flex:none; }
+.mobile-navigation__wallet { position:relative; z-index:1; min-height:0; padding:1.8cqw 4.5% 1.8cqw 14%; }
+.mobile-navigation__wallet .wallet-account { width:100%; height:100%; }
+.mobile-navigation__wallet .wallet-btn {
+ position:relative; display:flex; align-items:center; justify-content:flex-start;
+ width:100%; height:100%; min-height:44px; padding:2cqw 4cqw; gap:3.5cqw;
+ border:0; border-radius:0; background:none; box-shadow:none; clip-path:none;
+ color:#ffedc7; font:700 5.7cqw/1.1 Georgia,serif; white-space:nowrap; cursor:pointer;
 }
-
-/* Lighthouse reference: logo-only masthead and dark wallet parchment. */
-.mobile-navigation__surface{background-image:url('/scene/navigation-lighthouse-v3.png');min-height:max(100dvh,250cqw)}
-.mobile-navigation__heading{height:63cqw;padding:12cqw 9cqw 0}
-.mobile-navigation__brand>svg{width:24cqw;height:24cqw;margin:0}
-.mobile-navigation__heading button{top:12cqw;right:4cqw}
-.mobile-navigation nav{padding:2cqw 6cqw 0;gap:4.5cqw}
-.mobile-navigation nav a,.mobile-navigation nav a[aria-current='page']{height:18cqw;padding:2cqw 4cqw;gap:4cqw;color:#241106;background-size:100% 140%;font-size:6cqw}
-.mobile-navigation nav a:first-child .mobile-navigation__icon{color:#9c211c}
-.mobile-navigation nav a[aria-current='page'] .mobile-navigation__label{text-decoration:underline;text-decoration-color:#8b3025;text-decoration-thickness:1px;text-underline-offset:5px}
-.mobile-navigation__icon{width:16cqw;padding-right:4cqw}
-.mobile-navigation__divider{display:flex;align-items:center;justify-content:center;gap:3cqw;margin:4cqw 16% 2cqw;color:#321608}
-.mobile-navigation__divider span{height:1px;flex:1;background:#57381c}
-.mobile-navigation__divider svg{width:8cqw;height:8cqw;flex:none}
-.mobile-navigation__wallet{padding:0 6cqw}
-.mobile-navigation__wallet .wallet-btn{position:relative;min-height:16cqw;justify-content:flex-start;padding:3cqw 5cqw;gap:4cqw;font-size:5.6cqw;background:#3b1c10 url('/textures/parchment-v2.jpg') center/cover;background-blend-mode:multiply;color:#fff0d0;clip-path:polygon(1% 5%,6% 2%,20% 3%,36% 0,55% 2%,75% 0,96% 3%,99% 8%,98% 22%,100% 38%,99% 60%,100% 80%,97% 97%,78% 99%,55% 97%,30% 100%,12% 97%,2% 99%,0 80%,1% 55%,0 30%);}
-.mobile-navigation__wallet .wallet-btn>.header-wallet-icon{width:12cqw;height:8cqw;padding-right:3cqw;border-right:1px solid #f0ddbd;box-sizing:border-box;}
-.mobile-navigation__wallet .wallet-btn:not(.wallet-btn--connected)::after{content:'→';margin-left:auto;font-size:7cqw}
-.mobile-navigation__wallet .wallet-btn__text small,.mobile-navigation__wallet .wallet-btn__text strong{color:#fff0d0}
+.mobile-navigation__wallet .wallet-btn>.header-wallet-icon { width:16cqw; height:10cqw; padding-right:3.5cqw; border-right:1px solid #f0ddbd; box-sizing:border-box; flex:none; }
+.mobile-navigation__wallet .wallet-btn:not(.wallet-btn--connected)::after { content:'→'; margin-left:auto; font-size:7cqw; }
+.mobile-navigation__wallet .wallet-btn__text { min-width:0; white-space:normal; }
+.mobile-navigation__wallet .wallet-btn__text small { font:400 3cqw/1.2 Georgia,serif; color:#fff0d0; }
+.mobile-navigation__wallet .wallet-btn__text strong { display:block; font:700 4cqw/1.2 Georgia,serif; color:#fff0d0; overflow-wrap:anywhere; }
+.mobile-navigation__wallet .wallet-btn--connected>svg:last-child { width:4cqw; height:4cqw; flex:none; }
+.mobile-navigation__wallet .wallet-menu { right:0; top:auto; bottom:100%; width:100%; max-width:none; max-height:65dvh; overflow:auto; }
+.mobile-navigation__scenery { min-height:0; background:none; }
+.mobile-navigation a:focus-visible,.mobile-navigation button:focus-visible { outline:2px solid #8b3025; outline-offset:-6px; }
+.mobile-navigation__wallet button:focus-visible { outline-color:#ffedc7; }
+@media(hover:hover) {
+ .mobile-navigation nav a:hover { color:#8b3025; }
+ .mobile-navigation__wallet .wallet-btn:hover { filter:brightness(1.2); }
+ .mobile-navigation__heading button:hover { color:#8b3025; }
+}
+@keyframes navigation-enter { from { transform:translateX(100%); } to { transform:translateX(0); } }
+@media(prefers-reduced-motion:reduce) {
+ .mobile-navigation[open] { animation:none; }
+ .mobile-navigation nav a { transition:none; }
+}
