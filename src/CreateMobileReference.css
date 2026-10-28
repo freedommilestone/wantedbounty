@@ -303,3 +303,15 @@
  .creator-page .create__preview::before { content:none; display:none; }
  .creator-page .create__panel-shadow { background:none; box-shadow:none; }
 }
+@media(max-width:1100px) {
+ /* One continuous surface behind the form and preview; no nested paper panels. */
+ body .creator-page .site-header.site-header { background:#ecd3aa url('/scene/home-mobile-plate.jpg') center top/100% auto no-repeat; }
+ .creator-page .create__grid { background:url('/scene/create-mobile-preview-harbor-v2.png') center bottom/100% auto no-repeat,linear-gradient(#f4dcb5b0,#f4dcb5b0),url('/textures/parchment-v2.jpg') center/cover; }
+ .creator-page .create__form { background:none; box-shadow:none; }
+ .creator-page .create__form::before { clip-path:none; mask-image:linear-gradient(to right,#000 0%,#000 5%,transparent 10%,transparent 90%,#000 95%,#000 100%); -webkit-mask-image:linear-gradient(to right,#000 0%,#000 5%,transparent 10%,transparent 90%,#000 95%,#000 100%); }
+ .creator-page .step,.creator-page .step__body { background:none; box-shadow:none; }
+ .creator-page .create__panel-shadow--preview,
+ .creator-page .create__preview { background:none; box-shadow:none; filter:none; }
+ .creator-page .create__preview { padding-top:18px; padding-bottom:20px; }
+ .creator-page .create__preview::before,.creator-page .create__preview::after { content:none; display:none; }
+}
