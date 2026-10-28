@@ -289,7 +289,7 @@ export function CreatePosterPage() {
                   <p className="create__lede">
                     <strong>Turn your photo into a legendary bounty.</strong>
                     <br />
-                    Turn your uploaded photo into a pirate-anime wanted poster. Your connected wallet supplies the default bounty amount.
+                    <span className="create__hero-description">Turn your uploaded photo into a pirate-anime wanted poster. Your connected wallet supplies the default bounty amount.</span>
                   </p>
                 </div>
               </div>
