@@ -1,6 +1,6 @@
 /* One header geometry for every route, independent of page typography. */
 body #root :is(.home-page,.creator-page,.explore-page,.legend-page) { width:100%; max-width:1536px; margin-inline:auto; }
-body #root .site-header.site-header { position:relative; width:100%; padding:0; border:0; background:#f2dbb4 url('/textures/parchment-v2.jpg') center/cover; color:#301709; font:10px 'EB Garamond',Georgia,serif; }
+body #root .site-header.site-header { position:relative; width:100%; padding:0; border:0; color:#301709; font:10px 'EB Garamond',Georgia,serif; }
 body #root .site-header.site-header::after { display:none; }
 body #root .site-header.site-header .site-header__inner { width:84%; max-width:none; margin:auto; padding:0; min-height:0; height:75px; display:flex; align-items:center; justify-content:space-between; gap:28px; }
 body #root .site-header.site-header .brand { display:flex; margin:0; flex:none; order:0; }
@@ -20,7 +20,7 @@ body #root .site-header.site-header .wallet-btn__text small { font-size:11px; }
 body #root .site-header.site-header .wallet-btn__text strong { font-size:15px; }
 body #root .site-header.site-header .wallet-btn>svg:last-child:not(:first-child) { width:14px; height:14px; }
 @media(max-width:1100px) {
- body #root .site-header.site-header { background:#f2dbb4 url('/textures/parchment-v2.jpg') center/cover; padding:0; border-bottom:1px solid #7b512d; }
+ body #root .site-header.site-header { padding:0; border-bottom:1px solid #7b512d; }
  body #root .site-header.site-header::after { display:none; }
  body #root .site-header.site-header .site-header__inner { width:96%; height:auto; min-height:64px; display:grid; grid-template-columns:36px minmax(0,1fr) auto; gap:8px; padding:5px 0; }
  body #root .site-header.site-header .site-menu-toggle { display:block; grid-column:1; grid-row:1; order:0; margin:0; width:36px; height:44px; padding:0; font-size:27px; }
