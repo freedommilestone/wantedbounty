@@ -101,8 +101,8 @@ export function HomePreloader() {
       {Array.from({length:12},(_,i)=><i key={i} className="home-preloader__scrap" style={{left:`${i * 9}%`,animationDelay:`${-i * .7}s`,animationDuration:`${5 + i % 4}s`}} />)}
     </div>
     <div className="home-preloader__entrance">
-      <button type="button" className="home-preloader__enter" onClick={dismiss} disabled={leaving} autoFocus>
-        Enter the Grand Line <span aria-hidden="true">→</span>
+      <button type="button" className="home-preloader__enter" onClick={dismiss} disabled={leaving} aria-label="Enter the Grand Line" autoFocus>
+        <img src="/scene/enter-grand-line-banner.png" alt="" width="2172" height="724" draggable={false} />
       </button>
     </div>
   </dialog>;
