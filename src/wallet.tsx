@@ -5,7 +5,7 @@ import { buildPosterPayment, type PaymentToken, type SolQuote } from "./payment"
 
 const STORAGE_KEY = "wantedbounty:wallet";
 const LEGACY_STORAGE_KEY = "wantedbounty:phantom";
-const BERI_MINT = import.meta.env.VITE_BERI_MINT?.trim() || "GbYRS9bPStDoDCHtgc4PpuguaMAhux5s3qA2LAgxFXzt";
+const BERI_MINT = process.env.NEXT_PUBLIC_BERI_MINT?.trim() || "GbYRS9bPStDoDCHtgc4PpuguaMAhux5s3qA2LAgxFXzt";
 const TOKEN_PROGRAMS = [
   "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
   "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb",
@@ -140,11 +140,9 @@ export function shortAddress(address: string) {
 }
 
 function rpcUrl() {
-  const configured = import.meta.env.VITE_SOLANA_RPC_URL?.trim();
+  const configured = process.env.NEXT_PUBLIC_SOLANA_RPC_URL?.trim();
   if (configured) return configured;
-  const host = typeof window !== "undefined" ? window.location.hostname : "";
-  // Local Vite strips the browser Origin header. The live site uses the same-origin proxy in /api.
-  if (import.meta.env.DEV || host === "localhost" || host === "127.0.0.1") return "/solana-rpc";
+  // Next.js serves the same-origin RPC proxy in development and production.
   return "/api/solana-rpc";
 }
 

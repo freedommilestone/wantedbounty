@@ -1,5 +1,4 @@
 import { useEffect, useRef, useState } from "react";
-import "./HomePreloader.css";
 
 let shownThisVisit = false;
 const layers = Array.from({ length: 10 }, (_, index) => index);

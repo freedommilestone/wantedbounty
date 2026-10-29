@@ -2,7 +2,7 @@ import { associatedTokenAddress, decodeBase58 } from "./ata";
 
 /** Wallet that receives the poster fee. */
 export const TREASURY_ADDRESS =
-  (import.meta.env?.VITE_TREASURY_ADDRESS as string | undefined)?.trim() || "3CQ2GbBy1ks8kyEpa89TV9b3LaC17FBhwR2iZUzVw4pP";
+  (process.env.NEXT_PUBLIC_TREASURY_ADDRESS as string | undefined)?.trim() || "3CQ2GbBy1ks8kyEpa89TV9b3LaC17FBhwR2iZUzVw4pP";
 
 /** Fixed fee in whole USD stablecoin units, on Solana mainnet. */
 export const POSTER_FEE = 5;

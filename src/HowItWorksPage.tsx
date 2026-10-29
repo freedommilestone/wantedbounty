@@ -1,49 +1,62 @@
-import { useEffect } from "react";
-import { HowDesktop } from "./components/HowDesktop";
-import { SiteHeader } from "./components/SiteHeader";
-import { CreatorPoster } from "./components/CreatorPoster";
-import { CompassRose, ArrowRight } from "./components/icons";
-import { Link } from "./router";
-import { useWallet } from "./wallet";
-import "./HowItWorksPage.css";
+"use client";
+import { useEffect, type ReactNode } from 'react';
+import { SiteHeader } from './components/SiteHeader';
+import { CreatorPoster } from './components/CreatorPoster';
+import { PirateSkullIcon } from './components/ReferenceIcons';
+import { ProfileIcon } from './components/ProfileIcon';
+import { ArrowRight, BeriTarget, CheckIcon, EditIcon, EyeIcon, CompassRose } from './components/icons';
+import { Link } from './router';
+import { useWallet } from './wallet';
 
-function Action({children,href="/create"}:{children:React.ReactNode;href?:string}) {
-  return <Link className="legend-action" href={href}>{children}<ArrowRight /></Link>;
+function Action({children,href='/create',onClick}:{children:ReactNode;href?:string;onClick?:()=>void}) {
+ const content=<>{children}<ArrowRight/></>;
+ return onClick?<button className="journey-action" onClick={onClick}>{content}</button>:<Link className="journey-action" href={href}>{content}</Link>;
 }
+function Step({number,title,subtitle,children}:{number:number;title:string;subtitle:string;children:ReactNode}) {
+ return <section className={`journey-card journey-card--${number}`} aria-labelledby={`journey-step-${number}`}>
+  <header className="journey-card-heading"><span className="journey-number" aria-hidden="true">{number}</span><div><h2 id={`journey-step-${number}`}>{title}</h2><h3>{subtitle}</h3></div></header>
+  {children}
+ </section>;
+}
+function Illustration({kind}:{kind:'beri'|'rewards'|'payment'|'control'}) {
+ return <div className={`journey-art journey-art--${kind}`} aria-hidden="true"/>;
+}
+const previewRanks=[['Luffy','2,800,000',0],['Nami','1,950,000',1],['Zoro','1,320,000',2],['Sanji','980,000',7],['Robin','760,000',3]] as const;
 export function HowItWorksPage() {
-  const {openModal,holdings}=useWallet();
-  useEffect(()=>{document.title="How It Works | Wanted Bounty";},[]);
-  return <div className="legend-page">
-    <SiteHeader active="how" />
-    <main>
-      <HowDesktop/>
-      <section className="legend-hero">
-        <p className="legend-motto">More than a token.<br/>A community.<br/>A legend in the making.</p>
-        <div className="legend-title-paper"><h1>How It Works</h1><h2>Hold BERI. Build your legend.</h2><p>Join the crew and create your own<br/>One Piece–style wanted poster. Here’s how it all works.</p></div>
-        <div className="legend-compass"><CompassRose/><p>Every legend<br/>has a price.</p></div>
-        <h2 className="legend-journey">The journey to legendary status</h2>
-      </section>
-      <section className="legend-row">
-        <div className="legend-copy"><span className="legend-number">1</span><h2>Become a BERI holder</h2><h3>Hold $BERI in your wallet.</h3><p>Connect your Solana wallet to view your BERI balance and use it as your poster bounty. You can also choose a custom bounty.</p><button className="legend-action" onClick={openModal}>Connect wallet <ArrowRight/></button></div>
-        <div className="legend-sprite legend-sprite--beri" aria-hidden="true"/><img className="legend-treasure" src="/scene/legend-treasure.png" alt="Pirate chest overflowing with BERI coins beneath a black flag"/>
-      </section>
-      <section className="legend-row legend-row--reverse">
-        <div className="legend-sprite legend-sprite--zcash" aria-hidden="true"/><div className="legend-reward-art" aria-hidden="true"><img src="/scene/legend-treasure.png" alt=""/><span className="legend-coin legend-coin--zcash">Ƶ</span></div>
-        <div className="legend-copy"><span className="legend-number">2</span><h2>Explore Zcash rewards</h2><h3>Learn about stonk.fun.</h3><p>Check stonk.fun for its current eligibility and distribution rules. Rewards are determined by that service and are not guaranteed by Wanted Bounty.</p><a className="legend-action" href="https://stonk.fun" target="_blank" rel="noreferrer">Learn more <ArrowRight/></a></div>
-      </section>
-      <section className="legend-row">
-        <div className="legend-copy"><span className="legend-number">3</span><h2>Create your wanted poster</h2><h3>Turn yourself into a legend.</h3><p>Upload your photo and choose a name, title, bounty and vintage finish. Preview your poster as you edit. Finishes use filters, not AI generation.</p><Action>Create your poster</Action></div>
-        <div className="legend-poster-fan" aria-label="Example wanted posters">{["Nami","Luffy","Zoro"].map((name)=><CreatorPoster key={name} name={name} bounty="1,250,000" portrait={`/portraits/home-${name.toLowerCase()}.jpg`} photoClassName="" fine="By order of the BERI fleet"/>)}</div>
-      </section>
-      <section className="legend-row">
-        <div className="legend-copy"><span className="legend-number">4</span><h2>One-time $5 fee</h2><h3>Pay with USDC, USDT or SOL.</h3><p>Unlock your download for 5 USDC, 5 USDT or $5 in SOL on Solana. SOL uses a live quote. Approve payment in your wallet; network fees are additional.</p><Action>Pay &amp; create</Action></div>
-        <div className="legend-sprite legend-sprite--payment" aria-hidden="true"/><div className="legend-payment-art" aria-label="USDC, USDT and SOL payment options"><span className="legend-coin legend-coin--usdc">$</span><span className="legend-coin legend-coin--usdt">₮</span><span className="legend-sol">SOL</span></div>
-      </section>
-      <div className="legend-bottom">
-        <section className="legend-ranking"><div className="legend-copy"><span className="legend-number">5</span><h2>See your bounty</h2><h3>Your holdings. Your story.</h3><p>Your connected wallet’s BERI balance can set your poster bounty. Explore the fleet’s example posters for inspiration.</p><Action href="/explore">Explore the fleet</Action></div><div className="legend-board"><h3>Your bounty</h3><img src="/portraits/home-luffy.jpg" alt="Example pirate portrait"/><strong>{holdings.state==="ready"?holdings.display:"1,250,000"} BERI</strong><small>{holdings.state==="ready"?"Connected wallet balance":"Example bounty · connect to see yours"}</small><div>♛ &nbsp; Build your legend</div></div></section>
-        <section className="legend-control"><span className="legend-number">6</span><h2>Your poster, your control</h2><h3>Make it your own.</h3><p>Edit your details before paying, then download your finished poster. Your uploaded photo stays in your browser.</p><Action>Customize poster</Action><div className="legend-sprite legend-sprite--control" aria-hidden="true"/><img src="/portraits/home-luffy.jpg" alt="" /></section>
-      </div>
-      <footer className="legend-footer"><h2>Ready to make your mark?</h2><p>Join the BERI crew and create your own legendary wanted poster.</p><Action>Create your poster</Action><div className="legend-footer-sign">More than a token<br/>A crew<br/>$BERI</div></footer>
-    </main>
-  </div>;
+ const {openModal}=useWallet();
+ useEffect(()=>{document.title='How It Works | Wanted Bounty';},[]);
+ return <div className="legend-page journey-page">
+  <SiteHeader active="how"/>
+  <main className="journey-main">
+   <section className="journey-hero" aria-labelledby="journey-title">
+    <div className="journey-title-paper"><BeriTarget className="journey-emblem"/><h1 id="journey-title">How It Works</h1><h2>Hold BERI. Build your legend.</h2><p>Join the crew and create your own One Piece–style wanted poster. Here’s how it all works.</p></div>
+    <p className="journey-motto">More than a token.<br/>A community.<br/>A legend in the making.</p>
+   </section>
+   <div className="journey-grid">
+    <Step number={1} title="Become a BERI holder" subtitle="Hold $BERI in your wallet.">
+     <div className="journey-copy"><p>Connect a compatible Solana wallet to view your BERI balance. Your holdings can set the bounty on your wanted poster.</p><Action onClick={openModal}>Connect wallet</Action></div><Illustration kind="beri"/>
+    </Step>
+    <Step number={2} title="Explore Zcash rewards" subtitle="Learn about stonk.fun.">
+     <div className="journey-copy"><p>As a BERI holder, you may be eligible for Zcash rewards through stonk.fun. Check its current rules; rewards are determined by that service and are not guaranteed.</p><a className="journey-action" href="https://stonk.fun" target="_blank" rel="noreferrer">Learn more<ArrowRight/></a></div><Illustration kind="rewards"/>
+    </Step>
+    <Step number={3} title="Create your wanted poster" subtitle="Turn yourself into a legend.">
+     <div className="journey-copy"><p>Upload your photo and customize your details. Our AI transforms your image into a pirate-anime portrait for your own wanted poster.</p><Action>Create your poster</Action></div>
+     <div className="journey-poster-fan" aria-label="Example wanted posters">{['Nami','Your Name','Zoro'].map((name,i)=><CreatorPoster key={name} name={name} bounty="1,250,000" portrait={`/portraits/home-${['nami','luffy','zoro'][i]}.jpg`} photoClassName="" fine="KONO SAKUHIN WA FICTION DESUNODE JITSUZAISURU JINBUTSU DANTAI SONOTA NO SOSHIKI TO DOITSU NO MEISHOU GA GEKICHU NI TOUJYOU SHITATOSHITEMO JITSUZAI NA MONOTOWA ISSAI MUKANKEIDESU"/>)}</div>
+    </Step>
+    <Step number={4} title="One-time $5 fee" subtitle="Pay with USDC, USDT or SOL.">
+     <p className="journey-wide-copy">A one-time $5 payment creates your AI wanted poster. Pay with USDC, USDT, or a live SOL quote. Approve payment in your wallet; network fees are additional.</p>
+     <div className="journey-payment-bottom"><Illustration kind="payment"/><ul className="journey-checklist"><li><CheckIcon/>AI image generation</li><li><CheckIcon/>Download your poster</li><li><CheckIcon/>One-time creation fee</li></ul></div>
+    </Step>
+    <Step number={5} title="See your ranking" subtitle="Track your bounty.">
+     <p className="journey-wide-copy">Your connected wallet supplies your default bounty. Explore the fleet and build your legend. Community rankings below are a preview.</p>
+     <div className="journey-ranking"><header><ProfileIcon kind="wheel"/><h3>Top BERI holders</h3><Link href="/profile">View all <ArrowRight/></Link></header><ol>{previewRanks.map(([name,amount,index],i)=><li key={name}><span className={`journey-rank journey-rank--${i}`}>{i===0?<ProfileIcon kind="crown"/>:i+1}</span><span className="journey-rank-avatar" role="img" aria-label={name} style={{backgroundPosition:`${(index%5)*25}% ${Math.floor(index/5)*50}%`}}/><strong>{amount} BERI</strong></li>)}</ol><small>Illustrative leaderboard · live rankings coming soon</small></div>
+    </Step>
+    <Step number={6} title="Your poster, your control" subtitle="Your story. Your choice.">
+     <p className="journey-wide-copy">Make your name and wanted condition your own. Download your finished poster, share it with the crew, and visit your profile to manage your details.</p>
+     <div className="journey-controls"><Action><EditIcon/>Edit poster</Action><Action href="/profile"><EyeIcon/>My profile</Action><Action href="/explore"><CompassRose/>Explore the fleet</Action></div><Illustration kind="control"/>
+    </Step>
+   </div>
+   <footer className="journey-footer"><div className="journey-footer-paper"><h2>Ready to make your mark?</h2><p>Join the BERI crew and create your own legendary wanted poster.</p><Action>Create your poster</Action><div className="journey-sign"><span/><PirateSkullIcon/><span/></div><small>More than a token<br/><b>A crew</b><br/>$BERI</small></div></footer>
+  </main>
+ </div>;
 }

@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import handler from '../api/sol-quote.js';
+import handler from '../server/handlers/sol-quote.js';
 
 async function quote(t, replies, method = 'GET') {
  let calls = 0;

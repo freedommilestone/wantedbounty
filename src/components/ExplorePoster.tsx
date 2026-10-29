@@ -1,7 +1,6 @@
 import { BeriSymbol } from "./BeriSymbol";
 import { wholeBounty } from "../bountyFormat";
 import { useId } from "react";
-import "./ExplorePoster.css";
 
 /** Gallery-specific poster: fixed print coordinates keep small cards and previews identical. */
 export function ExplorePoster({name,bounty,portrait,portraitIndex=0}:{name:string;bounty:number;portrait:string;portraitIndex?:number}) {

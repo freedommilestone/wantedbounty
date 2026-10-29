@@ -1,7 +1,7 @@
 import { randomBytes, randomUUID } from 'node:crypto';
 import quoteHandler from './sol-quote.js';
-import { configuration,database,getImage,putImage,loadOrder,updateOrder,result,hash,PublicError } from '../server/poster-store.js';
-import { verifyPayment } from '../server/verify-payment.js';
+import { configuration,database,getImage,putImage,loadOrder,updateOrder,result,hash,PublicError } from '../poster-store.js';
+import { verifyPayment } from '../verify-payment.js';
 
 export const config={maxDuration:300};
 const TREASURY='3CQ2GbBy1ks8kyEpa89TV9b3LaC17FBhwR2iZUzVw4pP';

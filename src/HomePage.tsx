@@ -1,11 +1,7 @@
+"use client";
 import { useRef, useState } from "react";
 import { HomePreloader } from "./components/HomePreloader";
-import { ProfilePage } from "./ProfilePage";
-import { ExplorePage } from "./ExplorePage";
-import { HowItWorksPage } from "./HowItWorksPage";
-import { CreatePosterPage } from "./CreatePosterPage";
 import { SiteHeader } from "./components/SiteHeader";
-import { WalletModal } from "./components/WalletModal";
 import { WantedPoster } from "./components/WantedPoster";
 import {
   ArrowRight,
@@ -18,14 +14,8 @@ import {
   SkullIcon,
 } from "./components/icons";
 import { HomeWheel, HomeCompass, HomeHat, HomeDiamond } from "./components/HomeIcons";
-import { Link, usePath } from "./router";
+import { Link } from "./router";
 import { organicEdges, tornPaper } from "./torn";
-import { WalletProvider } from "./wallet";
-import "./App.css";
-import "./HomePage.css";
-import "./HomeReferenceLayout.css";
-import "./HomeMobile.css";
-import "./HowMobileElements.css";
 
 const FEATURES_EDGE = organicEdges(11, { top: 22, bottom: 12 });
 const FLEET_EDGE = organicEdges(29, { top: 17, bottom: 20 });
@@ -47,22 +37,9 @@ const fleet = [
   { name: "Red Hawk", bounty: "640,000,000", handle: "@redhawk", time: "1d ago", portrait: "/portraits/red-hawk.jpg" },
 ];
 
-export default function App() {
-  const path = usePath();
-  const route = path.replace(/\/+$/, "");
-  const page = route === "/profile" ? <ProfilePage /> : route === "/create" ? <CreatePosterPage /> : route === "/how-it-works" ? <HowItWorksPage /> : route === "/explore" ? <ExplorePage /> : <HomePage />;
-
-  return (
-    <WalletProvider>
-      {page}
-      <WalletModal />
-    </WalletProvider>
-  );
-}
-
 const PLACEHOLDER_BOUNTY = "1,500,000,000";
 
-function HomePage() {
+export function HomePage() {
   const [showAll, setShowAll] = useState(false);
   const [selected, setSelected] = useState(0);
   const galleryRef = useRef<HTMLDialogElement>(null);

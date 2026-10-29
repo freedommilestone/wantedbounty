@@ -12,7 +12,6 @@ import { CloseIcon, ArrowRight, LockIcon, ShieldIcon, CheckIcon, CopyIcon, Refre
 import { PirateSkullIcon } from "./ReferenceIcons";
 import { FleetWalletIcon } from "./FleetWalletIcon";
 import { Link } from "../router";
-import "./WalletModal.css";
 
 export function WalletModal() {
   const {

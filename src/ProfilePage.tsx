@@ -1,3 +1,4 @@
+"use client";
 import { useEffect, useRef, useState } from 'react';
 import { SiteHeader } from './components/SiteHeader';
 import { CreatorPoster } from './components/CreatorPoster';
@@ -5,9 +6,6 @@ import { PirateSkullIcon } from './components/ReferenceIcons';
 import { useWallet } from './wallet';
 import { Link } from './router';
 import { ProfileIcon as Icon } from './components/ProfileIcon';
-import './ProfilePage.css';
-import './ProfileDesktop.css';
-import './ProfileMobile.css';
 
 type Tab = 'My Posters' | 'Activity' | 'Leaderboard' | 'Wallet' | 'Rewards' | 'Settings';
 type Profile = { name:string; bio:string; avatar:string };

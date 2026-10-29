@@ -1,7 +1,7 @@
 import { build } from 'esbuild';
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-const result = await build({entryPoints:['src/payment.ts'],bundle:true,write:false,format:'esm',platform:'node',define:{'import.meta.env':'{}'}});
+const result = await build({entryPoints:['src/payment.ts'],bundle:true,write:false,format:'esm',platform:'node',define:{'process.env.NEXT_PUBLIC_TREASURY_ADDRESS':'undefined'}});
 const {buildPosterPayment,PAYMENT_TOKENS,TREASURY_ADDRESS} = await import('data:text/javascript;base64,'+Buffer.from(result.outputFiles[0].text).toString('base64'));
 const program = 'TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA';
 for (const token of ['USDC','USDT']) {

@@ -1,3 +1,4 @@
+"use client";
 import { wholeBounty } from "./bountyFormat";
 import { toPng } from "html-to-image";
 import { useEffect, useRef, useState, type ChangeEvent, type DragEvent, type ReactNode } from "react";
@@ -21,11 +22,6 @@ import {
 } from "./components/icons";
 import { tornPaper } from "./torn";
 import { useWallet } from "./wallet";
-import "./CreatePosterPage.css";
-import "./CreateReference.css";
-import "./CreateMobile.css";
-import "./CreateDesktop.css";
-import "./CreateMobileReference.css";
 import { PaymentChoiceIcon, WantedConditionIcon, DesktopGuideIcon } from "./components/CreatorDesktopIcons";
 
 const FEE = POSTER_FEE;
@@ -108,7 +104,7 @@ export function CreatePosterPage() {
     return () => window.clearInterval(timer);
   }, [paymentToken]);
   const quoteValid = solQuote !== null && solQuote.expiresAt > now;
-  const [order, setOrder] = useState<SavedOrder | null>(readOrder);
+  const [order, setOrder] = useState<SavedOrder | null>(null);
   const [generated, setGenerated] = useState<string | null>(null);
   const applyResult = (data: OrderResult) => {
     if (data.details) {
@@ -124,6 +120,7 @@ export function CreatePosterPage() {
   useEffect(() => {
     const saved = readOrder();
     if (!saved) return;
+    setOrder(saved);
     setPhase("confirming");
     orderRequest<OrderResult>({ action: "status", id: saved.id, token: saved.token }).then(applyResult)
       .catch(() => { setPhase("retry"); setPayNote("Your previous order was saved. Check its status before paying again."); });

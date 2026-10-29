@@ -1,7 +1,5 @@
 import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
-import "./MobileNavigation.css";
-import "./SiteHeader.css";
 import { Link } from "../router";
 import { useWallet } from "../wallet";
 import { HomeCompass, HomeWheel } from "./HomeIcons";

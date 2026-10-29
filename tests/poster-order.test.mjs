@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import handler from '../api/poster-order.js';
+import handler from '../server/handlers/poster-order.js';
 import { verifyTransaction,MEMO,MINTS } from '../server/verify-payment.js';
 import { hash } from '../server/poster-store.js';
 

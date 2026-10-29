@@ -1,6 +1,5 @@
 import { BeriSymbol } from "./BeriSymbol";
 import { wholeBounty } from "../bountyFormat";
-import "./CreatorPoster.css";
 
 type Props = { name: string; condition?: string; bounty: string; portrait: string; photoClassName: string; fine: string; className?: string; portraitIndex?: number };
 
