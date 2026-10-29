@@ -12,6 +12,8 @@
 @import "./ExploreMobileReference.css";
 @import "./HowItWorksPage.css";
 @import "./ProfilePage.css";
+@import "./ProfileDesktop.css";
+@import "./ProfileMobile.css";
 @import "./components/HomePreloader.css";
 @import "./components/CreatorPoster.css";
 @import "./components/ExplorePoster.css";
