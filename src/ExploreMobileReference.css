@@ -1,12 +1,9 @@
-.explore-mobile-poster { display:none; }
 .explore-control-icon { width:1.4em; height:1.4em; flex:none; }
 .explore-verified { display:flex; align-items:center; gap:6px; cursor:pointer; }
 .explore-verified>.explore-control-icon { display:none; }
 @media(max-width:1100px) {
  .explore-page { --explore-art:url('/scene/explore-mobile-clean-reference-v3.png'); font-size:14px; background:#efd6ad; }
  .explore-page main { width:100%; max-width:none; }
- .explore-desktop-poster { display:none; }.explore-mobile-poster { display:block; }
- .explore-page .creator-poster.poster-reference .creator-poster__sheet { aspect-ratio:1058/1487; }
 
  /* Reference hero: y=85–548. Real title and link align with the blank paper art. */
  .explore-hero { position:relative; height:auto; aspect-ratio:854/463; padding:0; background:var(--explore-art) center 6.164%/100% 397.84% no-repeat; }

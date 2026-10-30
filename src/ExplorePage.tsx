@@ -2,7 +2,6 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { PirateSkullIcon } from "./components/ReferenceIcons";
 import { SiteHeader } from "./components/SiteHeader";
-import { ExplorePoster } from "./components/ExplorePoster";
 import { CompassRose, ArrowRight } from "./components/icons";
 import { Link } from "./router";
 import { ExploreIcon } from "./components/ExploreIcons";
@@ -27,7 +26,14 @@ const posters = [
 ];
 type Poster = typeof posters[number];
 function PosterArt({poster}:{poster:Poster}) {
-  return <><div className="explore-desktop-poster"><ExplorePoster name={poster.name} bounty={poster.amount} portrait="/portraits/explore-crew.png" portraitIndex={poster.portraitIndex} /></div><div className="explore-mobile-poster"><CreatorPoster name={poster.name} bounty={String(poster.amount)} portrait="/portraits/explore-crew.png" portraitIndex={poster.portraitIndex} photoClassName="" fine="KONO SAKUHIN WA FICTION DESUNODE JITSUZAISURU JINBUTSU DANTAI SONOTA NO SOSHIKI TO DOITSU NO MEISHOU GA GEKICHU NI TOUJYOU SHITATOSHITEMO JITSUZAI NA MONOTOWA ISSAI MUKANKEIDESU" /></div></>;
+  return <CreatorPoster
+    name={poster.name}
+    bounty={String(poster.amount)}
+    portrait="/portraits/explore-crew.png"
+    portraitIndex={poster.portraitIndex}
+    photoClassName=""
+    fine="KONO SAKUHIN WA FICTION DESUNODE JITSUZAISURU JINBUTSU DANTAI SONOTA NO SOSHIKI TO DOITSU NO MEISHOU GA GEKICHU NI TOUJYOU SHITATOSHITEMO JITSUZAI NA MONOTOWA ISSAI MUKANKEIDESU"
+  />;
 }
 export function ExplorePage() {
   const [mobile,setMobile]=useState(false);
