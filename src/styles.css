@@ -20,3 +20,5 @@
 @import "./auth/Account.css";
 
 @import "./HomeLanding.css";
+
+@import "./auth/SignInModal.css";

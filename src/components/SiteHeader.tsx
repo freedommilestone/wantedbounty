@@ -4,11 +4,13 @@ import { Link } from "../router";
 import { useWallet } from "../wallet";
 import { HomeCompass, HomeWheel } from "./HomeIcons";
 import { AccountButton } from "../auth/AccountButton";
+import { SignInModal } from "../auth/SignInModal";
 
 type Page = "home" | "create" | "how" | "explore" | "profile";
 
 export function SiteHeader({ active, primaryAction }: { active: Page; primaryAction?: "play" }) {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [signInOpen, setSignInOpen] = useState(false);
   const { modalOpen } = useWallet();
   useEffect(() => { if (modalOpen) setMenuOpen(false); }, [modalOpen]);
   const drawerRef = useRef<HTMLDialogElement>(null);
@@ -60,11 +62,12 @@ export function SiteHeader({ active, primaryAction }: { active: Page; primaryAct
           })}
           {active === "home" && <div className="mobile-nav-wallet"><AccountButton /></div>}
         </nav>
-        {primaryAction === "play" ? <Link className="header-play-game" href="/account">
+        {primaryAction === "play" ? <button className="header-play-game" type="button" aria-haspopup="dialog" onClick={() => setSignInOpen(true)}>
           <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M5 3l4 1 15 18-3 3L5 7ZM27 3l-4 1L8 22l3 3L27 7ZM3 22l7 7m-5-3-3 4m20-8 7 7m-3-3 4 4" /></svg>
           <span>Play Game</span>
-        </Link> : <AccountButton />}
+        </button> : <AccountButton />}
       </div>
+      {signInOpen && <SignInModal onClose={() => setSignInOpen(false)} />}
       {menuOpen && createPortal(
         <dialog ref={drawerRef} id="mobile-navigation" className="mobile-navigation" aria-label="Navigation"
           onCancel={() => setMenuOpen(false)}
