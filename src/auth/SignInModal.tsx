@@ -50,12 +50,12 @@ export function SignInModal({ onClose }: { onClose: () => void }) {
         } });
         if (error) throw error;
         setPassword('');
-        if (data.session) { onClose(); router.push('/profile'); }
+        if (data.session) { onClose(); router.push('/allegiance'); }
         else setMessage('Check your email to confirm your account, then sign in.');
       } else if (mode === 'login') {
         const { error } = await auth.signInWithPassword({ email: email.trim(), password });
         if (error) throw error;
-        setPassword(''); onClose(); router.push('/profile');
+        setPassword(''); onClose(); router.push('/allegiance');
       } else {
         const { error } = await auth.resetPasswordForEmail(email.trim(), { redirectTo: location.origin + '/account?mode=recovery' });
         if (error) throw error;

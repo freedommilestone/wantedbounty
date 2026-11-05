@@ -2,6 +2,8 @@
 
 Accounts use Supabase email/password Auth in the Wanted Bounty project. The `/account` page provides signup, login, confirmation landing, password reset, and logout. Email confirmation is required before preparing a paid poster order. Wallet access remains separate for crypto payments and BERI balance lookup.
 
+After signup/confirmation or login, players without a saved allegiance choose Pirates, Marines, or Revolutionaries at `/allegiance`. The profile route also checks this onboarding step. `public.players` stores the account-linked name, bio, allegiance and timestamps, with owner-only RLS and an allegiance-only browser update grant. Auth triggers create player records and synchronize name/bio edits. Password recovery remains accessible before onboarding. See `design/allegiance-onboarding.md` for schema and verification details.
+
 Supabase Dashboard → Authentication → Users contains email, account ID, creation/sign-in timestamps, and user metadata. Passwords are hashed by Supabase Auth; the application never writes plaintext passwords into a table or logs. Authentication events are recorded by Supabase Auth. Profile name, story, and a resized avatar are stored in the user's metadata. This metadata is display content, never an authorization source.
 
 The browser uses the project's public publishable key. Optional `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` overrides must identify the same project as the server's `SUPABASE_URL`. `SUPABASE_SECRET_KEY` stays server-only. Node 22 is required.

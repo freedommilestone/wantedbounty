@@ -1,0 +1,53 @@
+/* Each card, flag, label and action is independent of the scenery. */
+body #root .home-page.landing-page.allegiance-page { background:#e9cb95;min-height:100svh;display:flex;flex-direction:column; }
+body #root .allegiance-page .allegiance-main {
+ padding:1.3% 5.5% 2%; flex:1;
+ background:#ecd3a8 url('/scene/allegiance-coast-v1.webp') center/cover;
+ color:#321507; font-family:Georgia,serif;
+}
+.allegiance-intro {text-align:center;margin:0 0 1.2%;}
+.allegiance-intro>p {display:flex;justify-content:center;align-items:center;gap:.6em;margin:0 0 .4em;font:bold clamp(13px,1.85cqw,25px)/1.2 Georgia,serif;text-transform:uppercase;letter-spacing:.045em;}
+.allegiance-intro svg {width:1.6em;height:1.6em;}
+.allegiance-intro h1 {font:800 clamp(26px,4.4cqw,66px)/1 'EB Garamond',Georgia,serif;text-transform:uppercase;letter-spacing:-.025em;margin:0 0 .12em;}
+.allegiance-intro>span {font-size:clamp(13px,1.65cqw,22px);line-height:1.4;}
+.allegiance-choices {display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1.5%;padding:0;margin:0;border:0;min-width:0;}
+.allegiance-card {position:relative;isolation:isolate;display:flex;flex-direction:column;align-items:center;padding:3% 5% 4%;cursor:pointer;min-width:0;text-align:center;transition:transform .2s,filter .2s;filter:drop-shadow(0 2px 1px #58331445);}
+.allegiance-card-paper {position:absolute;inset:-8% -10%;z-index:-1;background:url('/scene/allegiance-card-v1.webp') center/100% 100%;}
+.allegiance-card.is-selected {filter:drop-shadow(0 0 2px #fff1a5) drop-shadow(0 0 4px #ffbd19) drop-shadow(0 0 7px #ffbd19);}
+.allegiance-card.is-selected .allegiance-card-paper {filter:drop-shadow(0 0 2px #fff9b6);}
+.allegiance-card:hover {transform:translateY(-3px);}
+.allegiance-card:focus-within {outline:3px solid #7a2c13;outline-offset:5px;border-radius:8px;}
+.allegiance-card input {position:absolute;inset:0;width:100%;height:100%;opacity:0;z-index:2;cursor:pointer;}
+.allegiance-flag {display:block;width:105%;aspect-ratio:1.75;background-image:url('/scene/allegiance-flags-v1.webp');background-size:300% auto;background-repeat:no-repeat;margin-top:0;}
+.allegiance-card h2 {font:800 clamp(20px,3.55cqw,52px)/1 'EB Garamond',Georgia,serif;text-transform:uppercase;letter-spacing:-.04em;margin:0 0 .18em;transform:scaleX(.88);}
+.allegiance-card:last-child h2 {font-size:clamp(18px,3.1cqw,46px);letter-spacing:-.045em;}
+.allegiance-motto {width:100%;padding:.35em .1em;background:#cc96513d;clip-path:polygon(3% 0,98% 3%,100% 85%,97% 100%,1% 96%,0 20%);font-size:clamp(11px,1.6cqw,23px);line-height:1.1;}
+.allegiance-description {font-size:clamp(12px,1.6cqw,22px);line-height:1.3;margin:.65em 0 .6em;flex:1;}
+.allegiance-trait {display:flex;align-items:center;justify-content:center;gap:.5em;width:100%;padding-top:.4em;border-top:1px solid #a47948a0;font-size:clamp(12px,1.8cqw,25px);font-weight:bold;line-height:1.2;}
+.allegiance-trait svg {flex:none;width:1.55em;height:1.55em;}
+.allegiance-actions {display:flex;align-items:stretch;justify-content:center;gap:7%;margin:1.5% 0 0;}
+.allegiance-selected,.allegiance-confirm {display:flex;align-items:center;justify-content:center;gap:.5em;min-height:44px;padding:.55em 1.4em;font:700 clamp(17px,2.2cqw,30px)/1.15 'EB Garamond',Georgia,serif;background:url('/textures/button-parchment.png') center/100% 100%;border:0;border-radius:5px;}
+.allegiance-selected span {color:#9c2c10;}
+.allegiance-confirm {color:#fff0cf;background-color:#8b2515;background-blend-mode:multiply;clip-path:polygon(2% 0,98% 0,100% 10%,99.6% 91%,97% 100%,1% 98%,0 88%,0 10%);cursor:pointer;transition:filter .2s,transform .2s;}
+.allegiance-confirm:hover:not(:disabled) {filter:brightness(1.15);transform:translateY(-2px);}
+.allegiance-confirm:active:not(:disabled) {transform:translateY(1px);}
+.allegiance-confirm:disabled {opacity:.6;cursor:default;}
+.allegiance-confirm:focus-visible,.allegiance-feedback :is(button,a):focus-visible {outline:3px solid #8e3d15;outline-offset:3px;}
+.allegiance-feedback {text-align:center;margin:14px auto 0;font-size:16px;max-width:640px;}
+.allegiance-feedback button {background:transparent;color:inherit;text-decoration:underline;font:inherit;cursor:pointer;}
+@media(max-width:700px) {
+ body #root .allegiance-page .allegiance-main {padding:24px 6% 28px;background-size:auto 100%;}
+ .allegiance-intro {margin-bottom:22px;}
+ .allegiance-intro h1 {font-size:clamp(30px,7.5vw,45px);}
+ .allegiance-intro>span {display:block;margin:8px auto 0;max-width:340px;font-size:15px;}
+ .allegiance-choices {grid-template-columns:1fr;gap:18px;max-width:420px;margin:auto;}
+ .allegiance-card {padding:14px 24px 20px;}
+ .allegiance-flag {width:90%;aspect-ratio:2.15;}
+ .allegiance-card h2,.allegiance-card:last-child h2 {font-size:32px;}
+ .allegiance-motto {font-size:17px;}
+ .allegiance-description {font-size:16px;max-width:300px;}
+ .allegiance-trait {font-size:17px;}
+ .allegiance-actions {flex-direction:column;gap:10px;max-width:420px;margin:20px auto 0;}
+ .allegiance-selected,.allegiance-confirm {font-size:22px;min-height:50px;}
+}
+@media(prefers-reduced-motion:reduce) {.allegiance-card,.allegiance-confirm {transition:none;}}

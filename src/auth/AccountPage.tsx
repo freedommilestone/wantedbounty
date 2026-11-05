@@ -5,9 +5,10 @@ import { getAuthClient } from './client';
 import { useAuth } from './AuthProvider';
 import { useWallet } from '../wallet';
 import { Link } from '../router';
+import { useRouter } from 'next/navigation';
 type Mode='signup'|'login'|'reset'|'password';
 export function AccountPage(){
- const {user,loading}=useAuth();const {disconnect}=useWallet();
+ const {user,loading,player,playerLoading}=useAuth();const {disconnect}=useWallet();const router=useRouter();
  const [mode,setMode]=useState<Mode>('signup'),[email,setEmail]=useState(''),[password,setPassword]=useState(''),[name,setName]=useState(''),[busy,setBusy]=useState(false),[message,setMessage]=useState(''),[error,setError]=useState('');
  useEffect(()=>{
   const params=new URLSearchParams(location.search);
@@ -17,6 +18,9 @@ export function AccountPage(){
   const {data:{subscription}}=getAuthClient().auth.onAuthStateChange(event=>{if(event==='PASSWORD_RECOVERY')setMode('password');});
   return()=>subscription.unsubscribe();
  },[]);
+ useEffect(()=>{
+  if(user&&player&&!playerLoading&&!player.allegiance&&mode!=='password'&&mode!=='reset'&&new URLSearchParams(location.search).get('mode')!=='recovery')router.replace('/allegiance');
+ },[user,player,playerLoading,mode,router]);
  const switchMode=(next:Mode)=>{setMode(next);setPassword('');setMessage('');setError('');};
  async function submit(e:FormEvent){
   e.preventDefault();setBusy(true);setError('');setMessage('');
@@ -28,7 +32,7 @@ export function AccountPage(){
     setMessage(data.session?'Welcome aboard! Your account is ready.':'Check your email to confirm your account, then log in.');
    }else if(mode==='login'){
     const {error}=await auth.signInWithPassword({email:email.trim(),password});if(error)throw error;
-    setPassword('');location.assign('/profile');
+    setPassword('');router.push('/allegiance');
    }else if(mode==='reset'){
     const {error}=await auth.resetPasswordForEmail(email.trim(),{redirectTo:location.origin+'/account?mode=recovery'});if(error)throw error;
     setMessage('If an account exists for that email, you’ll receive a password reset link.');
