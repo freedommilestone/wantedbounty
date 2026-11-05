@@ -1,3 +1,4 @@
+import { requireAccount, authorizeOrder } from '../account-auth.js';
 import { randomBytes, randomUUID } from 'node:crypto';
 import quoteHandler from './sol-quote.js';
 import { configuration,database,getImage,putImage,loadOrder,updateOrder,result,hash,PublicError } from '../poster-store.js';
@@ -19,6 +20,7 @@ export function validatePhoto(photo) {
   return bytes;
 }
 async function prepare(req,body) {
+  const accountId=await requireAccount(req);
   if(!/^[1-9A-HJ-NP-Za-km-z]{32,44}$/.test(body.owner??'') || !['USDC','USDT','SOL'].includes(body.currency)) throw new PublicError('Connect your wallet and select a payment currency.');
   if(typeof body.name!=='string' || !body.name.trim() || body.name.length>24 || !['DEAD OR ALIVE','DEAD','ALIVE'].includes(body.condition)) throw new PublicError('Check your poster details.');
   const bytes=validatePhoto(body.photo);
@@ -31,7 +33,7 @@ async function prepare(req,body) {
     client_hash:hash(String(req.headers['x-vercel-forwarded-for']||req.socket?.remoteAddress||'unknown')+process.env.SUPABASE_SECRET_KEY),
     currency:body.currency,amount:quote?.lamports??5000000,treasury,
     expires_at:new Date(expiresAt).toISOString(),
-    details:{name:body.name.trim(),condition:body.condition,bounty:String(body.bounty??'1,250,000').replace(/[^0-9,]/g,'').slice(0,25)},
+    details:{accountId,name:body.name.trim(),condition:body.condition,bounty:String(body.bounty??'1,250,000').replace(/[^0-9,]/g,'').slice(0,25)},
   }});
   await putImage(`${id}/input.jpg`,bytes);
   return {id,token,quote,expiresAt,treasury};
@@ -80,6 +82,7 @@ export default async function handler(req,res) {
     if(!body || Buffer.byteLength(JSON.stringify(body))>1600000) throw new PublicError('Request is too large.',413);
     if(body.action==='prepare') return res.status(200).json(await prepare(req,body));
     const order=await loadOrder(body.id,body.token);
+    await authorizeOrder(req,order);
     if(body.action==='status') return res.status(200).json(await result(order));
     if(body.action==='generate') return res.status(200).json(await generate(order,body.signature));
     throw new PublicError('Unknown action.');

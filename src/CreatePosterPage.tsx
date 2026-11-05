@@ -1,4 +1,5 @@
 "use client";
+import { useAuth } from "./auth/AuthProvider";
 import { wholeBounty } from "./bountyFormat";
 import { toPng } from "html-to-image";
 import { useEffect, useRef, useState, type ChangeEvent, type DragEvent, type ReactNode } from "react";
@@ -51,6 +52,7 @@ const steps = [
 ];
 
 export function CreatePosterPage() {
+  const { user } = useAuth();
   const { address, holdings, isHolder, openModal, payForPoster } = useWallet();
   const fileRef = useRef<HTMLInputElement>(null);
   const previewRef = useRef<HTMLElement>(null);
@@ -235,6 +237,7 @@ export function CreatePosterPage() {
       return;
     }
     if (phase !== "idle") return;
+    if (!user) { location.assign("/account"); return; }
     if (!address) { openModal(); return; }
     if (!photo || !name.trim()) { setPayNote("Upload your photo and add your pirate name first."); return; }
     setPayNote(null); setPhase("confirming");
@@ -265,9 +268,10 @@ export function CreatePosterPage() {
   else if (phase === "generating") payLabel = "Creating your anime portrait…";
   else if (phase === "signing") payLabel = "Approve in your wallet…";
   else if (phase === "confirming") payLabel = "Checking your order…";
+  else if (!user) payLabel = "Sign Up / Log In to Create";
   else if (!address) payLabel = "Connect Wallet to Pay";
 
-  const payDisabled = phase === "signing" || phase === "confirming" || phase === "generating" || phase === "review" || (phase === "idle" && paymentToken === "SOL" && (!quoteValid || quoteLoading));
+  const payDisabled = phase === "signing" || phase === "confirming" || phase === "generating" || phase === "review" || (phase === "idle" && !!user && !!address && paymentToken === "SOL" && (!quoteValid || quoteLoading));
 
   return (
     <div className="creator-page">

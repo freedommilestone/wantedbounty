@@ -3,11 +3,11 @@ import { createPortal } from "react-dom";
 import { Link } from "../router";
 import { useWallet } from "../wallet";
 import { HomeCompass, HomeWheel } from "./HomeIcons";
-import { WalletButton } from "./WalletButton";
+import { AccountButton } from "../auth/AccountButton";
 
 type Page = "home" | "create" | "how" | "explore" | "profile";
 
-export function SiteHeader({ active }: { active: Page }) {
+export function SiteHeader({ active, primaryAction }: { active: Page; primaryAction?: "play" }) {
   const [menuOpen, setMenuOpen] = useState(false);
   const { modalOpen } = useWallet();
   useEffect(() => { if (modalOpen) setMenuOpen(false); }, [modalOpen]);
@@ -44,7 +44,7 @@ export function SiteHeader({ active }: { active: Page }) {
         </Link>
         <button className="site-menu-toggle" type="button" aria-label="Toggle navigation" aria-expanded={menuOpen} aria-controls="mobile-navigation" onClick={() => setMenuOpen(!menuOpen)}>☰</button>
         <nav id="site-navigation" className="nav" aria-label="Main">
-          {links.map(({ label, href, page }) => {
+          {links.filter(link => primaryAction !== "play" || link.page !== "profile").map(({ label, href, page }) => {
             const current = page === active;
             return (
               <Link
@@ -58,9 +58,12 @@ export function SiteHeader({ active }: { active: Page }) {
               </Link>
             );
           })}
-          {active === "home" && <div className="mobile-nav-wallet"><WalletButton /></div>}
+          {active === "home" && <div className="mobile-nav-wallet"><AccountButton /></div>}
         </nav>
-        <WalletButton />
+        {primaryAction === "play" ? <Link className="header-play-game" href="/account">
+          <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M5 3l4 1 15 18-3 3L5 7ZM27 3l-4 1L8 22l3 3L27 7ZM3 22l7 7m-5-3-3 4m20-8 7 7m-3-3 4 4" /></svg>
+          <span>Play Game</span>
+        </Link> : <AccountButton />}
       </div>
       {menuOpen && createPortal(
         <dialog ref={drawerRef} id="mobile-navigation" className="mobile-navigation" aria-label="Navigation"
@@ -82,7 +85,7 @@ export function SiteHeader({ active }: { active: Page }) {
                 <span className="mobile-navigation__label">{label}</span><span aria-hidden="true">→</span></Link>)}
           </nav>
           <div className="mobile-navigation__divider" aria-hidden="true"><span/><NavigationSkull/><span/></div>
-          <div className="mobile-navigation__wallet"><WalletButton /></div>
+          <div className="mobile-navigation__wallet"><AccountButton /></div>
           <div className="mobile-navigation__scenery" aria-hidden="true" />
           </div>
         </dialog>, document.body)}

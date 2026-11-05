@@ -41,9 +41,9 @@ function env(t) {
    t.after(()=>{if(previous===undefined)delete process.env[key];else process.env[key]=previous;});
  }
 }
-async function request(body) {
+async function request(body,headers={authorization:"Bearer test-session"}) {
  const res={setHeader(){},status(n){this.code=n;return this;},json(v){this.body=v;return this;}};
- await handler({method:'POST',body,headers:{},socket:{remoteAddress:'test'}},res);return res;
+ await handler({method:'POST',body,headers,socket:{remoteAddress:'test'}},res);return res;
 }
 function fakeServices(t,{providerFails=false}={}) {
  let record=order(),calls=0;const images=new Map([['input.jpg',Buffer.from([255,216,255,...new Array(100).fill(0)])]]);
@@ -94,8 +94,10 @@ test('provider failure saves receipt for assistance and never charges/generates 
 test('checkout ignores client price/recipient and saves the photo before authorizing payment',async t=>{
  env(t);let stored=false;
  t.mock.method(globalThis,'fetch',async(url,options)=>{
+  if(url.includes('/auth/v1/user'))return Response.json({id:'account-123',email_confirmed_at:new Date().toISOString()});
   if(url.includes('/rpc/prepare_poster_order')) {
    const {p_order}=JSON.parse(options.body);
+   assert.equal(p_order.details.accountId,'account-123');
    assert.equal(p_order.amount,5000000);assert.notEqual(p_order.treasury,'attacker');
    assert.equal(p_order.currency,'USDC');assert.equal(p_order.token,undefined);
    return Response.json(p_order.id);

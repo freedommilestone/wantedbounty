@@ -1,0 +1,97 @@
+/* Compact landing composition. Scenery is decorative; all content remains live. */
+body #root .home-page.landing-page {
+  container-type:inline-size;
+  width:100%; max-width:1536px; min-height:0; margin:0 auto; padding:0;
+  color:#321608; font:16px Georgia,serif;
+  background:#edcf9b url('/textures/parchment-v2.jpg') center/cover;
+  overflow:clip;
+}
+.landing-page main { margin:0; padding:0; }
+body #root .landing-page .site-header.site-header {
+  background:url('/scene/home-background-plate.jpg') center top/100% 1579%;
+  z-index:5;
+}
+body #root .landing-page .site-header.site-header .site-header__inner {
+  width:84%; height:7.6cqw; min-height:68px; gap:2cqw; flex-wrap:nowrap;
+}
+body #root .landing-page .site-header.site-header .create-mobile-brand>.wanted-brand-logo { width:5.4cqw; height:6.5cqw; }
+body #root .landing-page .site-header.site-header .create-mobile-brand strong { font-size:2.6cqw; letter-spacing:-.055em; }
+body #root .landing-page .site-header.site-header .create-mobile-brand small { font-size:.61cqw; letter-spacing:.1em; }
+body #root .landing-page .site-header.site-header .nav { gap:2.8cqw; }
+body #root .landing-page .site-header.site-header .nav a { font:700 1.35cqw Georgia,serif; }
+.header-play-game {
+  display:inline-flex; flex:none; align-items:center; justify-content:center; gap:.5em;
+  min-height:44px; padding:.55em .85em; color:#fff0cd; text-decoration:none;
+  font:700 clamp(14px,1.6vw,23px)/1.15 Georgia,serif;
+  background:#8c2b13 url('/textures/button-parchment.png') center/100% 100%;
+  background-blend-mode:multiply;
+  border:0; border-radius:5px; filter:drop-shadow(0 2px 2px #3a160754);
+  transition:transform .18s ease,filter .18s ease;
+}
+.header-play-game svg { width:1.3em; height:1.3em; }
+.header-play-game:hover { transform:translateY(-2px); filter:brightness(1.12) drop-shadow(0 3px 3px #3a160754); }
+.header-play-game:active { transform:translateY(1px); }
+.landing-hero {
+  position:relative; aspect-ratio:748/284; isolation:isolate;
+  background:url('/scene/home-background-plate.jpg') center 10.29%/100% 260.04% no-repeat;
+}
+.landing-hero__copy { position:absolute; top:8%; left:8%; width:41%; z-index:2; }
+.landing-hero__eyebrow { margin:0 0 .45em; font:bold 1.65cqw/1.2 Georgia,serif; letter-spacing:.13em; text-transform:uppercase; }
+.landing-hero h1 { margin:0 0 .1em; font:900 8.65cqw/.83 'Playfair Display',Georgia,serif; letter-spacing:-.055em; text-transform:uppercase; }
+.landing-hero h1 span { display:block; }
+.landing-hero__description { margin:1em 0 0; font:bold 1.38cqw/1.35 Georgia,serif; text-transform:uppercase; letter-spacing:-.025em; }
+.landing-hero__poster {
+  display:block; position:absolute; width:27%; left:56%; top:5%; color:inherit;
+  transform:rotate(-11deg); transition:transform .25s ease;
+  filter:drop-shadow(0 4px 4px #30170866); z-index:3;
+}
+.landing-hero__poster:hover { transform:rotate(-7deg) translateY(-4px); }
+.landing-hero__poster:focus-visible { outline:none; filter:drop-shadow(0 0 5px #853526); }
+.landing-hero__poster .creator-poster { width:100%; max-width:none; margin:0; }
+.landing-hero__motto { position:absolute; right:3.5%; top:12%; width:16%; text-align:center; }
+.landing-hero__motto span { display:block; font:700 2.8cqw/1 'Caveat',cursive; transform:rotate(-12deg); }
+.landing-hero__motto svg { display:block; width:6.5cqw; height:6.5cqw; margin:1.5cqw 0 0 auto; opacity:.8; }
+.landing-features {
+  position:relative; display:grid; grid-template-columns:repeat(4,minmax(0,1fr));
+  padding:1.3cqw 3.5% 1.7cqw; min-height:12.8cqw; align-items:stretch;
+  background:url('/scene/home-background-plate.jpg') center 53.7%/100% 602.3% no-repeat;
+}
+.landing-feature { position:relative; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:.45cqw; padding:0 1cqw; color:inherit; text-decoration:none; text-align:center; transition:color .2s ease; }
+.landing-feature + .landing-feature::before { content:''; position:absolute; left:0; top:12%; bottom:5%; width:1px; background:#8c522b66; }
+.landing-feature>svg { width:5.6cqw; height:5.6cqw; transition:transform .2s ease; }
+.landing-feature>span { font:800 1.7cqw/1.05 'EB Garamond',Georgia,serif; text-transform:uppercase; white-space:pre-line; }
+.landing-feature:hover { color:#8a2f1d; }
+.landing-feature:hover>svg { transform:translateY(-3px) rotate(-5deg); }
+@media(min-width:701px) and (max-width:1100px) {
+  body #root .landing-page .site-header.site-header .site-header__inner { display:flex; width:92%; gap:1.8cqw; }
+  body #root .landing-page .site-header.site-header .nav { display:flex; gap:2.3cqw; }
+  body #root .landing-page .site-header.site-header .nav a { font-size:clamp(11px,1.35cqw,15px); }
+  body #root .landing-page .site-header.site-header .site-menu-toggle { display:none; }
+  body #root .landing-page .site-header.site-header .create-mobile-brand strong { font-size:2.5cqw; }
+}
+@media(max-width:700px) {
+  body #root .landing-page .site-header.site-header .site-header__inner { display:grid; grid-template-columns:minmax(0,1fr) auto 40px; width:94%; gap:8px; height:auto; min-height:66px; padding-block:7px; }
+  body #root .landing-page .site-header.site-header .site-menu-toggle { grid-column:3; width:40px; height:44px; background:none; color:#321608; }
+  body #root .landing-page .site-header.site-header .create-mobile-brand>.wanted-brand-logo { width:34px; height:44px; }
+  body #root .landing-page .site-header.site-header .create-mobile-brand strong { font-size:clamp(10px,3cqw,21px); }
+  body #root .landing-page .site-header.site-header .create-mobile-brand small { font-size:clamp(4px,.85cqw,6px); }
+  .header-play-game { grid-column:2; grid-row:1; padding:10px 9px; font-size:13px; gap:5px; }
+  .header-play-game svg { width:16px; }
+  .landing-hero { aspect-ratio:auto; min-height:620px; padding:28px 6% 36px; background-size:auto 260.04%; background-position:55% 10.29%; }
+  .landing-hero__copy { position:relative; inset:auto; width:100%; text-align:center; }
+  .landing-hero__eyebrow { font-size:12px; }
+  .landing-hero h1 { font-size:clamp(60px,13.5cqw,88px); line-height:.88; }
+  .landing-hero__description { font-size:12px; max-width:340px; margin:16px auto 0; }
+  .landing-hero__poster { position:relative; inset:auto; width:51%; max-width:270px; margin:30px auto 0; }
+  .landing-hero__motto { right:3%; top:42%; width:23%; }
+  .landing-hero__motto span { font-size:clamp(17px,4.5cqw,25px); }
+  .landing-hero__motto svg { width:40px; height:40px; margin:12px auto; }
+  .landing-features { grid-template-columns:repeat(2,minmax(0,1fr)); padding:18px 4%; gap:20px 0; background:#ecd1a4 url('/textures/parchment-v2.jpg') center/cover; }
+  .landing-feature { min-height:100px; gap:8px; }
+  .landing-feature:nth-child(3)::before { display:none; }
+  .landing-feature>svg { width:48px; height:48px; }
+  .landing-feature>span { font-size:16px; }
+}
+@media(prefers-reduced-motion:reduce) {
+  .header-play-game,.landing-hero__poster,.landing-feature,.landing-feature>svg { transition:none; }
+}

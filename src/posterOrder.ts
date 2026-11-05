@@ -1,3 +1,4 @@
+import { getAuthClient } from './auth/client';
 import type { SolQuote } from './payment';
 
 export interface SavedOrder {id:string;token:string;signature?:string;quote?:SolQuote;treasury:string;}
@@ -14,7 +15,8 @@ export function saveOrder(order:SavedOrder) {
   localStorage.setItem(KEY,JSON.stringify(order));
 }
 export async function orderRequest<T>(body:object):Promise<T> {
-  const response=await fetch('/api/poster-order',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});
+  const {data:{session}}=await getAuthClient().auth.getSession();
+  const response=await fetch('/api/poster-order',{method:'POST',headers:{'Content-Type':'application/json',...(session?{Authorization:`Bearer ${session.access_token}`}:{})},body:JSON.stringify(body)});
   const data=await response.json();
   if(!response.ok) throw new Error(data.error||'Poster service is unavailable. Please retry.');
   return data;
