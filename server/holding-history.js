@@ -63,8 +63,13 @@ export async function historyRpc(method,params){
  const url=process.env.SOLANA_HISTORY_RPC_URL?.trim();
  if(!url)throw new Error('History provider is unavailable');
  const response=await fetch(url,{method:'POST',headers:{'Content-Type':'application/json'},signal:AbortSignal.timeout(12000),body:JSON.stringify({jsonrpc:'2.0',id:1,method,params})});
- if(!response.ok)throw new Error('History provider is unavailable');
- const body=await response.json();if(body.error||body.result===undefined)throw new Error('History query failed');
+ if(!response.ok)throw Object.assign(new Error('History provider is unavailable'),{rpcStatus:response.status});
+ const body=await response.json();
+ if(body.error||body.result===undefined){
+  const message=String(body.error?.message||'');
+  const category=/upgrade|paid|subscription|plan/i.test(message)?'plan_access':/api.key|unauthori|forbidden|access.denied/i.test(message)?'authentication':/not.support|not.found|not.available/i.test(message)?'method_support':/invalid.param/i.test(message)?'parameters':'rpc_error';
+  throw Object.assign(new Error('History query failed'),{rpcCode:Number.isInteger(body.error?.code)?body.error.code:undefined,rpcCategory:category});
+ }
  return body.result;
 }
 async function historyAnchor(address,minSlot){

@@ -10,13 +10,15 @@ if(process.env.VERCEL_ENV==='production'){
   await Promise.all(['player_energy','energy_levels','energy_events','wallet_links','wallet_holding_history'].map(table=>walletDb(`${table}?select=*&limit=0`)));
   stage='historical RPC and token launch coverage';
   const first=await historyRpc('getTransactionsForAddress',[BERI_MINT,{transactionDetails:'signatures',sortOrder:'asc',limit:1,commitment:'finalized',filters:{status:'succeeded'}}]);
+  stage='token launch metadata';
   if(!Number.isSafeInteger(first?.data?.[0]?.slot)||first.data[0].slot<111491819)throw new Error('Unsupported history');
   stage='full token-account history support';
   const page=await historyRpc('getTransactionsForAddress',[BERI_MINT,{transactionDetails:'full',encoding:'json',maxSupportedTransactionVersion:1,commitment:'finalized',sortOrder:'asc',limit:1,filters:{status:'succeeded',tokenAccounts:'all',slot:{gte:first.data[0].slot}}}]);
   if(!Array.isArray(page?.data)||!page.data.length||!Number.isSafeInteger(page.data[0].transactionIndex)||!Array.isArray(page.data[0].meta?.preTokenBalances))throw new Error('Unsupported history response');
   console.log('Production checks passed: Supabase energy/wallet tables, finalized history RPC, token-launch coverage, full token-account metadata.');
- }catch{
+ }catch(error){
   console.error(`Production release check failed: ${stage}. Check the server-only Vercel configuration/provider access.`);
+  console.error(JSON.stringify({httpStatus:error.rpcStatus,rpcCode:error.rpcCode,category:error.rpcCategory}));
   process.exitCode=1;
  }
 }
