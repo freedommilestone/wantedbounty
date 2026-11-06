@@ -33,6 +33,7 @@ interface PhantomSolanaProvider {
   publicKey: SolanaPublicKey | null;
   connect(options?: { onlyIfTrusted?: boolean }): Promise<{ publicKey: SolanaPublicKey }>;
   disconnect(): Promise<void>;
+  signMessage?(message: Uint8Array, display?: string): Promise<{signature: Uint8Array}>;
   on(event: "accountChanged", handler: (publicKey: SolanaPublicKey | null) => void): void;
   on(event: "disconnect", handler: () => void): void;
   off(event: "accountChanged", handler: (publicKey: SolanaPublicKey | null) => void): void;
@@ -62,6 +63,10 @@ interface StandardSignAndSend {
   signAndSendTransaction(
     ...inputs: { account: unknown; chain: string; transaction: Uint8Array }[]
   ): Promise<{ signature: Uint8Array }[]>;
+}
+
+interface StandardSignMessage {
+  signMessage(...inputs: {account: unknown; message: Uint8Array}[]): Promise<{signature: Uint8Array; signedMessage: Uint8Array}[]>;
 }
 
 interface StandardEvents {
@@ -107,6 +112,7 @@ interface WalletContextValue {
   holdings: BeriHoldings;
   isHolder: boolean;
   refreshHoldings: () => void;
+  signVerificationMessage: (message: string, expectedAddress: string) => Promise<string>;
   /** Pays the fixed stablecoin poster fee and resolves after confirmation. */
   payForPoster: (token: PaymentToken, onSent?: (signature: string) => void, quote?: SolQuote, orderId?: string) => Promise<string>;
 }
@@ -560,6 +566,26 @@ export function WalletProvider({ children }: { children: ReactNode }) {
     reset();
   }, [metamask, reset]);
 
+  const signVerificationMessage = useCallback(async (message: string, expectedAddress: string) => {
+    if (!address || address !== expectedAddress || !walletRef.current) throw new Error("Reconnect the wallet you want to verify.");
+    const bytes = new TextEncoder().encode(message);
+    const standard = walletRef.current === "metamask" ? metamask : phantomStandard.current;
+    const signer = standard?.features["solana:signMessage"] as StandardSignMessage | undefined;
+    let signature: Uint8Array;
+    if (signer && standard) {
+      const account = standard.accounts.find(item => item.address === expectedAddress);
+      if (!account) throw new Error("Your wallet account changed. Reconnect and try again.");
+      const [signed] = await signer.signMessage({account, message:bytes});
+      if (!signed || signed.signedMessage.length !== bytes.length || signed.signedMessage.some((byte,index) => byte !== bytes[index])) throw new Error("The wallet changed the verification message. Please try again.");
+      signature = signed.signature;
+    } else {
+      const provider = walletRef.current === "phantom" ? getPhantom() : null;
+      if (!provider?.signMessage || readAddress(provider.publicKey) !== expectedAddress) throw new Error("This wallet does not support message verification. Update Phantom or MetaMask and try again.");
+      signature = (await provider.signMessage(bytes,"utf8")).signature;
+    }
+    return btoa(String.fromCharCode(...signature));
+  }, [address,metamask]);
+
   const payForPoster = useCallback(
     async (token: PaymentToken, onSent?: (signature: string) => void, quote?: SolQuote, orderId?: string) => {
       const kind = walletRef.current;
@@ -627,6 +653,7 @@ export function WalletProvider({ children }: { children: ReactNode }) {
       isHolder: holdings.state === "ready" && holdings.amount > 0,
       refreshHoldings: () => setScanNonce((nonce) => nonce + 1),
       payForPoster,
+      signVerificationMessage,
     }),
     [
       modalOpen,
@@ -642,6 +669,7 @@ export function WalletProvider({ children }: { children: ReactNode }) {
       error,
       holdings,
       payForPoster,
+      signVerificationMessage,
     ],
   );
 

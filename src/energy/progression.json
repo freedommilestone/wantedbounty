@@ -1,0 +1,602 @@
+[
+  {
+    "level": 1,
+    "holdingDays": 0,
+    "epPerDay": 144,
+    "capacity": 500
+  },
+  {
+    "level": 2,
+    "holdingDays": 1,
+    "epPerDay": 149,
+    "capacity": 528
+  },
+  {
+    "level": 3,
+    "holdingDays": 4,
+    "epPerDay": 155,
+    "capacity": 556
+  },
+  {
+    "level": 4,
+    "holdingDays": 8,
+    "epPerDay": 160,
+    "capacity": 583
+  },
+  {
+    "level": 5,
+    "holdingDays": 13,
+    "epPerDay": 165,
+    "capacity": 611
+  },
+  {
+    "level": 6,
+    "holdingDays": 18,
+    "epPerDay": 171,
+    "capacity": 639
+  },
+  {
+    "level": 7,
+    "holdingDays": 24,
+    "epPerDay": 176,
+    "capacity": 667
+  },
+  {
+    "level": 8,
+    "holdingDays": 30,
+    "epPerDay": 181,
+    "capacity": 694
+  },
+  {
+    "level": 9,
+    "holdingDays": 37,
+    "epPerDay": 187,
+    "capacity": 722
+  },
+  {
+    "level": 10,
+    "holdingDays": 44,
+    "epPerDay": 192,
+    "capacity": 750
+  },
+  {
+    "level": 11,
+    "holdingDays": 52,
+    "epPerDay": 197,
+    "capacity": 775
+  },
+  {
+    "level": 12,
+    "holdingDays": 61,
+    "epPerDay": 202,
+    "capacity": 800
+  },
+  {
+    "level": 13,
+    "holdingDays": 69,
+    "epPerDay": 206,
+    "capacity": 825
+  },
+  {
+    "level": 14,
+    "holdingDays": 78,
+    "epPerDay": 211,
+    "capacity": 850
+  },
+  {
+    "level": 15,
+    "holdingDays": 88,
+    "epPerDay": 216,
+    "capacity": 875
+  },
+  {
+    "level": 16,
+    "holdingDays": 98,
+    "epPerDay": 221,
+    "capacity": 900
+  },
+  {
+    "level": 17,
+    "holdingDays": 108,
+    "epPerDay": 226,
+    "capacity": 925
+  },
+  {
+    "level": 18,
+    "holdingDays": 119,
+    "epPerDay": 230,
+    "capacity": 950
+  },
+  {
+    "level": 19,
+    "holdingDays": 130,
+    "epPerDay": 235,
+    "capacity": 975
+  },
+  {
+    "level": 20,
+    "holdingDays": 141,
+    "epPerDay": 240,
+    "capacity": 1000
+  },
+  {
+    "level": 21,
+    "holdingDays": 153,
+    "epPerDay": 245,
+    "capacity": 1050
+  },
+  {
+    "level": 22,
+    "holdingDays": 165,
+    "epPerDay": 250,
+    "capacity": 1100
+  },
+  {
+    "level": 23,
+    "holdingDays": 177,
+    "epPerDay": 254,
+    "capacity": 1150
+  },
+  {
+    "level": 24,
+    "holdingDays": 190,
+    "epPerDay": 259,
+    "capacity": 1200
+  },
+  {
+    "level": 25,
+    "holdingDays": 203,
+    "epPerDay": 264,
+    "capacity": 1250
+  },
+  {
+    "level": 26,
+    "holdingDays": 216,
+    "epPerDay": 269,
+    "capacity": 1300
+  },
+  {
+    "level": 27,
+    "holdingDays": 230,
+    "epPerDay": 274,
+    "capacity": 1350
+  },
+  {
+    "level": 28,
+    "holdingDays": 244,
+    "epPerDay": 278,
+    "capacity": 1400
+  },
+  {
+    "level": 29,
+    "holdingDays": 258,
+    "epPerDay": 283,
+    "capacity": 1450
+  },
+  {
+    "level": 30,
+    "holdingDays": 272,
+    "epPerDay": 288,
+    "capacity": 1500
+  },
+  {
+    "level": 31,
+    "holdingDays": 287,
+    "epPerDay": 293,
+    "capacity": 1550
+  },
+  {
+    "level": 32,
+    "holdingDays": 302,
+    "epPerDay": 298,
+    "capacity": 1600
+  },
+  {
+    "level": 33,
+    "holdingDays": 317,
+    "epPerDay": 302,
+    "capacity": 1650
+  },
+  {
+    "level": 34,
+    "holdingDays": 332,
+    "epPerDay": 307,
+    "capacity": 1700
+  },
+  {
+    "level": 35,
+    "holdingDays": 348,
+    "epPerDay": 312,
+    "capacity": 1750
+  },
+  {
+    "level": 36,
+    "holdingDays": 364,
+    "epPerDay": 317,
+    "capacity": 1800
+  },
+  {
+    "level": 37,
+    "holdingDays": 380,
+    "epPerDay": 322,
+    "capacity": 1850
+  },
+  {
+    "level": 38,
+    "holdingDays": 397,
+    "epPerDay": 326,
+    "capacity": 1900
+  },
+  {
+    "level": 39,
+    "holdingDays": 414,
+    "epPerDay": 331,
+    "capacity": 1950
+  },
+  {
+    "level": 40,
+    "holdingDays": 431,
+    "epPerDay": 336,
+    "capacity": 2000
+  },
+  {
+    "level": 41,
+    "holdingDays": 448,
+    "epPerDay": 341,
+    "capacity": 2075
+  },
+  {
+    "level": 42,
+    "holdingDays": 465,
+    "epPerDay": 346,
+    "capacity": 2150
+  },
+  {
+    "level": 43,
+    "holdingDays": 483,
+    "epPerDay": 350,
+    "capacity": 2225
+  },
+  {
+    "level": 44,
+    "holdingDays": 501,
+    "epPerDay": 355,
+    "capacity": 2300
+  },
+  {
+    "level": 45,
+    "holdingDays": 519,
+    "epPerDay": 360,
+    "capacity": 2375
+  },
+  {
+    "level": 46,
+    "holdingDays": 538,
+    "epPerDay": 365,
+    "capacity": 2450
+  },
+  {
+    "level": 47,
+    "holdingDays": 556,
+    "epPerDay": 370,
+    "capacity": 2525
+  },
+  {
+    "level": 48,
+    "holdingDays": 575,
+    "epPerDay": 374,
+    "capacity": 2600
+  },
+  {
+    "level": 49,
+    "holdingDays": 594,
+    "epPerDay": 379,
+    "capacity": 2675
+  },
+  {
+    "level": 50,
+    "holdingDays": 614,
+    "epPerDay": 384,
+    "capacity": 2750
+  },
+  {
+    "level": 51,
+    "holdingDays": 633,
+    "epPerDay": 389,
+    "capacity": 2825
+  },
+  {
+    "level": 52,
+    "holdingDays": 653,
+    "epPerDay": 394,
+    "capacity": 2900
+  },
+  {
+    "level": 53,
+    "holdingDays": 673,
+    "epPerDay": 398,
+    "capacity": 2975
+  },
+  {
+    "level": 54,
+    "holdingDays": 693,
+    "epPerDay": 403,
+    "capacity": 3050
+  },
+  {
+    "level": 55,
+    "holdingDays": 713,
+    "epPerDay": 408,
+    "capacity": 3125
+  },
+  {
+    "level": 56,
+    "holdingDays": 734,
+    "epPerDay": 413,
+    "capacity": 3200
+  },
+  {
+    "level": 57,
+    "holdingDays": 755,
+    "epPerDay": 418,
+    "capacity": 3275
+  },
+  {
+    "level": 58,
+    "holdingDays": 776,
+    "epPerDay": 422,
+    "capacity": 3350
+  },
+  {
+    "level": 59,
+    "holdingDays": 797,
+    "epPerDay": 427,
+    "capacity": 3425
+  },
+  {
+    "level": 60,
+    "holdingDays": 818,
+    "epPerDay": 432,
+    "capacity": 3500
+  },
+  {
+    "level": 61,
+    "holdingDays": 840,
+    "epPerDay": 437,
+    "capacity": 3600
+  },
+  {
+    "level": 62,
+    "holdingDays": 862,
+    "epPerDay": 442,
+    "capacity": 3700
+  },
+  {
+    "level": 63,
+    "holdingDays": 884,
+    "epPerDay": 446,
+    "capacity": 3800
+  },
+  {
+    "level": 64,
+    "holdingDays": 906,
+    "epPerDay": 451,
+    "capacity": 3900
+  },
+  {
+    "level": 65,
+    "holdingDays": 928,
+    "epPerDay": 456,
+    "capacity": 4000
+  },
+  {
+    "level": 66,
+    "holdingDays": 951,
+    "epPerDay": 461,
+    "capacity": 4100
+  },
+  {
+    "level": 67,
+    "holdingDays": 973,
+    "epPerDay": 466,
+    "capacity": 4200
+  },
+  {
+    "level": 68,
+    "holdingDays": 996,
+    "epPerDay": 470,
+    "capacity": 4300
+  },
+  {
+    "level": 69,
+    "holdingDays": 1020,
+    "epPerDay": 475,
+    "capacity": 4400
+  },
+  {
+    "level": 70,
+    "holdingDays": 1043,
+    "epPerDay": 480,
+    "capacity": 4500
+  },
+  {
+    "level": 71,
+    "holdingDays": 1066,
+    "epPerDay": 485,
+    "capacity": 4600
+  },
+  {
+    "level": 72,
+    "holdingDays": 1090,
+    "epPerDay": 490,
+    "capacity": 4700
+  },
+  {
+    "level": 73,
+    "holdingDays": 1114,
+    "epPerDay": 494,
+    "capacity": 4800
+  },
+  {
+    "level": 74,
+    "holdingDays": 1138,
+    "epPerDay": 499,
+    "capacity": 4900
+  },
+  {
+    "level": 75,
+    "holdingDays": 1162,
+    "epPerDay": 504,
+    "capacity": 5000
+  },
+  {
+    "level": 76,
+    "holdingDays": 1187,
+    "epPerDay": 509,
+    "capacity": 5100
+  },
+  {
+    "level": 77,
+    "holdingDays": 1211,
+    "epPerDay": 514,
+    "capacity": 5200
+  },
+  {
+    "level": 78,
+    "holdingDays": 1236,
+    "epPerDay": 518,
+    "capacity": 5300
+  },
+  {
+    "level": 79,
+    "holdingDays": 1261,
+    "epPerDay": 523,
+    "capacity": 5400
+  },
+  {
+    "level": 80,
+    "holdingDays": 1286,
+    "epPerDay": 528,
+    "capacity": 5500
+  },
+  {
+    "level": 81,
+    "holdingDays": 1312,
+    "epPerDay": 533,
+    "capacity": 5650
+  },
+  {
+    "level": 82,
+    "holdingDays": 1337,
+    "epPerDay": 538,
+    "capacity": 5800
+  },
+  {
+    "level": 83,
+    "holdingDays": 1363,
+    "epPerDay": 542,
+    "capacity": 5950
+  },
+  {
+    "level": 84,
+    "holdingDays": 1389,
+    "epPerDay": 547,
+    "capacity": 6100
+  },
+  {
+    "level": 85,
+    "holdingDays": 1415,
+    "epPerDay": 552,
+    "capacity": 6250
+  },
+  {
+    "level": 86,
+    "holdingDays": 1441,
+    "epPerDay": 557,
+    "capacity": 6400
+  },
+  {
+    "level": 87,
+    "holdingDays": 1467,
+    "epPerDay": 562,
+    "capacity": 6550
+  },
+  {
+    "level": 88,
+    "holdingDays": 1494,
+    "epPerDay": 566,
+    "capacity": 6700
+  },
+  {
+    "level": 89,
+    "holdingDays": 1520,
+    "epPerDay": 571,
+    "capacity": 6850
+  },
+  {
+    "level": 90,
+    "holdingDays": 1547,
+    "epPerDay": 576,
+    "capacity": 7000
+  },
+  {
+    "level": 91,
+    "holdingDays": 1574,
+    "epPerDay": 581,
+    "capacity": 7300
+  },
+  {
+    "level": 92,
+    "holdingDays": 1602,
+    "epPerDay": 586,
+    "capacity": 7600
+  },
+  {
+    "level": 93,
+    "holdingDays": 1629,
+    "epPerDay": 590,
+    "capacity": 7900
+  },
+  {
+    "level": 94,
+    "holdingDays": 1656,
+    "epPerDay": 595,
+    "capacity": 8200
+  },
+  {
+    "level": 95,
+    "holdingDays": 1684,
+    "epPerDay": 600,
+    "capacity": 8500
+  },
+  {
+    "level": 96,
+    "holdingDays": 1712,
+    "epPerDay": 605,
+    "capacity": 8800
+  },
+  {
+    "level": 97,
+    "holdingDays": 1740,
+    "epPerDay": 610,
+    "capacity": 9100
+  },
+  {
+    "level": 98,
+    "holdingDays": 1768,
+    "epPerDay": 614,
+    "capacity": 9400
+  },
+  {
+    "level": 99,
+    "holdingDays": 1797,
+    "epPerDay": 619,
+    "capacity": 9700
+  },
+  {
+    "level": 100,
+    "holdingDays": 1825,
+    "epPerDay": 624,
+    "capacity": 10000
+  }
+]

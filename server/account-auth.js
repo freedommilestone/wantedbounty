@@ -9,7 +9,7 @@ export async function requireAccount(req) {
  if(response.status>=500)throw new PublicError('Account service is temporarily unavailable. Please retry.',503);
  if(!response.ok)throw new PublicError('Your session has expired. Please log in again.',401);
  const user=await response.json();
- if(!user.id||!user.email_confirmed_at)throw new PublicError('Confirm your email before creating a poster.',401);
+ if(!user.id||!user.email_confirmed_at)throw new PublicError('Confirm your email before continuing.',401);
  return user.id;
 }
 export async function authorizeOrder(req,order){

@@ -110,3 +110,5 @@ body #root .dashboard-poster {width:100%;max-width:none;transform:rotate(-3deg);
  .dashboard-guard {padding:24px;margin:20px auto;}
 }
 @media(prefers-reduced-motion:reduce) {.dashboard-button,.dashboard-sidebar button {transition:none;}}
+
+.dashboard-main > .holding-card {margin:0 0 20px;}

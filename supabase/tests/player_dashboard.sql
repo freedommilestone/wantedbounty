@@ -8,7 +8,7 @@ set local role authenticated;
 do $$
 declare chosen timestamptz; affected integer;
 begin
- if not exists(select 1 from public.players where wanted_bounty=0 and energy=8400 and level=1 and level_progress=0 and allegiance is null) then raise exception 'Starting stats incorrect'; end if;
+ if not exists(select 1 from public.players where wanted_bounty=0 and energy=500 and level=1 and level_progress=0 and allegiance is null) then raise exception 'Starting stats incorrect'; end if;
  update public.players set allegiance='pirates' where user_id=current_setting('test.player_a')::uuid;
  select allegiance_chosen_at into chosen from public.players where user_id=current_setting('test.player_a')::uuid;
  update public.players set allegiance='pirates' where user_id=current_setting('test.player_a')::uuid;
@@ -33,7 +33,7 @@ end $$;
 reset role;
 update auth.users set raw_user_meta_data='{"name":"Updated Captain"}' where id=current_setting('test.player_a')::uuid;
 do $$ begin
- if not exists(select 1 from public.players where user_id=current_setting('test.player_a')::uuid and display_name='Updated Captain' and allegiance='pirates' and energy=8400) then raise exception 'Profile sync changed faction or stats'; end if;
+ if not exists(select 1 from public.players where user_id=current_setting('test.player_a')::uuid and display_name='Updated Captain' and allegiance='pirates' and energy=500) then raise exception 'Profile sync changed faction or stats'; end if;
 end $$;
 rollback;
 select 'PASS: starting stats, first choice, permanent faction, reset denial, idempotent confirmation, server-only stats, RLS ownership, profile sync. Test records rolled back.' as verification;

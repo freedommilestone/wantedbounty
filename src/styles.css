@@ -24,3 +24,5 @@
 @import "./auth/SignInModal.css";
 @import "./auth/AllegiancePage.css";
 @import "./PlayerDashboard.css";
+
+@import "./holdings/Holdings.css";

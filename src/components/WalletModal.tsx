@@ -127,6 +127,7 @@ export function WalletModal() {
               <strong>{holdings.state === "ready" ? `${holdings.display} BERI` : holdings.state === "loading" ? "Scanning…" : "Balance unavailable"}</strong>
             </summary>
             <div className="fleet-modal__actions">
+              <Link href="/dashboard" onClick={closeModal}>Verify Wallet & Holding Streak <ArrowRight /></Link>
               <Link href="/profile" onClick={closeModal}>My Profile <ArrowRight /></Link>
               <button type="button" onClick={refreshHoldings} disabled={holdings.state === "loading" || connecting}><RefreshIcon /> Rescan balance</button>
               <button type="button" onClick={copyAddress}>{copyStatus === "Address copied" ? <CheckIcon /> : <CopyIcon />} Copy address</button>
