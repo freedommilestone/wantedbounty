@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import { useAuth } from './AuthProvider';
 import { getAuthClient } from './client';
 import { Link } from '../router';
+import { playerDestination } from './playerDestination';
 
 type Mode = 'login' | 'signup' | 'reset';
 export function SignInModal({ onClose }: { onClose: () => void }) {
@@ -50,12 +51,13 @@ export function SignInModal({ onClose }: { onClose: () => void }) {
         } });
         if (error) throw error;
         setPassword('');
-        if (data.session) { onClose(); router.push('/allegiance'); }
+        if (data.session) { const destination=await playerDestination(data.session.user.id); onClose(); router.push(destination); }
         else setMessage('Check your email to confirm your account, then sign in.');
       } else if (mode === 'login') {
-        const { error } = await auth.signInWithPassword({ email: email.trim(), password });
+        const { data, error } = await auth.signInWithPassword({ email: email.trim(), password });
         if (error) throw error;
-        setPassword(''); onClose(); router.push('/allegiance');
+        const destination=await playerDestination(data.user.id);
+        setPassword(''); onClose(); router.push(destination);
       } else {
         const { error } = await auth.resetPasswordForEmail(email.trim(), { redirectTo: location.origin + '/account?mode=recovery' });
         if (error) throw error;
@@ -77,7 +79,7 @@ export function SignInModal({ onClose }: { onClose: () => void }) {
       {loading ? <p role="status" className="sailor-feedback">Loading your account…</p> : user ?
         <div className="sailor-form-shell sailor-signed-in">
           <p>You’re signed in and ready to set sail.</p>
-          <Link className="sailor-primary" href="/profile" onClick={onClose}>Continue to My Profile <span aria-hidden="true">→</span></Link>
+          <Link className="sailor-primary" href="/dashboard" onClick={onClose}>Continue to Dashboard <span aria-hidden="true">→</span></Link>
           <Link className="sailor-secondary" href="/account" onClick={onClose}>Manage My Account</Link>
         </div> : <>
         {mode !== 'reset' && <div className="sailor-tabs" aria-label="Sign-in options">

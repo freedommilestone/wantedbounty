@@ -3,7 +3,7 @@ import { createContext, useContext, useEffect, useState, useCallback, type React
 import type { User } from '@supabase/supabase-js';
 import { getAuthClient } from './client';
 export type Allegiance = 'pirates' | 'marines' | 'revolutionaries';
-export type Player = {user_id:string;display_name:string;allegiance:Allegiance|null;allegiance_chosen_at:string|null};
+export type Player = {user_id:string;display_name:string;allegiance:Allegiance|null;allegiance_chosen_at:string|null;wanted_bounty:number;energy:number;level:number;level_progress:number;world_rank:number|null;fighting_style:string|null;devil_fruit:string|null};
 const Context = createContext<{user:User|null;loading:boolean;player:Player|null;playerLoading:boolean;playerError:string;refreshPlayer:()=>void}>({user:null,loading:true,player:null,playerLoading:true,playerError:'',refreshPlayer:()=>{}});
 export function AuthProvider({children}:{children:ReactNode}) {
  const [user,setUser]=useState<User|null>(null),[loading,setLoading]=useState(true);
@@ -18,7 +18,7 @@ export function AuthProvider({children}:{children:ReactNode}) {
  useEffect(()=>{
   let active=true;
   if(!user){setRecord(null);return;}
-  getAuthClient().from('players').select('user_id,display_name,allegiance,allegiance_chosen_at').eq('user_id',user.id).single()
+  getAuthClient().from('players').select('user_id,display_name,allegiance,allegiance_chosen_at,wanted_bounty,energy,level,level_progress,world_rank,fighting_style,devil_fruit').eq('user_id',user.id).single()
    .then(({data,error})=>{if(active)setRecord({id:user.id,player:data,error:error?'We couldn’t load your player record. Please retry.':''});},()=>{if(active)setRecord({id:user.id,player:null,error:'We couldn’t load your player record. Please retry.'});});
   return()=>{active=false;};
  },[user,revision]);

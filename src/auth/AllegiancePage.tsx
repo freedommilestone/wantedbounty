@@ -19,17 +19,19 @@ export function AllegiancePage() {
  const [selected,setSelected]=useState<Allegiance>('pirates');
  const [busy,setBusy]=useState(false),[error,setError]=useState('');
  const saving=useRef(false);
- useEffect(()=>{if(player?.allegiance)router.replace('/profile');},[player?.allegiance,router]);
+ useEffect(()=>{if(player?.allegiance)router.replace('/dashboard');},[player?.allegiance,router]);
  async function confirm(){
   if(saving.current||!user||playerLoading||playerError)return;
   saving.current=true;setBusy(true);setError('');
   try{
    const {data,error}=await getAuthClient().from('players').update({allegiance:selected}).eq('user_id',user.id).select('allegiance').single();
+   if(error?.code==='23514'){refreshPlayer();return;}
    if(error||data?.allegiance!==selected)throw new Error('Your allegiance could not be saved. Please try again.');
-   refreshPlayer();router.replace('/profile');
+   refreshPlayer();router.replace('/dashboard');
   }catch(e){setError(e instanceof Error?e.message:'Your allegiance could not be saved. Please try again.');}
   finally{saving.current=false;setBusy(false);}
  }
+ if(loading||playerLoading||player?.allegiance)return <div className="home-page landing-page allegiance-page"><SiteHeader active="home" primaryAction="play"/><main className="allegiance-main"><p role="status">Opening your player account…</p></main></div>;
  return <div className="home-page landing-page allegiance-page"><SiteHeader active="home" primaryAction="play"/>
   <main className="allegiance-main">
    <header className="allegiance-intro"><p><HomeCompass/> Your destiny awaits <HomeCompass/></p><h1>Choose your allegiance</h1><span>Three powers shape the world. Which banner will you follow?</span></header>
@@ -42,6 +44,7 @@ export function AllegiancePage() {
      <span className="allegiance-trait"><FactionIcon kind={f.id}/>{f.trait}</span>
     </label>)}
    </fieldset>
+   <p className="allegiance-permanent">Choose carefully. Your allegiance is permanent once confirmed.</p>
    <div className="allegiance-actions"><div className="allegiance-selected" role="status">Selected: {factions.find(f=>f.id===selected)?.name} <span aria-hidden="true">✓</span></div>
     <button className="allegiance-confirm" onClick={confirm} disabled={busy||loading||playerLoading||!user||!!playerError||!!player?.allegiance}>{busy?'Saving allegiance…':'Confirm Allegiance'} <span aria-hidden="true">→</span></button>
    </div>

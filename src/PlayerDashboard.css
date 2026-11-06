@@ -1,0 +1,112 @@
+/* One responsive composition; all player data and actions are live elements. */
+body #root .home-page.landing-page.player-dashboard {min-height:100svh;color:#321507;background:#ecd2a2 url('/scene/player-dashboard-coast-v1.webp') center/100% 100% no-repeat;}
+body #root .player-dashboard .site-header.site-header {background:linear-gradient(#f4dbb39c,#f4dbb39c),url('/textures/parchment-v2.jpg') center/cover;border-bottom:2px solid #80552e85;}
+body #root .player-dashboard .site-header.site-header .site-header__inner {width:88%;min-height:54px;height:7.1cqw;gap:2cqw;}
+body #root .player-dashboard .site-header.site-header .nav {gap:2.2cqw;}
+.dashboard-layout {display:grid;grid-template-columns:18% minmax(0,1fr);gap:2%;padding:0 2.5% 4% 0;}
+.dashboard-sidebar {border-right:3px double #9c6a38;padding:1.8cqw .8cqw 8cqw 0;background:linear-gradient(#efc58d66,#efc58d05);}
+.dashboard-sidebar nav {display:flex;flex-direction:column;}
+.dashboard-sidebar button {display:flex;align-items:center;gap:.7em;color:#321507;background:transparent;min-height:32px;padding:.65em .7em;border:0;border-bottom:1px solid #93663866;text-align:left;font:700 clamp(12px,1.65cqw,23px)/1.1 'EB Garamond',Georgia,serif;cursor:pointer;transition:color .18s,transform .18s,background .18s;}
+.dashboard-sidebar button svg {width:1.5em;height:1.5em;flex:none;}
+.dashboard-sidebar button.is-active {color:#fff0d2;background:#9a3418 url('/textures/button-parchment.png') center/100% 100%;background-blend-mode:multiply;border-radius:4px;box-shadow:0 2px 3px #66381555;}
+.dashboard-sidebar button:hover:not(.is-active) {background:#ab6e2c22;transform:translateX(2px);}
+.dashboard-main {min-width:0;padding-top:1%;}
+.dashboard-welcome {display:grid;grid-template-columns:minmax(0,1fr) 28%;align-items:center;gap:1%;margin:0 0 1%;}
+.dashboard-eyebrow {display:flex;gap:.5em;align-items:center;text-transform:uppercase;font:700 clamp(12px,1.7cqw,24px)/1.2 'EB Garamond',Georgia,serif;letter-spacing:.03em;margin:0 0 .25em;}
+.dashboard-eyebrow svg {width:1.8em;height:1.8em;}
+.dashboard-welcome h1 {font:800 clamp(24px,3.55cqw,52px)/1.1 'EB Garamond',Georgia,serif;letter-spacing:-.025em;margin:0 0 .2em;overflow-wrap:anywhere;}
+.dashboard-welcome-copy {font:clamp(12px,1.45cqw,20px)/1.35 Georgia,serif;margin:0;}
+.dashboard-flag {width:100%;aspect-ratio:1.9;background:url('/scene/allegiance-flags-v1.webp') 0 center/300% auto no-repeat;}
+.dashboard-stats {display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1.2%;margin-bottom:2%;}
+.dashboard-stat {min-width:0;min-height:8.6cqw;padding:5% 12%;background:url('/textures/home-poster-paper.jpg') center/100% 100%;border:1px solid #8d572b;border-radius:6px;box-shadow:inset 0 0 0 2px #e9c391;}
+.dashboard-stat h2 {font:700 clamp(11px,1.6cqw,22px)/1.15 'EB Garamond',Georgia,serif;text-transform:uppercase;letter-spacing:.025em;margin:0 0 .25em;}
+.dashboard-stat strong {display:flex;align-items:center;gap:.25em;font:800 clamp(22px,3.1cqw,45px)/1.05 'EB Garamond',Georgia,serif;overflow-wrap:anywhere;}
+.dashboard-stat strong svg {width:.75em;height:1em;flex:none;}
+.dashboard-stat:last-child strong {font-size:clamp(18px,2.8cqw,40px);}
+.dashboard-stat small {display:block;margin-top:.25em;font:clamp(11px,1.35cqw,18px)/1.2 Georgia,serif;}
+.dashboard-stat small svg {width:1.4em;height:1.4em;}
+.dashboard-overview {display:grid;grid-template-columns:56% minmax(0,1fr);gap:1.5%;}
+.dashboard-panel {min-width:0;border:1px solid #82562e;border-radius:8px;background:linear-gradient(#f8dfb5cc,#f8dfb5cc),url('/textures/parchment-v2.jpg') center/cover;box-shadow:inset 0 0 6px #b67e3659;}
+.dashboard-panel>h2 {border-bottom:1px solid #ac7e4c;margin:0;padding:.35em .7em .25em;font:800 clamp(16px,2.05cqw,29px)/1.1 'EB Garamond',Georgia,serif;text-transform:uppercase;letter-spacing:-.025em;}
+.dashboard-identity-body {display:grid;grid-template-columns:38% minmax(0,1fr);gap:4%;padding:3% 5% 4%;align-items:start;}
+body #root .dashboard-poster {width:100%;max-width:none;transform:rotate(-3deg);margin:0;filter:drop-shadow(1px 3px 2px #58310c66);}
+.dashboard-character-copy {min-width:0;padding-top:3%;}
+.dashboard-level-tag {display:inline-block;background:#88291b url('/textures/button-parchment.png') center/100% 100%;background-blend-mode:multiply;color:#fff0d2;padding:.3em .8em;border-radius:3px;font:700 clamp(11px,1.5cqw,21px)/1.1 'EB Garamond',Georgia,serif;text-transform:uppercase;}
+.dashboard-panel h3 {font:800 clamp(20px,2.8cqw,40px)/1.1 'EB Garamond',Georgia,serif;letter-spacing:-.03em;margin:.2em 0;overflow-wrap:anywhere;}
+.dashboard-panel dl {margin:0 0 .6em;}
+.dashboard-panel dl>div {display:flex;flex-wrap:wrap;gap:.3em;border-top:1px solid #aa784355;padding:.45em 0;font:clamp(12px,1.5cqw,20px)/1.25 Georgia,serif;}
+.dashboard-panel dt {font-weight:bold;}
+.dashboard-panel dd {margin:0;}
+.dashboard-button {display:flex;align-items:center;justify-content:center;gap:.6em;min-height:34px;width:100%;padding:.55em .75em;text-decoration:none;background:url('/textures/button-parchment.png') center/100% 100%;color:#321507;font:700 clamp(14px,1.85cqw,26px)/1.1 'EB Garamond',Georgia,serif;border:0;cursor:pointer;transition:filter .18s,transform .18s;}
+.dashboard-button:hover {filter:brightness(1.08) drop-shadow(0 2px 2px #7a491a55);transform:translateY(-2px);}
+.dashboard-button:active {transform:translateY(1px);}
+.dashboard-adventure {display:flex;flex-direction:column;padding:0 5% 5%;}
+.dashboard-adventure>h2 {margin-inline:-5.6%;border:0;padding:.4em 0 .2em;}
+.dashboard-adventure>img {width:100%;aspect-ratio:3.1;object-fit:cover;border:1px solid #ae814b;border-radius:3px;}
+.dashboard-adventure p {font:clamp(12px,1.5cqw,20px)/1.35 Georgia,serif;margin:0 0 .6em;}
+.dashboard-adventure .dashboard-button {margin-top:auto;}
+.dashboard-guard {max-width:640px;margin:5% auto;padding:32px;font:18px/1.5 Georgia,serif;}
+.dashboard-guard h1 {font:700 36px/1.1 'EB Garamond',Georgia,serif;}
+.dashboard-guard .dashboard-button {margin-top:20px;}
+.dashboard-section {padding:3%;font:clamp(15px,1.5cqw,21px)/1.5 Georgia,serif;min-height:28cqw;}
+.dashboard-section-heading {display:flex;justify-content:space-between;align-items:center;gap:16px;border-bottom:1px solid #a47b46;margin-bottom:20px;padding-bottom:8px;}
+.dashboard-section-heading h2 {display:flex;align-items:center;gap:.5em;font:700 clamp(23px,2.5cqw,38px)/1.1 'EB Garamond',Georgia,serif;}
+.dashboard-section-heading svg {width:1.2em;height:1.2em;}
+.dashboard-back {background:none;color:inherit;font:inherit;cursor:pointer;}
+.dashboard-character-details {display:grid;grid-template-columns:30% 1fr;gap:5%;}
+.dashboard-character-details>img {width:100%;aspect-ratio:1;object-fit:cover;border-radius:50%;border:3px double #683b1e;}
+.dashboard-exploration img {width:100%;max-height:250px;object-fit:cover;margin-bottom:15px;}
+.dashboard-faction-detail {display:grid;grid-template-columns:40% 1fr;align-items:center;gap:5%;}
+.player-menu {position:relative;min-width:0;max-width:25%;font-family:Georgia,serif;}
+.player-menu-trigger {display:flex;align-items:center;gap:.45em;max-width:100%;min-height:44px;padding:.2em .6em .2em .3em;background:url('/textures/button-parchment.png') center/100% 100%;color:#321507;font:700 clamp(12px,1.4cqw,21px)/1.1 Georgia,serif;cursor:pointer;}
+.player-menu-trigger img {width:3.8cqw;height:3.8cqw;min-width:32px;min-height:32px;border-radius:50%;object-fit:cover;border:2px solid #73431d;}
+.player-menu-trigger span:first-of-type {overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.player-menu-panel {position:absolute;right:0;top:calc(100% + 8px);width:220px;padding:12px;background:#f2d6a3 url('/textures/parchment-v2.jpg') center/cover;box-shadow:0 7px 20px #32150766;border:1px solid #906036;border-radius:6px;z-index:20;}
+.player-menu-panel a,.player-menu-panel button {display:block;width:100%;padding:12px 9px;color:#321507;font:16px/1.2 Georgia,serif;text-decoration:none;text-align:left;background:transparent;cursor:pointer;}
+.player-menu-panel :is(a,button):hover {background:#b9793025;}
+.player-menu-panel p {font:14px/1.3 Georgia,serif;}
+.player-dashboard :is(button,a):focus-visible {outline:2px solid #a5481d;outline-offset:3px;}
+@media(max-width:1000px) and (min-width:701px) {
+ body #root .player-dashboard .site-header.site-header .site-header__inner {width:94%;gap:1.2cqw;}
+ body #root .player-dashboard .site-header.site-header .nav {gap:1.8cqw;}
+ .dashboard-stat {padding:5% 9%;}
+ .dashboard-stat:last-child strong {font-size:clamp(16px,2.5cqw,25px);}
+}
+@media(max-width:700px) {
+ body #root .home-page.landing-page.player-dashboard {background-size:auto 100%;}
+ body #root .player-dashboard .site-header.site-header .site-header__inner {width:94%;height:auto;grid-template-columns:minmax(0,1fr) auto 36px;gap:6px;}
+ .player-menu {grid-column:2;grid-row:1;max-width:145px;}
+ .player-menu-trigger {font-size:11px;min-height:42px;max-width:145px;}
+ .player-menu-trigger img {width:32px;height:32px;}
+ .dashboard-layout {display:flex;flex-direction:column;gap:14px;padding:12px 4% 35px;}
+ .dashboard-sidebar {padding:0;border:0;background:transparent;}
+ .dashboard-sidebar nav {flex-direction:row;overflow-x:auto;gap:6px;padding:3px 2px 8px;scrollbar-width:thin;}
+ .dashboard-sidebar button {flex:none;white-space:nowrap;font-size:15px;min-height:42px;padding:8px 12px;}
+ .dashboard-welcome {grid-template-columns:1fr 28%;margin-bottom:18px;}
+ .dashboard-eyebrow {font-size:12px;}
+ .dashboard-welcome h1 {font-size:clamp(24px,6vw,34px);}
+ .dashboard-welcome-copy {font-size:14px;}
+ .dashboard-stats {grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-bottom:16px;}
+ .dashboard-stat {min-height:88px;padding:12px 14px;}
+ .dashboard-stat h2 {font-size:14px;}
+ .dashboard-stat strong,.dashboard-stat:last-child strong {font-size:26px;}
+ .dashboard-stat small {font-size:12px;}
+ .dashboard-overview {grid-template-columns:1fr;gap:16px;}
+ .dashboard-panel>h2 {font-size:22px;padding:10px 14px;}
+ .dashboard-identity-body {padding:14px 18px 20px;gap:6%;}
+ .dashboard-level-tag {font-size:12px;}
+ .dashboard-panel h3 {font-size:25px;}
+ .dashboard-panel dl>div {font-size:14px;}
+ .dashboard-button {font-size:18px;min-height:44px;}
+ .dashboard-adventure {padding:0 18px 18px;}
+ .dashboard-adventure>h2 {margin:0;padding-inline:0;}
+ .dashboard-adventure p {font-size:16px;margin:8px 0 14px;}
+ .dashboard-adventure>img {aspect-ratio:2.8;}
+ .dashboard-section {padding:18px;}
+ .dashboard-section-heading {align-items:flex-start;flex-direction:column;gap:10px;}
+ .dashboard-character-details,.dashboard-faction-detail {grid-template-columns:1fr;gap:20px;}
+ .dashboard-character-details>img {max-width:160px;}
+ .dashboard-faction-detail .dashboard-flag {max-width:240px;margin:auto;}
+ .dashboard-guard {padding:24px;margin:20px auto;}
+}
+@media(prefers-reduced-motion:reduce) {.dashboard-button,.dashboard-sidebar button {transition:none;}}

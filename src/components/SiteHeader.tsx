@@ -5,10 +5,13 @@ import { useWallet } from "../wallet";
 import { HomeCompass, HomeWheel } from "./HomeIcons";
 import { AccountButton } from "../auth/AccountButton";
 import { SignInModal } from "../auth/SignInModal";
+import { PlayerMenu } from "../auth/PlayerMenu";
+import { useAuth } from "../auth/AuthProvider";
 
 type Page = "home" | "create" | "how" | "explore" | "profile";
 
-export function SiteHeader({ active, primaryAction }: { active: Page; primaryAction?: "play" }) {
+export function SiteHeader({ active, primaryAction }: { active: Page; primaryAction?: "play" | "player" }) {
+  const {user}=useAuth();
   const [menuOpen, setMenuOpen] = useState(false);
   const [signInOpen, setSignInOpen] = useState(false);
   const { modalOpen } = useWallet();
@@ -46,7 +49,7 @@ export function SiteHeader({ active, primaryAction }: { active: Page; primaryAct
         </Link>
         <button className="site-menu-toggle" type="button" aria-label="Toggle navigation" aria-expanded={menuOpen} aria-controls="mobile-navigation" onClick={() => setMenuOpen(!menuOpen)}>☰</button>
         <nav id="site-navigation" className="nav" aria-label="Main">
-          {links.filter(link => primaryAction !== "play" || link.page !== "profile").map(({ label, href, page }) => {
+          {links.filter(link => !primaryAction || link.page !== "profile").map(({ label, href, page }) => {
             const current = page === active;
             return (
               <Link
@@ -62,7 +65,7 @@ export function SiteHeader({ active, primaryAction }: { active: Page; primaryAct
           })}
           {active === "home" && <div className="mobile-nav-wallet"><AccountButton /></div>}
         </nav>
-        {primaryAction === "play" ? <button className="header-play-game" type="button" aria-haspopup="dialog" onClick={() => setSignInOpen(true)}>
+        {primaryAction === "player" ? <PlayerMenu/> : primaryAction === "play" && user ? <Link className="header-play-game" href="/dashboard">Play Game <span aria-hidden="true">→</span></Link> : primaryAction === "play" ? <button className="header-play-game" type="button" aria-haspopup="dialog" onClick={() => setSignInOpen(true)}>
           <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M5 3l4 1 15 18-3 3L5 7ZM27 3l-4 1L8 22l3 3L27 7ZM3 22l7 7m-5-3-3 4m20-8 7 7m-3-3 4 4" /></svg>
           <span>Play Game</span>
         </button> : <AccountButton />}

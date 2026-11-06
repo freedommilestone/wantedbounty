@@ -6,6 +6,7 @@ import { useAuth } from './AuthProvider';
 import { useWallet } from '../wallet';
 import { Link } from '../router';
 import { useRouter } from 'next/navigation';
+import { playerDestination } from './playerDestination';
 type Mode='signup'|'login'|'reset'|'password';
 export function AccountPage(){
  const {user,loading,player,playerLoading}=useAuth();const {disconnect}=useWallet();const router=useRouter();
@@ -31,8 +32,9 @@ export function AccountPage(){
     if(error)throw error;setPassword('');
     setMessage(data.session?'Welcome aboard! Your account is ready.':'Check your email to confirm your account, then log in.');
    }else if(mode==='login'){
-    const {error}=await auth.signInWithPassword({email:email.trim(),password});if(error)throw error;
-    setPassword('');router.push('/allegiance');
+    const {data,error}=await auth.signInWithPassword({email:email.trim(),password});if(error)throw error;
+    const destination=await playerDestination(data.user.id);
+    setPassword('');router.push(destination);
    }else if(mode==='reset'){
     const {error}=await auth.resetPasswordForEmail(email.trim(),{redirectTo:location.origin+'/account?mode=recovery'});if(error)throw error;
     setMessage('If an account exists for that email, you’ll receive a password reset link.');
@@ -46,7 +48,7 @@ export function AccountPage(){
  return <div className="account-page"><SiteHeader active="profile"/><main className="account-panel">
  <img src="/brand/wanted-bounty-logo.png" alt="" className="account-mark"/>
  <h1>{user&&mode!=='password'?'Welcome aboard':mode==='signup'?'Join the fleet':mode==='login'?'Welcome back':mode==='reset'?'Reset your password':'Choose a new password'}</h1>
- {loading?<p role="status">Loading your account…</p>:user&&mode!=='password'?<><p>Signed in as {user.email}</p><Link className="account-primary" href="/profile">Go to My Profile →</Link><button className="account-secondary" onClick={()=>switchMode("password")}>Change Password</button><button className="account-secondary" disabled={busy} onClick={signOut}>Sign Out</button></>:<>
+ {loading?<p role="status">Loading your account…</p>:user&&mode!=='password'?<><p>Signed in as {user.email}</p><Link className="account-primary" href="/dashboard">Go to Dashboard →</Link><button className="account-secondary" onClick={()=>switchMode("password")}>Change Password</button><button className="account-secondary" disabled={busy} onClick={signOut}>Sign Out</button></>:<>
  <p>Create your Wanted Bounty account with your email. A wallet is only needed for crypto payments and viewing BERI holdings.</p>
  {(mode==='signup'||mode==='login')&&<div className="account-tabs"><button aria-pressed={mode==='signup'} onClick={()=>switchMode('signup')}>Sign Up</button><button aria-pressed={mode==='login'} onClick={()=>switchMode('login')}>Log In</button></div>}
  <form onSubmit={submit}>
