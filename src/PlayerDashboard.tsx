@@ -9,6 +9,7 @@ import { BeriSymbol } from './components/BeriSymbol';
 import {useEnergy} from './energy/useEnergy';
 import {EnergyPanel} from './energy/EnergyPanel';
 import { WalletHoldingCard } from './holdings/WalletHoldingCard';
+import { useVerifiedWallet } from './holdings/HoldingsProvider';
 import { Link } from './router';
 
 type Section='Dashboard'|'My Character'|'Exploration'|'Devil Fruits'|'Marketplace'|'Factions'|'Leaderboard';
@@ -35,6 +36,9 @@ function DashboardShell({children}:{children:React.ReactNode}){
 function DashboardContent({player}:{player:Player}){
  const {user}=useAuth();
  const energy=useEnergy();
+ const holdings=useVerifiedWallet();
+ const bounty=holdings.wallet?.balance??null;
+ const bountyStatus=holdings.loading?'Checking BERI holdings…':holdings.error||holdings.wallet?.checkFailed?'Balance check unavailable':!holdings.wallet?'Verify your wallet to show your bounty':bounty===null?'Checking BERI holdings…':'Verified wallet BERI holdings';
  const level=energy.state?.highest_level??player.level;
  const [section,setSection]=useState<Section>('Dashboard');
  const faction=factions[player.allegiance!],name=player.display_name.trim()||'Captain';
@@ -45,7 +49,7 @@ function DashboardContent({player}:{player:Player}){
   <main className="dashboard-main">
    <header className="dashboard-welcome"><div><p className="dashboard-eyebrow"><HomeCompass/> The captain’s quarters</p><h1>Welcome, {name}!</h1><p className="dashboard-welcome-copy">Your journey as a {faction.singular} has begun. Set sail, grow stronger, and raise your bounty!</p></div><div className="dashboard-flag" role="img" aria-label={`${faction.name} flag`} style={{backgroundPosition:`${faction.position} center`}}/></header>
    <section className="dashboard-stats" aria-label="Player statistics">
-    <Stat label="Wanted Bounty" value={<><BeriSymbol/>{number(player.wanted_bounty)}</>} detail={`World Rank ${player.world_rank?`#${number(player.world_rank)}`:'—'}`}/>
+    <Stat label="Wanted Bounty" live value={<><BeriSymbol/>{bounty??'—'}</>} detail={bountyStatus}/>
     <Stat label="Energy" value={energy.balance===null?'—':`${number(Math.floor(energy.balance))} EP`} detail={energy.state?`Reserve: ${number(energy.state.capacity)} EP`:'Syncing reserve…'}/>
     <Stat label="Level" value={`Lv. ${level}`} detail="Highest unlocked level"/>
     <Stat label="Allegiance" value={faction.name} detail={<DashboardIcon kind="My Character"/>}/>
@@ -53,7 +57,7 @@ function DashboardContent({player}:{player:Player}){
    <EnergyPanel energy={energy}/>
    <WalletHoldingCard/>
    {section==='Dashboard'?<div className="dashboard-overview">
-    <section className="dashboard-panel dashboard-identity"><h2>Your wanted identity</h2><div className="dashboard-identity-body"><CreatorPoster className="dashboard-poster" name={name} bounty={String(player.wanted_bounty)} portrait={portrait} photoClassName="" fine={fine}/><div className="dashboard-character-copy"><span className="dashboard-level-tag">{faction.singular} · Level {level}</span><h3>{name}</h3><dl><div><dt>Fighting Style:</dt><dd>{player.fighting_style||'Not Chosen'}</dd></div><div><dt>Devil Fruit:</dt><dd>{player.devil_fruit||'None'}</dd></div></dl><button className="dashboard-button" onClick={()=>choose('My Character')}>Character Details <span aria-hidden="true">→</span></button></div></div></section>
+    <section className="dashboard-panel dashboard-identity"><h2>Your wanted identity</h2><div className="dashboard-identity-body"><CreatorPoster className="dashboard-poster" name={name} bounty={bounty??'—'} portrait={portrait} photoClassName="" fine={fine}/><div className="dashboard-character-copy"><span className="dashboard-level-tag">{faction.singular} · Level {level}</span><h3>{name}</h3><dl><div><dt>Fighting Style:</dt><dd>{player.fighting_style||'Not Chosen'}</dd></div><div><dt>Devil Fruit:</dt><dd>{player.devil_fruit||'None'}</dd></div></dl><button className="dashboard-button" onClick={()=>choose('My Character')}>Character Details <span aria-hidden="true">→</span></button></div></div></section>
     <section className="dashboard-panel dashboard-adventure"><h2>Your next adventure</h2><img src="/scene/uncharted-seas-v1.webp" alt="Uncharted islands surrounded by blue seas"/><h3>The Uncharted Seas</h3><p>Begin your first expedition, earn rewards, and search for rare Devil Fruits.</p><button className="dashboard-button" onClick={()=>choose('Exploration')}>Explore the Waters <span aria-hidden="true">→</span></button></section>
    </div>:<section className="dashboard-panel dashboard-section" aria-label={section}>
     <div className="dashboard-section-heading"><h2><DashboardIcon kind={section}/>{section}</h2><button className="dashboard-back" onClick={()=>choose('Dashboard')}>← Dashboard</button></div>
@@ -62,13 +66,13 @@ function DashboardContent({player}:{player:Player}){
     :section==='Factions'?<div className="dashboard-faction-detail"><div className="dashboard-flag" role="img" aria-label={`${faction.name} flag`} style={{backgroundPosition:`${faction.position} center`}}/><div><h3>{faction.name}</h3><p>{faction.mission}</p><strong>Your allegiance is permanent.</strong><p>You’ll return to this faction every time you sign in.</p></div></div>
     :section==='Devil Fruits'?<><h3>{player.devil_fruit||'No Devil Fruit equipped'}</h3><p>{player.devil_fruit?'Your equipped Devil Fruit is saved to your character.':'Your character has not discovered a Devil Fruit yet. Fruit discovery will become available with expeditions.'}</p></>
     :section==='Marketplace'?<><h3>The trading docks</h3><p>The marketplace is not open yet. No items or transactions are available.</p></>
-    :<><h3>{player.world_rank?`Your world rank: #${number(player.world_rank)}`:'Your legend starts here'}</h3><p>Your wanted bounty is {number(player.wanted_bounty)}. Community rankings will appear when the leaderboard opens.</p></>}
+    :<><h3>{player.world_rank?`Your world rank: #${number(player.world_rank)}`:'Your legend starts here'}</h3><p>{bounty===null?bountyStatus:`Your wanted bounty is ${bounty} BERI.`} Community rankings will appear when the leaderboard opens.</p></>}
    </section>}
   </main>
  </div></DashboardShell>;
 }
-function Stat({label,value,detail}:{label:string;value:React.ReactNode;detail?:React.ReactNode}){
- return <div className="dashboard-stat"><h2>{label}</h2><strong>{value}</strong>{detail&&<small>{detail}</small>}</div>;
+function Stat({label,value,detail,live=false}:{label:string;value:React.ReactNode;detail?:React.ReactNode;live?:boolean}){
+ return <div className="dashboard-stat"><h2>{label}</h2><strong aria-live={live?'polite':undefined}>{value}</strong>{detail&&<small>{detail}</small>}</div>;
 }
 function DashboardIcon({kind}:{kind:Section}){
  if(kind==='Factions')return <HomeWheel/>;

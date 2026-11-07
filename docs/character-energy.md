@@ -4,7 +4,7 @@ The 100 rows in `src/energy/progression.json` were extracted from the supplied E
 
 ## Current integration status
 
-The progression tables, reserve accounting, server-only mutation functions, dashboard display, and Supabase Realtime subscription are implemented. The database migration has been applied. Frontend/API changes are not yet published.
+The progression tables, reserve accounting, server-only mutation functions, dashboard display, and Supabase Realtime subscription are implemented. The database migrations and frontend/API changes are live. Production deployment `dpl_4EbpnKCYhpQvQCFVb3xaGDe3Bm67` passed the Supabase and historical RPC release checks.
 
 **Approved rules:** at least 1 BERI; include historical holdings from token launch. `BERI_HISTORY_START_DATE` defaults to `launch`. An optional server-only YYYY-MM-DD cutoff can be used for a future reviewed policy; an existing checkpoint refuses a changed cutoff rather than silently rewriting permanent awards.
 
@@ -14,7 +14,7 @@ Finalized balance checks activate regeneration through `sync_wallet_energy`. His
 
 Regeneration eligibility follows the latest finalized **balance observation**, with a maximum 26-hour window to cover the daily cron's scheduling window. An observed drop below 1 BERI or unlink immediately pauses future regeneration; failed checks allow the current window to expire. This is periodic balance eligibility, not second-by-second transaction-event enforcement of regeneration. Historical streaks use transaction history separately. Any future game that requires exact intra-check accrual boundaries must reconcile eligible transaction intervals before spending; it must not treat the daily eligibility window as exact continuous proof.
 
-The Vercel variable name `SOLANA_HISTORY_RPC_URL` exists, but sensitive production values are not exportable to local development. Provider connectivity/plan support must be verified in the deployed environment before reporting historical backfills as operational. No new production deployment has been made as part of this work.
+Sensitive production values for `SOLANA_HISTORY_RPC_URL` are not exportable to local development. The deployed production release check verified provider connectivity, token-launch coverage, and full token-account metadata.
 
 ## Storage and accounting
 
@@ -22,6 +22,7 @@ The Vercel variable name `SOLANA_HISTORY_RPC_URL` exists, but sensitive producti
 - `energy_events`: server-awarded/spent EP, unique per-player event key, requested/applied amounts, resulting balance and reason. Retrying a key does not apply the event twice; reusing a key with different parameters is rejected.
 - One EP is 86,400,000,000 integer units. Microseconds elapsed multiplied by EP/day gives exact fractional accrual without rounding hourly credits. Settlement advances at full capacity so discarded overflow cannot be redeemed later.
 - New characters start with 500 EP. Existing balances are preserved, including the old 8,400 balance. Over-cap legacy reserves cannot grow. Spending gradually removes the grandfathered ceiling; normal caps apply once below capacity. No extra transferable balance is created.
+- After the player reported the old 8,400 EP starting value above their 611 EP reserve, the single matching Level 5 account was corrected to 611 EP through `apply_player_energy_event`, under key `legacy-starting-reserve-correction-v1`. The transaction required the exact unchanged legacy balance and no prior energy events; it preserved Level 5 and 16 best holding days, cleared the legacy ceiling, and synchronized `players.energy`. The ledger records the -7,789 EP correction. This was a targeted data repair, not a change to earned balances or progression rules.
 - Expired or disabled eligibility stops future accrual without erasing existing energy or permanent levels. A trusted holdings pipeline must provide the verified best duration and bounded validity window. No browser can set them.
 - RLS allows players to read only their reserve/events. All mutation functions are invoker-security and executable only by the server service role. Browser clients cannot spend/award arbitrary amounts or set levels.
 
